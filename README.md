@@ -64,14 +64,14 @@
       + workspace/ch01-buildup/todolist/sample 폴더 복사해서 01 폴더 생성
 
 #### 오후(3시간)
-    - 💻 [02 등록](./workspace-ins/ch01-buildup/todolist/02/index.html)
-      + workspace/ch01-buildup/todolist/01 폴더 복사해서 02 폴더 생성
-    - 💻 [03 수정](./workspace-ins/ch01-buildup/todolist/03/index.html)
-      + workspace/ch01-buildup/todolist/02 폴더 복사해서 03 폴더 생성
-    - 💻 [04 삭제, 완성](./workspace-ins/ch01-buildup/todolist/04/index.html)
-      + workspace/ch01-buildup/todolist/03 폴더 복사해서 04 폴더 생성
-    - 💻 [05 데이터를 기반으로 화면 리렌더링](./workspace-ins/ch01-buildup/todolist/05/index.html)
-      + workspace/ch01-buildup/todolist/04 폴더 복사해서 05 폴더 생성
+  - 💻 [02 등록](./workspace-ins/ch01-buildup/todolist/02/index.html)
+    + workspace/ch01-buildup/todolist/01 폴더 복사해서 02 폴더 생성
+  - 💻 [03 수정](./workspace-ins/ch01-buildup/todolist/03/index.html)
+    + workspace/ch01-buildup/todolist/02 폴더 복사해서 03 폴더 생성
+  - 💻 [04 삭제, 완성](./workspace-ins/ch01-buildup/todolist/04/index.html)
+    + workspace/ch01-buildup/todolist/03 폴더 복사해서 04 폴더 생성
+  - 💻 [05 데이터를 기반으로 화면 리렌더링](./workspace-ins/ch01-buildup/todolist/05/index.html)
+    + workspace/ch01-buildup/todolist/04 폴더 복사해서 05 폴더 생성
 
 </details>
 
