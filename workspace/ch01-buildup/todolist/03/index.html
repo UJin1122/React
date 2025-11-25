@@ -157,18 +157,39 @@
         console.log(num, "완료/미완료");
         // 데이터 갱신, itemList에서 num에 해당하는 item의 done 값을 수정
         // itemList에서 num 값으로 item 조회
+        const item = itemList.find((item) => item.num === num);
 
         // item의 done 값을 수정
-
+        item.done = !item.done;
         // 화면 갱신, done 값에 따라서 <s> 추가 또는 삭제
+        const targetLiElem = document.querySelector(
+          `.todolist > li[data-num="${item.num}"]`
+        );
+        // HTMLElement.childNodes : 자식 노드들이 저장된 유사배열 객체(TextNode, CommentNode 포함)
+        // HTMLElement.children : 자식 노드들이 저장된 유사배열 객체(ElementNode만 포함)
+        const titleSpan = targetLiElem.children[1]; // <span>자바스크립트 공부</span>
+        if (item.done) {
+          const sElem = document.createElement("s");
+          sElem.appendChild(titleSpan.firstChild);
+          titleSpan.appendChild(sElem);
+        } else {
+          titleSpan.appendChild(titleSpan.firstChild.firstChild);
+          titleSpan.firstChild.remove();
+        }
       }
 
       // 할일 삭제
       function deleteItem(num) {
         console.log(num, "할일 삭제");
         // 데이터 갱신, itemList에서 num에 해당하는 item 삭제
+        const index = itemList.findIndex((item) => item.num === num);
+        itemList.splice(index, 1);
 
         // 화면 갱신, 화면에서 num에 해당하는 item 제거
+        const targetLiElem = document.querySelector(
+          `.todolist > li[data-num="${num}"]`
+        );
+        targetLiElem.remove();
       }
     </script>
   </body>
