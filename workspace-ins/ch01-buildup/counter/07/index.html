@@ -15,6 +15,7 @@
 
     // 헤더 컴포넌트
     function Header(){
+      console.log('Header 렌더링됨.');
       return (
         Reaction.createElement('header', null, 
           Reaction.createElement('h1', null, 'Counter - 07 상태(데이터) 변경시 자동으로 UI 리렌더링'), 
@@ -25,22 +26,24 @@
 
     // Counter 컴포넌트
     function Counter(){
-      Reaction.useState(5);
+      console.log('Counter 렌더링됨.');
+      // 상태
+      const [ count, setCount ] = Reaction.useState(5);
 
       // 카운터 감소
       const handleDown = () => {
-        count--;
+        setCount(count - 1);
       };
 
       // 카운터 증가
       const handleUp = () => {
-        count++;
+        setCount(count + 1);
       };
 
       // 카운터 초기화
       const handleReset = event => {
         console.log(event);
-        count = 0;
+        setCount(0);
       };
       
       return (
@@ -61,6 +64,7 @@
 
     // App 컴포넌트
     function App(){
+      console.log('App 렌더링됨.');
       return (
         Reaction.createElement('div', { id: 'app' }, Header, Counter)
       );
