@@ -7,6 +7,9 @@ const reaction = {
     if(props){
       for(const attrName in props){
         const value = props[attrName];
+        if(attrName.toLowerCase().startsWith('on')){
+          elem.addEventListener(attrName.toLowerCase().substring(2), value);
+        }
         elem.setAttribute(attrName, value);
       }
     }
