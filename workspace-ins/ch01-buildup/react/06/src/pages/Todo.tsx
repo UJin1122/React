@@ -1,10 +1,8 @@
-import Reaction from '../../reaction.js';
-import Footer from './components/Footer.js';
-import Header from './components/Header.js';
-import Todo from './pages/Todo.js';
+import { useState } from "react";
+import TodoInput from "./TodoInput";
+import TodoList from "./TodoList";
 
-
-function App(){
+function Todo(){
   // 샘플 목록
   const initItemList = [
     { num: 1, title: '자바스크립트 공부', done: true },
@@ -13,10 +11,10 @@ function App(){
   ];
 
   // State
-  const [ itemList, setItemList ] = Reaction.useState(initItemList);
+  const [ itemList, setItemList ] = useState(initItemList);
 
   // 할일 추가
-  function addItem(title){
+  function addItem(title: string){
     console.log('할일 추가');
     // 데이터 갱신, itemList에 item 추가
     // num, title, done 속성을 가진 item 객체 생성
@@ -36,7 +34,7 @@ function App(){
   }
 
   // 완료/미완료 처리
-  function toggleDone(num){
+  function toggleDone(num: number){
     console.log(num, '완료/미완료');
 
     // let selectedItem = itemList.find(item => item.num === num);
@@ -48,7 +46,7 @@ function App(){
   }
 
   // 할일 삭제
-  function deleteItem(num){
+  function deleteItem(num: number){
     console.log(num, '할일 삭제');
     // 데이터 갱신, itemList에서 num에 해당하는 item 삭제
     // 원본 배열에서 작업
@@ -60,8 +58,18 @@ function App(){
   }
 
   return (
-    Reaction.createElement('div', { id: 'todo' }, Header, Todo({ itemList, addItem, toggleDone, deleteItem }), Footer)
+    <div id="main">
+      <div id="container">
+        <ul>
+          <li>
+            <h2>쇼핑 목록</h2>
+            <TodoInput addItem={ addItem } />
+            <TodoList itemList={ itemList } toggleDone={ toggleDone } deleteItem={ deleteItem } />
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 }
 
-export default App;
+export default Todo;
