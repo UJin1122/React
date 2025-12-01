@@ -1,3 +1,5 @@
+import Reaction from '../reaction.js';
+
 // Counter 컴포넌트
 function Counter(){
   console.log('Counter 렌더링됨.');

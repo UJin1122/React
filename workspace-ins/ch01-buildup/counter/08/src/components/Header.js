@@ -1,3 +1,5 @@
+import Reaction from '../reaction.js';
+
 // 헤더 컴포넌트
 function Header(){
   console.log('Header 렌더링됨.');
