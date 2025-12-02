@@ -1,6 +1,5 @@
-import Title from "./components/Title";
-import TodoList from "./pages/TodoList";
-
+import Title from "@/components/Title";
+import TodoList from "@/pages/TodoList";
 export interface TodoItem{
   _id: number;
   title: string;

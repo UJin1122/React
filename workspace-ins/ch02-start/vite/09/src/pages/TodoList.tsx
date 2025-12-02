@@ -1,5 +1,4 @@
-import type { TodoItem } from "../App";
-
+import type { TodoItem } from "@/App";
 interface TodoListProps{
   list: TodoItem[]
 }
