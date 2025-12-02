@@ -1,9 +1,15 @@
 import Title from "./components/Title";
 import TodoList from "./pages/TodoList";
 
+export interface TodoItem{
+  _id: number;
+  title: string;
+  done: boolean;
+}
+
 // Title, TodoList의 부모 컴포넌트
 function App(){
-  const list = [
+  const list: TodoItem[] = [
     { _id: 1, title: 'JavaScript 공부', done: true},
     { _id: 2, title: '바닐라 프로젝트', done: true},
     { _id: 3, title: 'React 공부', done: false},
