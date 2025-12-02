@@ -82,11 +82,12 @@
       //  autofocus -> autoFocus
       // class는 JS의 키워드이므로 사용 못함
       //  class -> className
+      //  for -> htmlFor
       return (
         <div id="todo">
           <header>
             <h1>03 Todo List - React로 UI 구성(JSX)</h1>
-            <p>파일 경로: <span id="filepath"></span></p>
+            <p>파일 경로: <span id="filepath">{`ch${location.href.split('/ch')[1]}index.html`}</span></p>
           </header>
           <div id="main">
             <div id="container">
