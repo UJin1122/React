@@ -16,10 +16,12 @@
       // return <h1>02 Hello DOM</h1>
       const h1 = document.createElement('h1');
       const txt = document.createTextNode('02 Hello DOM');
-      
+      h1.appendChild(txt);
+      return h1;
     }
+
+    document.getElementById('root').appendChild(App());
   </script>
 </body>
-
 
 </html>
