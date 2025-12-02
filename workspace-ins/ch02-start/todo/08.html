@@ -17,31 +17,36 @@
   <script type="text/babel">
     // Title, TodoList의 부모 컴포넌트
     function App(){
+      const list = [
+        { _id: 1, title: 'JavaScript 공부', done: true},
+        { _id: 2, title: '바닐라 프로젝트', done: true},
+        { _id: 3, title: 'React 공부', done: false},
+      ];
+
       return (
         <div id="app">
           <div>
-            <Title />
-            <TodoList />
+            <Title title="08 Simple Todo List - React Props" />
+            <TodoList list={ list } />
           </div>
         </div>
       );
     }
 
-    function Title(props){
+    function Title({ title }){
       return (
         <div>
-          <h1>{ props.title }</h1>
+          <h1>{ title }</h1>
           <hr />
         </div>
       );
     }
 
-    function TodoList(){
+    function TodoList({ list }){
+      const items = list.map(item => <li key={ item._id }>{ item.title } - { item.done ? '완료' : '진행중' }</li>);
       return (
         <ul className="todolist">
-          <li>React 공부 - 진행중</li>
-          <li>Javascript 프로젝트 - 완료</li>
-          <li>Javascript 공부 - 완료</li>
+          { items }
         </ul>
       );
     }
