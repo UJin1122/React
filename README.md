@@ -241,10 +241,38 @@
 <summary><h3>5일차(2025.12.02 화)</h3></summary>
 
 #### 오전(3시간)
-
+* 🔊 [2장 React 시작하기](./workspace-ins/ch02-start)
+  - 🔊 [1. React란?](./workspace-ins/ch02-start#1-react란)
+  * Hello React
+    - 💻 [01 Hello HTML](./workspace-ins/ch02-start/hello/01.html)
+    - 💻 [02 Hello DOM](./workspace-ins/ch02-start/hello/02.html)
+    - 💻 [03 Hello React](./workspace-ins/ch02-start/hello/03.html)
+    - 💻 [04 Hello JSX with babel](./workspace-ins/ch02-start/hello/04.html)
+  * Simple Todo List
+    - 💻 [05 Simple Todo List - HTML](./workspace-ins/ch02-start/todo/05.html)
+    - 💻 [06 Simple Todo List - React](./workspace-ins/ch02-start/todo/06.html)
+    - 💻 [07 Simple Todo List - React Component](./workspace-ins/ch02-start/todo/07.html)
+    - 💻 [08 Simple Todo List - React Props](./workspace-ins/ch02-start/todo/08.html)
 
 #### 오후(3시간)
+* 🔊 [2. React 개발 환경 구축](./workspace-ins/ch02-start#2-react-개발-환경-구축)
+* 🔊 [3. React 애플리케이션 배포](./workspace-ins/ch02-start#3-react-애플리케이션-배포)
+  - 💻 [09 Vite로 개발 환경 구축 및 빌드, 배포](./workspace-ins/ch02-start/vite/09)
+    + workspace/ch02-start/vite 폴더에서 다음 명령 실행
+    ```sh
+    npm create vite@latest 09 -- --template react-ts
+    ```
 
+* 🔊 [4. JSX](./workspace-ins/ch02-start#4-jsx)
+* 🔊 [5. 속성 (Props)](./workspace-ins/ch02-start#5-속성-props)
+
+* 2-3 Props
+  - 💻 [10 Button 컴포넌트에 Props 전달](./workspace-ins/ch02-start/props/10)
+    + workspace/ch02-start/props 폴더에서 다음 명령 실행
+    ```sh
+    npm create vite@latest 10 -- --template react-ts
+    ```
+    + workspace/ch01-buildup/react/02/index.html에서 컴포넌트 복사
 
 </details>
 
