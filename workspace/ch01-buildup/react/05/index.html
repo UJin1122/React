@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List App</title>
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+</head>
+<body>
+
+  <!-- 
+  <div id="todo">
+    <header>
+      <h1>03 Todo List - React로 UI 구성(JSX)</h1>
+      <p>파일 경로: <span id="filepath"></span></p>
+    </header>
+    <div id="main">
+      <div id="container">
+        <ul>
+          <li>
+            <h2>쇼핑 목록</h2>
+            <div class="todoinput">
+              <input type="text" autofocus>
+              <button type="button">추가</button>
+            </div>
+            <ul class="todolist">
+              <li>
+                <span>1</span>
+                <span><s>샘플1</s></span>
+                <button type="button">삭제</button>
+              </li>
+              <li>
+                <span>2</span>
+                <span>샘플2</span>
+                <button type="button">삭제</button>
+              </li>
+              <li>
+                <span>3</span>
+                <span>샘플3</span>
+                <button type="button">삭제</button>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <footer>
+      <p>멋쟁이 사자처럼 FrontEnd BootCamp</p>
+    </footer>
+  </div>
+  -->
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    /*
+          ┌───────── App ──────────┐
+          │           │            │
+        Header       Todo        Footer
+                      │
+                  ┌───┴────┐
+            TodoInput   TodoList
+                           │
+                        TodoItem
+    */
+
+    function Header(){
+      return (
+        <header>
+          <h1>05 Todo List - React 기능 추가</h1>
+          <p>파일 경로: <span id="filepath"></span></p>
+        </header>
+      );
+    }
+
+    function Footer(){
+      return (
+        <footer>
+          <p>멋쟁이 사자처럼 FrontEnd BootCamp</p>
+        </footer>
+      );
+    }
+
+    function Todo(){
+      // 샘플 목록
+      const initItemList = [
+        { num: 1, title: '자바스크립트 공부', done: true },
+        { num: 2, title: 'JS 프로젝트', done: true },
+        { num: 3, title: 'React 공부', done: false },
+      ];
+
+      // State
+      const [ itemList, setItemList ] = React.useState(initItemList);
+
+      // 할일 추가
+      function addItem(title){
+        console.log('할일 추가');
+        // 데이터 갱신, itemList에 item 추가
+        // num, title, done 속성을 가진 item 객체 생성
+        let lastNum = itemList[itemList.length-1]?.num ?? 0;
+        const item = {
+          num: lastNum+1,
+          title,
+          done: false,
+        };
+        
+        // itemList.push(item);
+        // setItemList(itemList); // 객체일 경우 주소가 바뀌지 않았기 때문에 상태가 변경된 걸로 인식하지 않음
+
+        const newItemList = [ ...itemList ];
+        newItemList.push(item);
+        setItemList(newItemList); // 상태 변경
+      }
+
+      // 완료/미완료 처리
+      function toggleDone(num){
+        console.log(num, '완료/미완료');
+
+        // let selectedItem = itemList.find(item => item.num === num);
+        // selectedItem.done = !selectedItem.done;
+        // setItemList([ ...itemList ]);
+
+        const newItemList = itemList.map(item => item.num === num ? { ...item, done: !item.done } : item);
+        setItemList(newItemList);
+      }
+
+      // 할일 삭제
+      function deleteItem(num){
+        console.log(num, '할일 삭제');
+        // 데이터 갱신, itemList에서 num에 해당하는 item 삭제
+        // 원본 배열에서 작업
+        // const index = itemList.findIndex(item => item.num === num);
+        // itemList.splice(index, 1);
+
+        const newItemList = itemList.filter(item => item.num !== num);
+        setItemList(newItemList);
+      }
+
+      return (
+        <div id="main">
+          <div id="container">
+            <ul>
+              <li>
+                <h2>쇼핑 목록</h2>
+                <TodoInput addItem={ addItem } />
+                <TodoList itemList={ itemList } toggleDone={ toggleDone } deleteItem={ deleteItem } />
+              </li>
+            </ul>
+          </div>
+        </div>
+      );
+    }
+
+    function TodoInput({ addItem }){
+      // 추가 버튼 클릭 이벤트 핸들러
+      const handleAdd = () => {
+        console.log('추가 버튼 클릭');
+        // 입력한 제목 꺼내기
+        const inputElem = document.querySelector('.todoinput > input');
+        if(inputElem.value.trim() !== ''){ // 빈 문자열만 입력한게 아니라면
+          addItem(inputElem.value.trim());
+          inputElem.value = '';
+          inputElem.focus();
+        }
+      };
+
+      // 엔터 이벤트 핸들러
+      const handleAddKeyUp = (event) => {
+        console.log('keyup', event);
+        if(event.key === 'Enter') handleAdd();
+      };
+
+      return (
+        <div className="todoinput">
+          <input type="text" autoFocus onKeyUp={ handleAddKeyUp } />
+          <button type="button" onClick={ handleAdd }>추가</button>
+        </div>
+      );
+    }
+
+    function TodoItem({ item, toggleDone, deleteItem }){
+      return (
+        <li>
+          <span>{ item.num }</span>
+          <span onClick={ () => toggleDone(item.num) }>{ item.done ? <s>{ item.title }</s> : item.title }</span>
+          <button onClick={ () => deleteItem(item.num) } type="button">삭제</button>
+        </li>
+      );
+    }
+
+    function TodoList({ itemList, toggleDone, deleteItem }){
+      const list = itemList.map(item => <TodoItem key={ item.num } item={ item } toggleDone={ toggleDone } deleteItem={ deleteItem } />);
+      return (
+        <ul className="todolist">
+          { list }
+        </ul>
+      );
+    }
+
+    function App(){
+      return (
+        <div id="todo">
+          <Header />
+          <Todo />
+          <Footer />
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+  </script>
+</body>
+</html>
