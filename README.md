@@ -266,13 +266,13 @@
 * 🔊 [4. JSX](./workspace-ins/ch02-start#4-jsx)
 * 🔊 [5. 속성 (Props)](./workspace-ins/ch02-start#5-속성-props)
 
-* 2-3 Props
-  - 💻 [10 Button 컴포넌트에 Props 전달](./workspace-ins/ch02-start/props/10)
-    + workspace/ch02-start/props 폴더에서 다음 명령 실행
-    ```sh
-    npm create vite@latest 10 -- --template react-ts
-    ```
-    + workspace/ch01-buildup/react/02/index.html에서 컴포넌트 복사
+  * 2-3 Props
+    - 💻 [10 Button 컴포넌트에 Props 전달](./workspace-ins/ch02-start/props/10)
+      + workspace/ch02-start/props 폴더에서 다음 명령 실행
+      ```sh
+      npm create vite@latest 10 -- --template react-ts
+      ```
+      + workspace/ch01-buildup/react/02/index.html에서 컴포넌트 복사
 
 </details>
 
