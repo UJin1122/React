@@ -1,31 +1,32 @@
-import React from "react";
+import { useState } from "react";
+import Button from "./Button";
 
 function Counter(){
+  console.log("\tCounter 랜더링");
   
-  const [ count, setCount ] = React.useState(0);
+  const [ count, setCount ] = useState(0);
   
   // 카운터 감소
-  const handleDown = () => {
+  const countDown = () => {
     setCount(count - 1);
   };
 
   // 카운터 증가
-  const handleUp = () => {
+  const countUp = () => {
     setCount(count + 1);
   };
 
   // 카운터 초기화
-  const handleReset = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(event);
+  const countReset = () => {
     setCount(0);
   };
 
   return(
     <div id="counter">
       <div style={{gap:"10px",padding:"10px",display:"flex" ,justifyContent:"center", alignItems:"center"}}>
-        <button onClick={ handleDown } style={{borderRadius:"100%", border:"1px solid white", cursor: "pointer" ,width:"40px",height:"40px"}} type="button">-_-</button>
-        <button onClick={ handleReset } style={{borderRadius:"100%", border:"1px solid white", cursor: "pointer" ,width:"40px",height:"40px"}} type="button">0_0</button>
-        <button onClick={ handleUp } style={{borderRadius:"100%", border:"1px solid white", cursor: "pointer" ,width:"40px",height:"40px"}} type="button">+_+</button>
+        <Button onClick={ countDown } color="#a38961ff">-_-</Button>
+        <Button onClick={ countReset } color="#2d5734ff">0_0</Button>
+        <Button onClick={ countUp } color="gray">+_+</Button>
       </div>
       <span style={{
         gap:"10px",

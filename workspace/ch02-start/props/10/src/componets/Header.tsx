@@ -1,5 +1,6 @@
 function Header({title}:{title:string}){
-      return (
+  console.log("\tHeader 랜더링");    
+  return (
         <header>
           <h1 style={{ display:"flex", justifyContent:"center" }}>{title}</h1>
             <div style={{ display:"flex" ,justifyContent:"center", gap:"10px", padding:"10px" }}>
