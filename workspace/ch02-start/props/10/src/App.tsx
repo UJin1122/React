@@ -2,6 +2,7 @@ import Counter from "./componets/Counter";
 import Header from "./componets/Header";
 
 function App(){
+  console.log("\tApp 랜더링");
     return(
       <div id="app">
         <Header title="10 Button 컴포넌트에 Props 전달" />
