@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "./Button";
 
 export default function Counter(){
   console.log('\tCounter 렌더링.');
@@ -19,9 +20,9 @@ export default function Counter(){
 
   return (
     <div id="counter">
-      <button type="button" onClick={ countDown }>-_-</button>
-      <button type="button" onClick={ reset }>0_0</button>
-      <button type="button" onClick={ countUp }>+_+</button>
+      <Button onClick={ countDown }>-_-</Button>
+      <Button onClick={ reset }>0_0</Button>
+      <Button onClick={ countUp }>+_+</Button>
       <span>{ count }</span>
     </div>
   );
