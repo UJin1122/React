@@ -19,9 +19,9 @@ export default function Counter(){
 
   return (
     <div id="counter">
-      <button type="button">-_-</button>
-      <button type="button">0_0</button>
-      <button type="button">+_+</button>
+      <button type="button" onClick={ countDown }>-_-</button>
+      <button type="button" onClick={ reset }>0_0</button>
+      <button type="button" onClick={ countUp }>+_+</button>
       <span>{ count }</span>
     </div>
   );
