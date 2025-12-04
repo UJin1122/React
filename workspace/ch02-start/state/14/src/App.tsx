@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import UserInfo from "./components/UserInfo";
 import type { User } from "./Type";
+import { produce } from "immer";
 
 function App(){
   
@@ -36,20 +37,29 @@ function App(){
   function handleAddressChange(id:number, value:string){
     console.log(id, value);
     
-    const newAddressBook = user.extra.addressBook.map(address => {
-      if(address.id == id){
-        return{...address, value};
-      }else{
-        return address;
+    // const newAddressBook = user.extra.addressBook.map(address => {
+    //   if(address.id == id){
+    //     return{...address, value};
+    //   }else{
+    //     return address;
+    //   }
+    // });
+    // const newUser = { 
+    //   ...user,
+    //   extra: {
+    //     ...user.extra,
+    //     addressBook: newAddressBook
+    //   }
+    // };
+
+    // user 를 Proxy로 감싼 새로운 객채(draft)를 만들어서 콜백 함수의 인자로 전달
+    const newUser = produce(user, (draft)=>{
+      const address = draft.extra.addressBook.find(address => address.id === id)
+      if(address){
+        address.value = value;
       }
     });
-    const newUser = { 
-      ...user,
-      extra: {
-        ...user.extra,
-        addressBook: newAddressBook
-      }
-    };
+    
     setUser(newUser);
     setprevUser(prevUser);
   }
