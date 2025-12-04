@@ -31,8 +31,8 @@ function App(){
   }
 
   // 사용자 정보 변경시 리렌더링이 필요하므로 상태로 관리
-  const [ user, setUser ] = useState(initialUser);
-  const [ prevUser, setPrevUser ] = useState(user);
+  const [ user, setUser ] = useState(initialUser); // 주소 변경 후 사용자 정보
+  const [ prevUser, setPrevUser ] = useState(user); // 주소 변경 전 사용자 정보
 
   console.log('변경 전', prevUser);
   console.log('변경 후', user);
@@ -40,16 +40,35 @@ function App(){
   // 주소가 수정될때 호출되는 이벤트 핸들러
   function handleAddressChange(id: number, value: string){
     console.log(id, value);
+
     // user 상태를 변경해서 리렌더링
-    const targetAddress = user.extra.addressBook.find(address => address.id === id);
-    if(targetAddress){
-      targetAddress.value = value;
-    }
 
-    setPrevUser(user);
+    // 상태의 불변성이 지켜지지 않음
+    // const newUser = { ...user }; // 주소 변경 후의 데이터
+    // const targetAddress = newUser.extra.addressBook.find(address => address.id === id);
+    // if(targetAddress){
+    //   targetAddress.value = value;
+    // }
 
-    const newUser = { ...user };
-    setUser(newUser);
+    // 상태의 불변성을 지키기 위해서 추가 작업이 필요
+    const newAddressBook = user.extra.addressBook.map(address => {
+      if(address.id === id){
+        return { ...address, value };
+      }else{
+        return address;
+      }
+    });
+
+    const newUser = {
+      ...user,
+      extra: {
+        ...user.extra,
+        addressBook: newAddressBook
+      }
+    };
+
+    setPrevUser(user); // user: 주소 변경 전의 데이터    
+    setUser(newUser); // newUser: 주소 변경 후의 데이터
   }
 
   const list = user.extra.addressBook.map((address) => {
