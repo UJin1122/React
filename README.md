@@ -280,10 +280,30 @@
 <summary><h3>6일차(2025.12.03 수)</h3></summary>
 
 #### 오전(3시간)
+* 🔊 [5. 속성 (Props)](./workspace-ins/ch02-start#5-속성-props)
+  * 2-3 Props
+    - 💻 [10 Button 컴포넌트에 Props 전달](./workspace-ins/ch02-start/props/10)
+      + workspace/ch02-start/props 폴더에서 다음 명령 실행
+      ```sh
+      npm create vite@latest 10 -- --template react-ts
+      ```
+      + workspace/ch01-buildup/react/02/index.html에서 컴포넌트 복사
 
+* 🔊 [6. 상태 (State)](./workspace-ins/ch02-start#6-상태-state)
+  - 🔊 [6.1 React.useState()](./workspace-ins/ch02-start#61-reactusestate)
 
 #### 오후(3시간)
-
+* 2-4 State
+  - 💻 [11 state 대신 컴포넌트 외부의 변수 사용시 문제점](./workspace-ins/ch02-start/state/11)
+    + workspace/ch02-start/state 폴더에서 vite 프로젝트 생성(11)
+    + workspace/ch02-start/state/11.html 참고해서 컴포넌트 생성
+* 🔊 [6.2 상태 사용시 유의사항](./workspace-ins/ch02-start#62-상태-사용시-유의사항)
+  - 💻 [12 이벤트 핸들러에서 state 값을 여러번 변경했을 때 문제점](./workspace-ins/ch02-start/state/12)
+    + workspace/ch02-start/state 폴더에서 vite 프로젝트 생성(12)
+    + workspace/ch02-start/state/12.html 참고해서 컴포넌트 생성
+  - 💻 [13 상태관리 대상이 객체일 경우 주의 사항](./workspace-ins/ch02-start/state/13)
+    + workspace/ch02-start/state 폴더에서 vite 프로젝트 생성(13)
+    + workspace/ch02-start/state/13.html 참고해서 컴포넌트 생성
 
 </details>
 
