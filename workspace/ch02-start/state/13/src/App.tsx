@@ -25,7 +25,7 @@ function App(){
     <>
     <h1>13 상태관리 대상이 객체일 경우 주의 사항</h1>
     <div className="container" onPointerMove={ handleMove }>
-      <div className="circle"  style={{transform: `translate( ${position.x}px, ${position.y}px)`}}>
+      <div className="circle"  style={{pointerEvents:'none', transform: `translate( ${position.x}px, ${position.y}px)`}}>
 
       </div>
     </div>
