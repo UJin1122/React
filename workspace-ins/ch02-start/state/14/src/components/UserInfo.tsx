@@ -1,16 +1,20 @@
+import type { User } from "../types";
 
+interface UserInfoProps {
+  user: User;
+}
 
-function UserInfo({ user }){
+function UserInfo({ user }: UserInfoProps){
+  const list = user.extra.addressBook.map(address => <li key={ address.id }>{ address.name }: { address.value }</li>);
   return (
     <div>
       <p>
-        이메일: u1@market.com<br/>
-        이름: 무지<br/>
-        전화번호: 01022223333<br/>
+        이메일: { user.email }<br/>
+        이름: { user.name }<br/>
+        전화번호: { user.phone }<br/>
       </p>
       <ul>
-        <li>회사: 서울시 강동구 천호동 123</li>
-        <li>집: 서울시 강동구 성내동 234</li>
+        { list }
       </ul>
     </div>
   );
