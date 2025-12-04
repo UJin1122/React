@@ -311,10 +311,14 @@
 <summary><h3>7일차(2025.12.04 목)</h3></summary>
 
 #### 오전(3시간)
-
+* 🔊 [6.3 상태의 불변성 (immutability)](./workspace-ins/ch02-start#63-상태의-불변성-immutability)
+  - 💻 [14 상태관리 대상이 복합 객체일 경우 불변성 (feat. immer)](./workspace-ins/ch02-start/state/14)
+    + workspace/ch02-start/state 폴더에서 vite 프로젝트 생성(14)
+    + workspace/ch02-start/state/sample/14.html 참고해서 컴포넌트 생성
 
 #### 오후(3시간)
-
+    + workspace 폴더에서 immer 라이브러리 설치
+      - `npm i immer`
 
 </details>
 
