@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import UserInfo from "./components/UserInfo";
 import type { User } from "./types";
 
@@ -33,18 +33,35 @@ function App(){
   // 사용자 정보 변경시 리렌더링이 필요하므로 상태로 관리
   const [ user, setUser ] = useState(initialUser);
 
+  // 주소가 수정될때 호출되는 이벤트 핸들러
+  function handleAddressChange(id: number, value: string){
+    console.log(id, value);
+
+  }
+
+  const list = user.extra.addressBook.map((address) => {
+    return (
+      <Fragment key={ address.id }>
+        <label htmlFor="1">{ address.name }</label>
+        <input 
+          id={ address.id.toString() }
+          type="text" 
+          name={ address.id.toString() }
+          value={ address.value }
+          onChange={ event => handleAddressChange(address.id, event.target.value) }
+        />
+        <br />
+      </Fragment>
+    );
+  });
+
   return (
     <>
       <h1>14 상태관리 대상이 복합 객체일 경우 불변성 (feat. immer)</h1>
       <UserInfo user={ user } />
 
       <p>
-        <label htmlFor="1">회사</label>
-        <input id="1" type="text" name="1" />
-        <br />
-        <label htmlFor="1">집</label>
-        <input id="2" type="text" name="2" />
-        <br />
+        { list }
       </p>
     </>
   );
