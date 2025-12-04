@@ -36,7 +36,14 @@ function App(){
   // 주소가 수정될때 호출되는 이벤트 핸들러
   function handleAddressChange(id: number, value: string){
     console.log(id, value);
+    // user 상태를 변경해서 리렌더링
+    const targetAddress = user.extra.addressBook.find(address => address.id === id);
+    if(targetAddress){
+      targetAddress.value = value;
+    }
 
+    const newUser = { ...user };
+    setUser(newUser);
   }
 
   const list = user.extra.addressBook.map((address) => {
@@ -58,7 +65,11 @@ function App(){
   return (
     <>
       <h1>14 상태관리 대상이 복합 객체일 경우 불변성 (feat. immer)</h1>
-      <UserInfo user={ user } />
+
+      <div style={{ display: 'flex', gap: '1rem' }}>
+        <UserInfo title="변경 전" user={ user } />
+        <UserInfo title="변경 후" user={ user } />
+      </div>
 
       <p>
         { list }

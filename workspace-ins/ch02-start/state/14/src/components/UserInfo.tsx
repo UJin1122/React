@@ -1,13 +1,15 @@
 import type { User } from "../types";
 
 interface UserInfoProps {
+  title: string;
   user: User;
 }
 
-function UserInfo({ user }: UserInfoProps){
+function UserInfo({ title, user }: UserInfoProps){
   const list = user.extra.addressBook.map(address => <li key={ address.id }>{ address.name }: { address.value }</li>);
   return (
-    <div>
+    <div style={{ border: '1px solid', padding: '1rem', borderRadius: '10px' }}>
+      <h2>{ title }</h2>
       <p>
         이메일: { user.email }<br/>
         이름: { user.name }<br/>
