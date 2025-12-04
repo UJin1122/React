@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import UserInfo from "./components/UserInfo";
 import type { User } from "./types";
+import { produce } from "immer";
 
 function App(){
 
@@ -51,21 +52,32 @@ function App(){
     // }
 
     // 상태의 불변성을 지키기 위해서 추가 작업이 필요
-    const newAddressBook = user.extra.addressBook.map(address => {
-      if(address.id === id){
-        return { ...address, value };
-      }else{
-        return address;
+    // const newAddressBook = user.extra.addressBook.map(address => {
+    //   if(address.id === id){
+    //     return { ...address, value };
+    //   }else{
+    //     return address;
+    //   }
+    // });
+
+    // const newUser = {
+    //   ...user,
+    //   extra: {
+    //     ...user.extra,
+    //     addressBook: newAddressBook
+    //   }
+    // };
+
+    // immer 라이브러리 사용
+    // user를 Proxy로 감싼 새로운 객체(draft)를 만들어서 콜백 함수의 인자로 전달
+    // 콜백함수에서 값을 읽을 때는 원본값을 사용하고
+    // 값을 수정하면 Proxy로 변경을 감지해서 해당 속성과 상위 속성들에 대해서만 실제 복사가 일어남
+    const newUser = produce(user, (draft) => {
+      const address = draft.extra.addressBook.find(address => address.id === id);
+      if(address){
+        address.value = value;
       }
     });
-
-    const newUser = {
-      ...user,
-      extra: {
-        ...user.extra,
-        addressBook: newAddressBook
-      }
-    };
 
     setPrevUser(user); // user: 주소 변경 전의 데이터    
     setUser(newUser); // newUser: 주소 변경 후의 데이터
