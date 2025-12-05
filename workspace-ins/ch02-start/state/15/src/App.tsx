@@ -12,6 +12,12 @@ interface Member {
   cellphone: string;
 }
 
+interface FormErrors {
+  name?: { message: string };
+  email?: { message: string };
+  cellphone?: { message: string };
+}
+
 function App() {
   console.log('App 렌더링');
 
@@ -36,10 +42,10 @@ function App() {
     setCellphone(event.target.value);
   }
 
-  const [ errors , setErrors ] = useState({});
+  const [ errors , setErrors ] = useState<FormErrors>({});
 
   function validate(){
-    let newErrors = {};
+    let newErrors: FormErrors = {};
 
     // 필수 입력 체크
     if(user.name.trim() === ''){
@@ -68,8 +74,9 @@ function App() {
       };
     }
     
+    setErrors(newErrors);
+    
     if(Object.keys(newErrors).length > 0){  // 입력값 검증 실패
-      setErrors(newErrors);
       console.log('입력값 검증 실패', newErrors);
     }else{  // 입력값 검증 통과
       console.log('서버에 전송...', user);
@@ -88,15 +95,15 @@ function App() {
       <form onSubmit={ registMember }>
         <label htmlFor="name">이름</label>
         <input id="name" name="name" value={ user.name } onChange={ handleNameChange } /><br />
-        <div className="error-style">검증 실패 메세지</div>
+        <div className="error-style">{ errors.name?.message }</div>
 
         <label htmlFor="email">이메일</label>
         <input id="email" name="email" value={ user.email } onChange={ handleEmailChange } /><br />
-        <div className="error-style">검증 실패 메세지</div>
+        <div className="error-style">{ errors.email?.message }</div>
 
         <label htmlFor="cellphone">휴대폰</label>
         <input id="cellphone" name="cellphone" value={ user.cellphone } onChange={ handleCellphoneChange } /><br />
-        <div className="error-style">검증 실패 메세지</div>
+        <div className="error-style">{ errors.cellphone?.message }</div>
 
         <button type="submit">가입</button>
       </form>
