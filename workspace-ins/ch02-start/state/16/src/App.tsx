@@ -22,6 +22,7 @@ function App() {
     }
   });
 
+  // 검증이 통과된 이후에 실행되는 함수
   function registMember(user: Member) {
     console.log('서버에 전송', user);
   }
