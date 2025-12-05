@@ -6,6 +6,12 @@ const emailExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 // 휴대폰 검증 정규식
 const cellphoneExp = /^010[0-9]{4}[0-9]{4}$/;
 
+interface Member {
+  name: string;
+  email: string;
+  cellphone: string;
+}
+
 function App() {
   console.log('App 렌더링');
 
@@ -13,6 +19,12 @@ function App() {
   const [ name, setName ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ cellphone, setCellphone ] = useState('010');
+
+  const user: Member = {
+    name,
+    email,
+    cellphone
+  };
 
   function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
     setName(event.target.value);
@@ -24,30 +36,75 @@ function App() {
     setCellphone(event.target.value);
   }
 
+  const [ errors , setErrors ] = useState({});
+
+  function validate(){
+    let newErrors = {};
+
+    // 필수 입력 체크
+    if(user.name.trim() === ''){
+      newErrors = {
+        name: { message: '이름을 입력하세요.' }
+      };
+    }else if(user.name.trim().length < 2){
+      newErrors = {
+        name: { message: '2글자 이상 입력하세요.' }
+      };
+    }else if(user.email.trim() === ''){
+      newErrors = {
+        email: { message: '이메일을 입력하세요.' }
+      };
+    }else if(emailExp.test(user.email) === false){
+      newErrors = {
+        email: { message: '이메일 양식에 맞지 않습니다.' }
+      };
+    }else if(user.cellphone.trim() === ''){
+      newErrors = {
+        cellphone: { message: '휴대폰 번호를 입력하세요.' }
+      };
+    }else if(cellphoneExp.test(user.cellphone) === false){
+      newErrors = {
+        cellphone: { message: '휴대폰 형식에 맞지 않습니다.' }
+      };
+    }
+    
+    if(Object.keys(newErrors).length > 0){  // 입력값 검증 실패
+      setErrors(newErrors);
+      console.log('입력값 검증 실패', newErrors);
+    }else{  // 입력값 검증 통과
+      console.log('서버에 전송...', user);
+    }
+  }
+
+  function registMember(event: React.FormEvent) {
+    event.preventDefault(); // 브라우저의 기본 동작 취소(submit 동작 취소)
+    validate();
+  }
+
   return (
     <>
       <h1>15 회원가입 입력값 상태 관리</h1>
 
-      <form>
+      <form onSubmit={ registMember }>
         <label htmlFor="name">이름</label>
-        <input id="name" name="name" value={ name } onChange={ handleNameChange } /><br />
+        <input id="name" name="name" value={ user.name } onChange={ handleNameChange } /><br />
         <div className="error-style">검증 실패 메세지</div>
 
         <label htmlFor="email">이메일</label>
-        <input id="email" name="email" value={ email } onChange={ handleEmailChange } /><br />
+        <input id="email" name="email" value={ user.email } onChange={ handleEmailChange } /><br />
         <div className="error-style">검증 실패 메세지</div>
 
         <label htmlFor="cellphone">휴대폰</label>
-        <input id="cellphone" name="cellphone" value={ cellphone } onChange={ handleCellphoneChange } /><br />
+        <input id="cellphone" name="cellphone" value={ user.cellphone } onChange={ handleCellphoneChange } /><br />
         <div className="error-style">검증 실패 메세지</div>
 
         <button type="submit">가입</button>
       </form>
 
       <p>
-        이름: { name }<br />
-        이메일: { email }<br />
-        휴대폰: { cellphone }<br />
+        이름: { user.name }<br />
+        이메일: { user.email }<br />
+        휴대폰: { user.cellphone }<br />
       </p>
     </>
   );
