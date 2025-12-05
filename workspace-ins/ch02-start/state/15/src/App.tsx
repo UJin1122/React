@@ -19,7 +19,8 @@ interface FormErrors {
 }
 
 interface ValidateOptions {
-  criteriaMode?: 'firstError' | 'all'
+  criteriaMode?: 'firstError' | 'all';
+  data?: Member;
 }
 
 function App() {
@@ -55,42 +56,190 @@ function App() {
   });
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setUser({
+    const newUser = {
       ...user,
       [event.target.name]: event.target.value,
-    });
+    };
+    setUser(newUser);
+    validate({ data: newUser });
   }
 
   const [ errors , setErrors ] = useState<FormErrors>({});
 
+  
+  function validate({ criteriaMode = 'firstError', data }: ValidateOptions = {}){
+    const userInfo = data || user;
+
+    let newErrors: FormErrors = {};
+
+    // 필수 입력 체크
+    if(userInfo.name.trim() === ''){
+      newErrors.name = { message: '이름을 입력하세요.' };
+      if (criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
+    }else if(userInfo.name.trim().length < 2){
+      newErrors.name = { message: '2글자 이상 입력하세요.' };
+      if (criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
+    }
+    
+    if(userInfo.email.trim() === ''){
+      newErrors.email = { message: '이메일을 입력하세요.' };
+      if (criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
+    }else if(emailExp.test(userInfo.email) === false){
+      newErrors.email = { message: '이메일 양식에 맞지 않습니다.' };
+      if (criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
+    }
+    
+    if(userInfo.cellphone.trim() === ''){
+      newErrors.cellphone = { message: '휴대폰 번호를 입력하세요.' };
+      if (criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
+    }else if(cellphoneExp.test(userInfo.cellphone) === false){
+      newErrors.cellphone = { message: '휴대폰 형식에 맞지 않습니다.' };
+      if (criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
+    }
+    
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+    
+    // if(Object.keys(newErrors).length > 0){  // 입력값 검증 실패
+    //   return false;
+    // }else{  // 입력값 검증 통과
+    //   return true;
+    // }
+  }
+  
+
+  // 소혜림, 이승규
+  /*  
+  function validate({ criteriaMode = 'firstError' }: ValidateOptions){
+    let newErrors: FormErrors = {};
+
+    // 필수 입력 체크
+    if (criteriaMode === "firstError") {
+      if (user.name.trim() === "") {
+        newErrors = {
+          name: { message: "이름을 입력하세요." },
+        };
+      } else if (user.name.trim().length < 2) {
+        newErrors = {
+          name: { message: "2글자 이상 입력하세요." },
+        };
+      } else if (user.email.trim() === "") {
+        newErrors = {
+          email: { message: "이메일을 입력하세요." },
+        };
+      } else if (emailExp.test(user.email) === false) {
+        newErrors = {
+          email: { message: "이메일 양식에 맞지 않습니다." },
+        };
+      } else if (user.cellphone.trim() === "") {
+        newErrors = {
+          cellphone: { message: "휴대폰 번호를 입력하세요." },
+        };
+      } else if (cellphoneExp.test(user.cellphone) === false) {
+        newErrors = {
+          cellphone: { message: "휴대폰 형식에 맞지 않습니다." },
+        };
+      }
+    } else if (criteriaMode === "all") {
+      if (user.name.trim() === "") {
+        newErrors.name = { message: "이름을 입력하세요." };
+      } else if (user.name.trim().length < 2) {
+        newErrors.name = { message: "2글자 이상 입력하세요." };
+      }
+
+      if (user.email.trim() === "") {
+        newErrors.email = { message: "이메일을 입력하세요." };
+      } else if (emailExp.test(user.email) === false) {
+        newErrors.email = { message: "이메일 양식에 맞지 않습니다." };
+      }
+
+      if (user.cellphone.trim() === "") {
+        newErrors.cellphone = { message: "휴대폰 번호를 입력하세요." };
+      } else if (cellphoneExp.test(user.cellphone) === false) {
+        newErrors.cellphone = { message: "휴대폰 형식에 맞지 않습니다." };
+      }
+    }
+
+    setErrors(newErrors);
+    
+    if(Object.keys(newErrors).length > 0){  // 입력값 검증 실패
+      console.log('입력값 검증 실패', newErrors);
+    }else{  // 입력값 검증 통과
+      console.log('서버에 전송...', user);
+      setUser({
+        name: '',
+        email: '',
+        cellphone: '010'
+      });
+    }
+  }
+  */
+
+  // 김지유
+  /*
   function validate(options: ValidateOptions){
     let newErrors: FormErrors = {};
 
     // 필수 입력 체크
-    if(user.name.trim() === ''){
-      newErrors = {
-        name: { message: '이름을 입력하세요.' }
-      };
-    }else if(user.name.trim().length < 2){
-      newErrors = {
-        name: { message: '2글자 이상 입력하세요.' }
-      };
-    }else if(user.email.trim() === ''){
-      newErrors = {
-        email: { message: '이메일을 입력하세요.' }
-      };
-    }else if(emailExp.test(user.email) === false){
-      newErrors = {
-        email: { message: '이메일 양식에 맞지 않습니다.' }
-      };
-    }else if(user.cellphone.trim() === ''){
-      newErrors = {
-        cellphone: { message: '휴대폰 번호를 입력하세요.' }
-      };
-    }else if(cellphoneExp.test(user.cellphone) === false){
-      newErrors = {
-        cellphone: { message: '휴대폰 형식에 맞지 않습니다.' }
-      };
+    if (user.name.trim() === '') {
+      newErrors.name = { message: '이름을 입력하세요.' };
+      if (options.criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
+    } else if (user.name.trim().length < 2) {
+      newErrors.name = { message: '2글자 이상 입력하세요.' };
+      if (options.criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
+    }
+  
+    if (user.email.trim() === '') {
+      newErrors.email = { message: '이메일을 입력하세요.' };
+      if (options.criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
+    } else if (!emailExp.test(user.email)) {
+      newErrors.email = { message: '이메일 양식에 맞지 않습니다.' };
+      if (options.criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
+    }
+  
+    if (user.cellphone.trim() === '') {
+      newErrors.cellphone = { message: '휴대폰 번호를 입력하세요.' };
+      if (options.criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
+    } else if (!cellphoneExp.test(user.cellphone)) {
+      newErrors.cellphone = { message: '휴대폰 형식에 맞지 않습니다.' };
+      if (options.criteriaMode === 'firstError') {
+        setErrors(newErrors);
+        return;
+      }
     }
     
     setErrors(newErrors);
@@ -106,13 +255,18 @@ function App() {
       });
     }
   }
+  */
 
   function registMember(event: React.FormEvent) {
     event.preventDefault(); // 브라우저의 기본 동작 취소(submit 동작 취소)
-    validate({
+    const isValid = validate({
       // criteriaMode: 'firstError', // 첫번째 발견된 에러만 포함(기본값)
       criteriaMode: 'all', // 모든 에러를 포함
     });
+    if(isValid){
+      console.log('서버에 전송', user);
+      setUser({ name: '', email: '', cellphone: '010' });
+    }
   }
 
   return (
