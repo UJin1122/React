@@ -18,10 +18,15 @@ interface FormErrors {
   cellphone?: { message: string };
 }
 
+interface ValidateOptions {
+  criteriaMode?: 'firstError' | 'all'
+}
+
 function App() {
   console.log('App 렌더링');
 
   // input 요소를 제어 컴포넌트로 만들기 위해서 상태로 정의
+  /*
   const [ name, setName ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ cellphone, setCellphone ] = useState('010');
@@ -41,10 +46,24 @@ function App() {
   function handleCellphoneChange(event: React.ChangeEvent<HTMLInputElement>) {
     setCellphone(event.target.value);
   }
+  */
+
+  const [ user, setUser ] = useState<Member>({
+    name: '',
+    email: '',
+    cellphone: '010'
+  });
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value,
+    });
+  }
 
   const [ errors , setErrors ] = useState<FormErrors>({});
 
-  function validate(){
+  function validate(options: ValidateOptions){
     let newErrors: FormErrors = {};
 
     // 필수 입력 체크
@@ -80,12 +99,20 @@ function App() {
       console.log('입력값 검증 실패', newErrors);
     }else{  // 입력값 검증 통과
       console.log('서버에 전송...', user);
+      setUser({
+        name: '',
+        email: '',
+        cellphone: '010'
+      });
     }
   }
 
   function registMember(event: React.FormEvent) {
     event.preventDefault(); // 브라우저의 기본 동작 취소(submit 동작 취소)
-    validate();
+    validate({
+      // criteriaMode: 'firstError', // 첫번째 발견된 에러만 포함(기본값)
+      criteriaMode: 'all', // 모든 에러를 포함
+    });
   }
 
   return (
@@ -94,15 +121,15 @@ function App() {
 
       <form onSubmit={ registMember }>
         <label htmlFor="name">이름</label>
-        <input id="name" name="name" value={ user.name } onChange={ handleNameChange } /><br />
+        <input id="name" name="name" value={ user.name } onChange={ handleChange } /><br />
         <div className="error-style">{ errors.name?.message }</div>
 
         <label htmlFor="email">이메일</label>
-        <input id="email" name="email" value={ user.email } onChange={ handleEmailChange } /><br />
+        <input id="email" name="email" value={ user.email } onChange={ handleChange } /><br />
         <div className="error-style">{ errors.email?.message }</div>
 
         <label htmlFor="cellphone">휴대폰</label>
-        <input id="cellphone" name="cellphone" value={ user.cellphone } onChange={ handleCellphoneChange } /><br />
+        <input id="cellphone" name="cellphone" value={ user.cellphone } onChange={ handleChange } /><br />
         <div className="error-style">{ errors.cellphone?.message }</div>
 
         <button type="submit">가입</button>
