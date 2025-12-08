@@ -159,7 +159,7 @@ export default ClickMe;
 
 # 2. 컴포넌트 생명 주기
 
-<img src="https://github.com/FEBC-15/ins-react/blob/main/images/lifecycle.png" width="800">
+<img src="https://github.com/FEBC-15/react/blob/main/images/lifecycle.png" width="800">
 
 ## 1 mounting
 * 컴포넌트가 처음으로 DOM에 추가되고 렌더링 되는 단계
