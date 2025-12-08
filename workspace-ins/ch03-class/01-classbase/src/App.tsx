@@ -6,7 +6,8 @@ class App extends Component {
     return (
       <div>
         <h1>01 클래스 컴포넌트</h1>
-        <ClickMe />
+        <ClickMe level={2} />
+        <ClickMe level={3} />
       </div>
     );
   }
