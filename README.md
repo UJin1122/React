@@ -326,10 +326,44 @@
 <summary><h3>8일차(2025.12.05 금)</h3></summary>
 
 #### 오전(3시간)
+* 💻 workspace/vite-template 프로젝트 생성
+  - `npm create vite@latest vite-template -- --template react-ts`
+  - package.json 파일을 workspace 폴더 하위로 복사
+  - workspace 폴더에서 `npm i` 실행해서 패키지 설치
+  - [vite.config.js 파일 수정](./workspace-ins/ch02-start#viteconfigjs)
+  - eslist.config.js 파일 수정
+    ```bash
+    languageOptions: {
+      ...,
+      // eslint가 node_modules를 기준으로 프로젝트 루트를 인식하므로
+      // 프로젝트에서 자체 node_modules를 사용하지 않고 상위의 node_modules를 사용하도록 설정하면
+      // 하위의 여러 프로젝트에서 tsconfig 파일을 여러개 검색하면서 오류가 발생하므로 명시적으로 프로젝트 루트를 인식하도록 설정
+      parserOptions: {
+        tsconfigRootDir: import.meta.dirname, // 현재 파일이 있는 디렉토리의 절대 경로
+      },
+    },
+    ```
+  - 불필요한 파일 삭제
 
+* 🔊 [7. 유효성 검증](./workspace-ins/ch02-start#7-유효성-검증)
+  - 💻 [15 회원가입 입력값 상태 관리](./workspace-ins/ch02-start/state/15)
+    + workspace/vite-template 폴더 복사해서 15 폴더 생성
+    + workspace/ch02-start/state/sample/15.html 참고해서 컴포넌트 생성
 
 #### 오후(3시간)
-
+  - 💻 [16 회원가입 입력값 검증 (feat. react-hook-form)](./workspace-ins/ch02-start/state/16)
+    + workspace/ch02-start/state/15 폴더 복사해서 16 폴더 생성
+    + workspace 폴더에서 react-hook-form 라이브러리 설치
+      - `npm i react-hook-form`
+      
+#### 과제
+```
+## 주말 과제: 환율 변환기 앱 개발
+- vite 프로젝트 생성
+  - vite-template 폴더 복사해서 workspace/homework 폴더에 복사한 후 currency-converter로 폴더명 변경(workspace/homework/currency-converter)
+- https://github.com/FEBC-15/react/blob/main/sample/homework/currency-converter/index.html 파일 참고해서 App.tsx에 화면 구현
+- 가능하다면 실제 기능 구현에 도전!!!
+```
 
 </details>
 
