@@ -1,17 +1,19 @@
 import './Button.css';
 
-interface ButtonProps {
-  children: string;
-  type?: 'button' | 'submit' | 'reset';
-  onClick: () => void;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
+  // children: string;
+  // type?: 'button' | 'submit' | 'reset';
+  // onClick: () => void;
+  bgColor?: string;
 }
 
-function Button({ children, type="button", onClick: handleClick }: ButtonProps) {
+function Button({ children, type="button", bgColor, color, ...props }: ButtonProps) {
   return (
     <button 
+      { ...props }
       className="rounded-button"
       type={ type }
-      onClick={ handleClick }
+      style={{ ...props.style, backgroundColor: bgColor, color }}
     >{ children }</button>
   );
 }

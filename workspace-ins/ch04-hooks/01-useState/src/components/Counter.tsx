@@ -36,8 +36,8 @@ function Counter({ children }: CounterProps) {
         value={ step }
         onChange={ (e) => setStep(Number(e.target.value)) }
       />
-      <Button onClick={ handleDown }>-_-</Button>
-      <Button type="submit" onClick={ handleReset }>0_0</Button>
+      <Button bgColor="red" color="black" onClick={ handleDown }>-_-</Button>
+      <Button bgColor="gray" type="submit" onClick={ handleReset }>0_0</Button>
       <Button type="reset" onClick={ handleUp }>+_+</Button>
       <span>{ count }</span>
     </div>
