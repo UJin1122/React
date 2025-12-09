@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import { useState } from "react";
 
 interface CounterProps {
@@ -35,9 +36,9 @@ function Counter({ children }: CounterProps) {
         value={ step }
         onChange={ (e) => setStep(Number(e.target.value)) }
       />
-      <button type="button" onClick={ handleDown }>-_-</button>
-      <button type="button" onClick={ handleReset }>0_0</button>
-      <button type="button" onClick={ handleUp }>+_+</button>
+      <Button onClick={ handleDown }>-_-</Button>
+      <Button type="submit" onClick={ handleReset }>0_0</Button>
+      <Button type="reset" onClick={ handleUp }>+_+</Button>
       <span>{ count }</span>
     </div>
   );
