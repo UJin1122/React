@@ -376,10 +376,18 @@
 <summary><h3>9일차(2025.12.08 월)</h3></summary>
 
 #### 오전(3시간)
-
+* 🔊 [3장 클래스 컴포넌트와 컴포넌트의 라이프 사이클](./workspace-ins/ch03-class)
+  - 💻 [01 클래스 컴포넌트](./workspace-ins/ch03-class/01-classbase)
+    + workspace/vite-template 폴더 복사해서 workspace/ch03-class/01-classbase 폴더 생성
+    + workspace/ch03-class/01-classbase.html 참고해서 컴포넌트 생성
+  - 💻 [02 클래스 컴포넌트 - 함수형 컴포넌트와 같이 사용](./workspace-ins/ch03-class/02-functionbase)
+    + workspace/ch03-class/01-classbase 폴더 복사해서 workspace/ch03-class/02-functionbase 폴더 생성
+    + workspace/ch03-class/02-functionbase.html 참고해서 컴포넌트 생성
 
 #### 오후(3시간)
-
+  - 💻 [03 클래스 컴포넌트 - 컴포넌트의 라이프 사이클](./workspace-ins/ch03-class/03-lifecycle)
+    + workspace/ch03-class/01-classbase 폴더 복사해서 workspace/ch03-class/03-lifecycle 폴더 생성
+    + workspace/ch03-class/03-lifecycle.html 참고해서 컴포넌트 생성
 
 </details>
 
