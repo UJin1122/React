@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <Header />
-      <Counter />      
+      <Counter>10</Counter>
     </>
   );
 }

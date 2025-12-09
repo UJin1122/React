@@ -1,9 +1,13 @@
 import { useState } from "react";
 
-function Counter() {
+interface CounterProps {
+  children: string;
+}
+
+function Counter({ children }: CounterProps) {
   console.log('\tCounter 호출됨');
 
-  const initCount = 5;
+  const initCount = Number(children);
   const [ count, setCount ] = useState(initCount);
   const [ step, setStep ] = useState(1);
 
