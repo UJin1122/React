@@ -4,16 +4,17 @@ function Counter() {
   console.log('\tCounter 호출됨');
 
   const initCount = 5;
-  let [ count, setCount ] = useState(initCount);
+  const [ count, setCount ] = useState(initCount);
+  const [ step, setStep ] = useState(1);
 
   // 카운트 감소
   const handleDown = () => {
-    setCount(count - 1);
+    setCount(count - step);
   };
 
   // 카운트 증가
   const handleUp = () => {
-    setCount(count + 1);
+    setCount(count + step);
   };
 
   // 카운트 초기화
@@ -27,6 +28,8 @@ function Counter() {
       <input 
         id="step" 
         type="number" 
+        value={ step }
+        onChange={ (e) => setStep(Number(e.target.value)) }
       />
       <button type="button" onClick={ handleDown }>-_-</button>
       <button type="button" onClick={ handleReset }>0_0</button>
