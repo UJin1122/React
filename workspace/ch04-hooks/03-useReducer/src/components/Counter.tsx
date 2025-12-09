@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface CounterProps{
   children: string;
@@ -14,10 +14,7 @@ function Counter({ children }: CounterProps){
   const [ change, setChange ] = useState(1);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  
-  const newcount = Number(e.target.value)
-  
-  setChange(newcount);
+  setChange(Number(e.target.value));  
   };
   
   // 카운터 감소
@@ -34,31 +31,6 @@ function Counter({ children }: CounterProps){
   const handleReset = () => {
     setCount(initCount);
   };
-
-  // 1초 후에 handleUP을 호출해서 자동으로 값을 1회 증가
-  
-  // console.log('랜더링 중에 호출',document.querySelector('input'));
-  // document.querySelector('input')?.focus();
-  
-  // useEffect(() => {
-  //   console.log('랜더링 후에 호출',document.querySelector('input'));
-  // const timerId = setTimeout(() => {
-  //   handleUp();
-  // }, 1000);
-
-  // return () => {
-  //   clearTimeout(timerId);
-  // }
-  // },[]);
-
-    
-  useEffect(()=>{
-    console.log('\t\tCounter 마운트됨');
-    setTimeout(() => {
-      handleUp();
-    }, 1000);
-    console.log('dependencies 지정시 값이 변경되면 호출됨');
-  },[ change ]);
 
   return(
     <>
