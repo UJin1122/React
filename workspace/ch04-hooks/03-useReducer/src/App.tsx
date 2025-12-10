@@ -12,7 +12,7 @@ function App(){
       justifyItems:"center",
       alignItems:"center" }}>
     <Header/>
-    <Counter>10</Counter>
+    <Counter>0</Counter>
     </div>
     </>
   );

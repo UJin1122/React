@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
-import { useState } from "react";
+import { counterReducer } from "@/reducers";
+import { useReducer, useState } from "react";
 
 interface CounterProps{
   children: string;
@@ -10,7 +11,8 @@ function Counter({ children }: CounterProps){
 
   const initCount = Number(children);
   
-  const [ count, setCount ] = useState(initCount);
+  // const [ count, setCount ] = useState(initCount);
+  const [ count, countDispatch ] = useReducer(counterReducer, initCount);
   const [ change, setChange ] = useState(1);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,17 +21,17 @@ function Counter({ children }: CounterProps){
   
   // 카운터 감소
   const handleDown = () => {
-    setCount(count - change);
+    countDispatch({ type:'DOWN', value: change });
   };
 
   // 카운터 증가
   const handleUp = () => {
-    setCount(count + change);
+    countDispatch({ type:'UP', value: change });
   };
 
   // 카운터 초기화
   const handleReset = () => {
-    setCount(initCount);
+    countDispatch({ type:'RESET', value: initCount });
   };
 
   return(
