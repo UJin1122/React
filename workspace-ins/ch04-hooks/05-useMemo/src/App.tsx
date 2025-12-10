@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // 지정한 수가 소수인지 여부를 반환
 const isPrime = function(num: number){
@@ -21,16 +21,19 @@ const isPrime = function(num: number){
 };
 
 function App() {
-  console.log('App 렌더링 시작');
-
   useEffect(() => {
-    console.log('App 렌더링 완료');
+    console.log('App 마운트 완료');
   }, []);
 
   const [ username, setUsername ] = useState('GD');
   const [ num, setNum ] = useState(1);
 
-  const prime = isPrime(num);
+  // username이 바뀔때 리렌더링이 필요하지만 소수 계산은 다시 할 필요 없음
+  // num이 바뀔때만 다시 계산하고 num이 바뀌지 않으면 메모이제이션된 값을 반환하도록 해야함
+  // const prime = isPrime(num);
+
+  // 메모이제이션
+  const prime = useMemo(() => isPrime(num), []);
 
   return (
     <>
@@ -45,8 +48,12 @@ function App() {
           onChange={ e => setNum(Number(e.target.value)) }
         />
         <div>
-          <span>GD가 좋아하는 숫자 7: 소수가 </span>
-          <span style={{ color: 'blue' }}>맞습니다.</span>
+          <span>{ username }가 좋아하는 숫자 { num }: 소수가 </span>
+          { prime ? // 조건부 렌더링
+            <span style={{ color: 'blue' }}>맞습니다.</span>
+          : 
+            <span style={{ color: 'red' }}>아닙니다.</span>
+          }          
         </div>
       </div>
     </>
