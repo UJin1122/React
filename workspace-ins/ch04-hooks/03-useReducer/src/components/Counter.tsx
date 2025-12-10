@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
-import { useState } from "react";
+import { counterReducer } from "@/reducers";
+import { useReducer, useState } from "react";
 
 interface CounterProps {
   children: string;
@@ -9,22 +10,24 @@ function Counter({ children }: CounterProps) {
   console.log('\tCounter 호출됨');
 
   const initCount = Number(children);
-  const [ count, setCount ] = useState(initCount);
+  // const [ count, setCount ] = useState(initCount);
+  const [ count, countDispatch ] = useReducer(counterReducer, initCount);
   const [ step, setStep ] = useState(1);
 
   // 카운트 감소
   const handleDown = () => {
-    setCount(count - step);
+    countDispatch({ type: 'DOWN', value: step });
+    // counterReducer(10, { type: 'DOWN', value: 1 });
   };
 
   // 카운트 증가
   const handleUp = () => {
-    setCount(count + step);
+    countDispatch({ type: 'UP', value: step });
   };
 
   // 카운트 초기화
   const handleReset = () => {
-    setCount(initCount);
+    countDispatch({ type: 'RESET', value: initCount });
   };
 
   return (
