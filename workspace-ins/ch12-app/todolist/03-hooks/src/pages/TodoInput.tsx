@@ -4,6 +4,7 @@ interface TodoInputProps {
   addItem: (title: string) => void;
 }
 
+// TODO 1. useRef를 사용해 새로운 아이템이 추가된 후 input 요소에 포커스가 갈수 있게 처리
 function TodoInput({ addItem }: TodoInputProps){
   console.log('\t\tTodoInput 렌더링');
 
