@@ -412,10 +412,22 @@
 <summary><h3>11일차(2025.12.10 수)</h3></summary>
 
 #### 오전(3시간)
-
+- 🔊 [useReducer](./workspace-ins/ch04-hooks#usereducer)
+  + 💻 [03 useReducer - 상태 관리 로직을 한곳에](./workspace-ins/ch04-hooks/03-useReducer)
+    + workspace/ch04-hooks/01-useState 폴더 복사해서 workspace/ch04-hooks/03-useReducer 폴더 생성
+- 🔊 [useRef](./workspace-ins/ch04-hooks#useref)
+  + 💻 [04 useRef - 값이 유지되는 데이터 관리, DOM 엘리먼트 참조](./workspace-ins/ch04-hooks/04-useRef)
+    + workspace/ch04-hooks/01-useState 폴더 복사해서 workspace/ch04-hooks/04-useRef 폴더 생성
 
 #### 오후(3시간)
-
+- 🔊 [useMemo](./workspace-ins/ch04-hooks#usememo)
+  + 💻 [05 useMemo - 함수의 반환값을 memoize](./workspace-ins/ch04-hooks/05-useMemo)
+    + workspace/vite-template 폴더 복사해서 workspace/ch04-hooks/05-useMemo 폴더 생성
+    + workspace/ch04-hooks/05-useMemo.html 참고해서 컴포넌트 생성
+- 🔊 [useCallback](./workspace-ins/ch04-hooks#usecallback)
+  + 💻 [06 useCallback(함수 자체를 memoize), React.memo(컴포넌트를 memoize)](./workspace-ins/ch04-hooks/06-useCallback)
+    + workspace/vite-template 폴더 복사해서 workspace/ch04-hooks/06-useCallback 폴더 생성
+    + workspace/ch04-hooks/06-useCallback.html 참고해서 컴포넌트 생성
 
 </details>
 
