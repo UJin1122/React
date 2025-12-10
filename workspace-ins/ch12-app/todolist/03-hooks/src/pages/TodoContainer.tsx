@@ -2,6 +2,7 @@ import Todo from "@pages/Todo";
 import type { TodoItem } from "@pages/TodoItem";
 import { useState } from "react";
 
+// TODO 2. useRef를 사용해 nextId를 만들고 할일 추가시 nextId를 사용해서 _id 값을 만들고 1씩 증가
 function TodoContainer(){
   // 샘플 목록
   const initItemList: TodoItem[] = [
