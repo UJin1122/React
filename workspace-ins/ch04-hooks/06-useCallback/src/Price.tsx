@@ -1,13 +1,24 @@
-function Price() {
+import { useState } from "react";
+
+interface PriceProps {
+  price: number;
+  maxQuantity: number;
+  shippingFees: number;
+  quantity: number;
+  handleQuantityChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+function Price({ price, maxQuantity, shippingFees, quantity, handleQuantityChange }: PriceProps) {
+  
   return (
     <>
       <h2>수량 선택</h2>
       <div>
-        가격: 125000원<br />
-        수량: <input type="number" min="1" max="10" 
-          value="1" />
-        (배송비는 5개당 3000원씩 추가됩니다.)<br />
-        상품 금액: 125000원
+        가격: { price }원<br />
+        수량: <input type="number" min="1" max={ maxQuantity } 
+          value={ quantity } onChange={ handleQuantityChange } />
+        (배송비는 5개당 { shippingFees }원씩 추가됩니다.)<br />
+        상품 금액: { price * quantity }원
       </div>
     </>
   );
