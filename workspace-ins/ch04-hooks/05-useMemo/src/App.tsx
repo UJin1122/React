@@ -21,6 +21,8 @@ const isPrime = function(num: number){
 };
 
 function App() {
+  console.log('App 호출');
+
   useEffect(() => {
     console.log('App 마운트 완료');
   }, []);
@@ -33,7 +35,7 @@ function App() {
   // const prime = isPrime(num);
 
   // 메모이제이션
-  const prime = useMemo(() => isPrime(num), []);
+  const prime = useMemo(() => isPrime(num), [ num ]);
 
   return (
     <>
