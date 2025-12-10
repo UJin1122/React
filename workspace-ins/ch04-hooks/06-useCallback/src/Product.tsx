@@ -10,7 +10,7 @@ function Product({ name, price, mainImage, content }: ProductProps) {
     <>
       <h2>상품 설명</h2>
       <p>상품명: { name }</p>
-      <p>가격: { price }원</p>
+      <p>가격: { price.toLocaleString() }원</p>
       <p>상품 설명</p>
       <div>
         <img src={ mainImage } width="600" />

@@ -1,16 +1,21 @@
 interface ShippingProps {
-  fees: number;
+  quantity: number;
+  shippingFees: number;
+  handlePayment: () => void;
 }
 
-function Shipping({ fees }: ShippingProps) {
+function Shipping({ quantity, shippingFees, handlePayment }: ShippingProps) {
+
+  const fees = shippingFees * Math.ceil(quantity/5);
+
   return (
     <>
       <h2>배송비</h2>
       <div>
-        배송비: { fees }원<br />
+        배송비: { fees.toLocaleString() }원<br />
       </div>
       <br />
-      <button type="button">결제</button>
+      <button type="button" onClick={ handlePayment }>결제</button>
     </>
   );
 }

@@ -19,11 +19,18 @@ function App() {
   // Price, Shipping 자식 컴포넌트에서 같이 사용 가능함
   const [ quantity, setQuantity ] = useState(1);
 
-  const fees = data.shippingFees * Math.ceil(quantity/5);
-
   // 수량이 변경되면 호출되는 이벤트 핸들러
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuantity(Number(e.target.value));
+  };
+
+  // 결제 버튼 클릭 시 호출되는 이벤트 핸들러
+  const handlePayment = () => {
+    const productPrice = data.price * quantity;
+    const shippingPrice = data.shippingFees * Math.ceil(quantity/5);
+    const totalPrice = productPrice + shippingPrice;
+
+    alert(`${totalPrice.toLocaleString()}원을 결제하시겠습니까?`);
   };
 
   return (
@@ -37,7 +44,11 @@ function App() {
         quantity={ quantity }
         handleQuantityChange={ handleQuantityChange }
       />
-      <Shipping fees={ fees }/>
+      <Shipping 
+        quantity={ quantity }
+        shippingFees={ data.shippingFees }
+        handlePayment={ handlePayment }
+      />
     </>
   );
 }
