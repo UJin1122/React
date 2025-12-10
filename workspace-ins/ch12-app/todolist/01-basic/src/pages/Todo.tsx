@@ -20,6 +20,7 @@ function Todo(){
   // 할일 추가
   const addItem = (title: string) => {
     const item: TodoItem = { _id: itemList[itemList.length-1]?._id + 1 || 1, title, done: false };
+    // item.push(item);
     setItemList([ ...itemList, item ]);
   }
 

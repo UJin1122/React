@@ -9,10 +9,23 @@ interface CounterAction {
 // state: 이전 상태
 // action: 동작을 정의한 작업(자유롭게 작성. 일반적으로 type 속성에 동작을, value 속성에 값을 지정)
 // 리턴값: 새로운 상태
+// 호출 예시, counterReducer(5, { type: 'UP', value: 3 }); -> 8
 export function counterReducer(state: number, action: CounterAction) {
   let newState = state;
 
-  
+  switch(action.type){
+    case 'UP':
+      newState = state + action.value;
+      break;
+    case 'DOWN':
+      newState = state - action.value;
+      break;
+    case 'RESET':
+      newState = action.value;
+      break;
+    default :
+      break;
+  }
 
   return newState;
 }
