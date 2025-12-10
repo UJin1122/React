@@ -1,10 +1,12 @@
 import Button from "@/components/Button";
+import useMyReducer from "@/hooks/useMyReducer";
 import { counterReducer } from "@/reducers";
-import { useReducer, useState } from "react";
+import { useState } from "react";
 
 interface CounterProps{
   children: string;
 }
+
 
 function Counter({ children }: CounterProps){
   console.log('\tCounter 호출됨.');
@@ -12,7 +14,8 @@ function Counter({ children }: CounterProps){
   const initCount = Number(children);
   
   // const [ count, setCount ] = useState(initCount);
-  const [ count, countDispatch ] = useReducer(counterReducer, initCount);
+  // const [ count, countDispatch ] = useReducer(counterReducer, initCount);
+  const [ count, countDispatch ] = useMyReducer(counterReducer, initCount);
   const [ change, setChange ] = useState(1);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
