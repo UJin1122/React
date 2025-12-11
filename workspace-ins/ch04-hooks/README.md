@@ -308,9 +308,6 @@ const cachedFn = useCallback(fn, dependencies);
 * 훅은 항상 동일한 순서로 호출되어야 함
   - 각 렌더링마다 동일한 순서로 훅이 호출되어야 하므로, 조건문이나 반복문 내에서 훅을 호출하는 패턴을 피해야 함
 
-## 1.9 eslint-plugin-react-hooks
-
-
 # 2. 리액트 컴파일러
 * 참고: https://ko.react.dev/learn/react-compiler
 
