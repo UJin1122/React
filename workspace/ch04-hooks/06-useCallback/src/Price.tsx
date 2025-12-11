@@ -1,5 +1,7 @@
 // import { useCallback } from "react";
 
+import React from "react";
+
 interface PriceProps{
   price: number;
   maxQuantity: number;
@@ -9,6 +11,7 @@ interface PriceProps{
 }
 
 function Price({price, maxQuantity, shippingFees, quantity, handleQuantityChange}:PriceProps){
+  console.log('\tPrice 렌더링');
  
   return(
     <>
@@ -23,4 +26,4 @@ function Price({price, maxQuantity, shippingFees, quantity, handleQuantityChange
     </>
   );
 }
-export default Price;
+export default React.memo(Price);
