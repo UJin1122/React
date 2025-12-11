@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API_SERVER = 'https://fesp-api.koyeb.app/todo';
+const API_SERVER = 'https://fesdfdfp-api.koyeb.app/todo';
 
 // 아이템 타입
 interface Todo {
@@ -42,17 +42,23 @@ function App() {
 
   // API 서버에서 할일 목록을 요청
   const fetchTodo = async (url: string) => {
-    const res = await fetch(API_SERVER + url);
-    console.log('res', res);
+    try{
+      const res = await fetch(API_SERVER + url);
+      console.log('res', res);
 
-    const jsonRes: ResData = await res.json();
-    console.log('body', jsonRes);
+      const jsonRes: ResData = await res.json();
+      console.log('body', jsonRes);
 
-    if(jsonRes.ok === 1){ // 타입 가드
-      setData(jsonRes);
-    }else{
-      setError(jsonRes);
+      if(jsonRes.ok === 1){ // 타입 가드
+        setData(jsonRes);
+      }else{
+        setError(jsonRes);
+      }
+    }catch(err){
+      console.error((err as Error).message);
+      setError(err as ErrorRes);
     }
+    
   };
 
   // 컴포넌트가 마운트 된 후에 실행
