@@ -1,3 +1,5 @@
+import React from "react";
+
 interface ProductProps {
   name: string;
   price: number;
@@ -6,6 +8,8 @@ interface ProductProps {
 }
 
 function Product({ name, price, mainImage, content }: ProductProps) {
+  console.log('\tProduct 렌더링');
+
   return (
     <>
       <h2>상품 설명</h2>
@@ -20,4 +24,5 @@ function Product({ name, price, mainImage, content }: ProductProps) {
   );
 }
 
-export default Product;
+// export default Product;
+export default React.memo(Product); // 컴포넌트를 메모이제이션 함

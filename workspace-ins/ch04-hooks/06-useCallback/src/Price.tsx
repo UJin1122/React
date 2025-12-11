@@ -7,7 +7,8 @@ interface PriceProps {
 }
 
 function Price({ price, maxQuantity, shippingFees, quantity, handleQuantityChange }: PriceProps) {
-  
+  console.log('\tPrice 렌더링');
+
   return (
     <>
       <h2>수량 선택</h2>
