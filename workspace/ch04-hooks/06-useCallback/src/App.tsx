@@ -1,9 +1,10 @@
 import Price from "@/Price";
 import Product from "@/Product";
 import Shipping from "@/Shipping";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 function App(){
+  console.log('App 렌더링');
   const data = {
     _id: 1,
     price: 135000,
@@ -17,6 +18,8 @@ function App(){
   
   // App 에서 quantity를 관리해야 다른 자식 컴포넌트에서 사용 가능
   const [ quantity, setQuantity ] = useState(1);
+
+  const shippingPrice = data.shippingFees * Math.ceil(quantity/5);
   
   // const fees = data.shippingFees * Math.ceil(quantity/5);
 
@@ -25,14 +28,9 @@ function App(){
     setQuantity(Number(e.target.value));
   };
 
-  const handlePayment = () => {
-    const productPrice = data.price * quantity;
-    const shippingPrice = data.shippingFees * Math.ceil(quantity/5);
-    
-    const totalPrice = productPrice + shippingPrice;
-
-    alert(`총 결제 금액은 ${totalPrice.toLocaleString()}입니다. 결제하시겠습니까?`);
-  };
+  const handlePayment = useCallback(() => {
+    alert(`총 결제 금액은 ${ shippingPrice.toLocaleString() }입니다. 결제하시겠습니까?`);
+  }, [shippingPrice]);  
 
   return(
     <>
@@ -46,8 +44,7 @@ function App(){
     quantity={ quantity }
     handleQuantityChange= { handleQuantityChange }/>
     <Shipping
-    quantity={ quantity }
-    shippingFees={ data.shippingFees }
+    fees = { shippingPrice }
     handlePayment={ handlePayment }
     />
 
