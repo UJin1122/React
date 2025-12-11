@@ -2,7 +2,7 @@ function Header(){
   console.log('\tHeader 호출됨.');
   return(
   <header>
-    <h1>01 useState - 상태 관리</h1>
+    <h1>08 customHook - useCounter 커스텀 훅 사용</h1>
   </header>
   );
 }
