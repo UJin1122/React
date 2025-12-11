@@ -22,12 +22,18 @@ function App() {
 
     const jsonRes = await res.json();
     console.log('body', jsonRes);
+
+    if(jsonRes.ok === 1){
+      setData(jsonRes.items);
+    }
   };
 
   // 컴포넌트가 마운트 된 후에 실행
   useEffect(() => {
     fetchTodo('/todolist');
   }, []); // 빈 배열을 전달해서 마운트시 한번만 호출되도록 설정
+
+  const list = data?.map(item => <li key={ item._id }>{ item.title }</li>);
 
   return (
     <>
@@ -42,9 +48,7 @@ function App() {
           
       {/* 서버에서 받은 Todo 목록을 렌더링 */}
       <ul>
-        <li>React 학습</li>
-        <li>Next.js 학습</li>
-        <li>파이널 프로젝트</li>
+        { list }
       </ul>
     </>
   );
