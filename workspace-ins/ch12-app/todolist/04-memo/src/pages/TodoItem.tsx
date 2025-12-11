@@ -10,8 +10,9 @@ interface TodoItemProps {
   deleteItem: (_id: number) => void;
 }
 
+// TODO 1. React.memo()를 사용해서 불필요한 리렌더링을 방지
 function TodoItem({ item, toggleDone, deleteItem }: TodoItemProps){
-  console.log('\t\t\t\tTodoItem 렌더링', item);
+  console.log('\t\t\tTodoItem 렌더링', item);
   return (
     <li>
       <span>{ item._id }</span>
