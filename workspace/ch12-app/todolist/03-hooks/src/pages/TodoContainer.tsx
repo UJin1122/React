@@ -1,7 +1,9 @@
+import todoReducer from "@/pages/todoReducer";
 import Todo from "@pages/Todo";
 import type { TodoItem } from "@pages/TodoItem";
-import { useState } from "react";
+import { useReducer, useRef } from "react";
 
+// TODO 2. useRef를 사용해 nextId를 만들고 할일 추가시 nextId를 사용해서 _id 값을 만들고 1씩 증가
 function TodoContainer(){
   // 샘플 목록
   const initItemList: TodoItem[] = [
@@ -11,24 +13,26 @@ function TodoContainer(){
   ];
 
   // 상태가 수정되면 자동으로 화면이 리렌더링 된다.
-  const [ itemList, setItemList ] = useState(initItemList);
+  const [ itemList, todoDispatch ] = useReducer(todoReducer, initItemList);
+
+  // 2번 정답
+  const nextId = useRef(itemList.length + 1);
 
   // 할일 추가
   const addItem = (title: string) => {
-    const item: TodoItem = { _id: itemList[itemList.length-1]?._id + 1 || 1, title, done: false };
-    setItemList([ ...itemList, item ]);
+    // _id 내용 변경
+    const item: TodoItem = { _id: nextId.current++ || 1, title, done: false };
+    todoDispatch({ type: 'ADD', value: item });
   }
 
   // 완료/미완료 처리
   const toggleDone = (_id: number) => {
-    const newItemList = itemList.map(item => item._id === _id ? { ...item, done: !item.done } : item);
-    setItemList(newItemList);
+    todoDispatch({ type: 'TOGGLE', value: { _id } });
   }
 
   // 할일 삭제
   const deleteItem = (_id: number) => {
-    const newItemList = itemList.filter(item => item._id !== _id );
-    setItemList(newItemList);
+    todoDispatch({ type: 'DELETE', value: { _id } });
   }
 
   return (
