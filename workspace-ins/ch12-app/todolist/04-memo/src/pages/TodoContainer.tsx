@@ -3,6 +3,7 @@ import type { TodoItem } from "@pages/TodoItem";
 import todoReducer from "@pages/todoReducer";
 import { useReducer, useRef } from "react";
 
+// TODO 2. useCallback() 사용해서 addItem, toggleDone, deleteItem 함수를 메모이제이션
 function TodoContainer(){
   // 샘플 목록
   const initItemList: TodoItem[] = [
