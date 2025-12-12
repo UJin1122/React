@@ -33,7 +33,7 @@ function useFetch(fetchParams: FetchParams) {
         setData(jsonRes);
         setError(null);
       }else{
-        // API 서버에서 에러를 응답 받을 경우
+        // API 서버에서 에러를 응답 받을 경우(4xx, 5xx 에러)
         throw new Error(jsonRes.message);
       }
     }catch(err){
