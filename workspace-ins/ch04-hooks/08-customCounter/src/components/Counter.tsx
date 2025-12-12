@@ -1,6 +1,5 @@
 import Button from "@/components/Button";
 import useCounter from "@/hooks/useCounter";
-import { useState } from "react";
 
 interface CounterProps {
   children: string;

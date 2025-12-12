@@ -17,14 +17,14 @@ function TodoContainer(){
   //   initItemList.push({ _id: i, title: `자바스크립트 공부 - ${i}`, done: true });
   // }
 
-  const nextId = useRef(initItemList.length + 1);
+  const nextId = useRef(initItemList.length + 1); // a123
 
   // 상태가 수정되면 자동으로 화면이 리렌더링 된다.
   const [ itemList, todoDispatch ] = useReducer(todoReducer, initItemList);
 
   // 할일 추가 
   const addItem = useCallback((title: string) => {
-    const item: TodoItem = { _id: nextId.current++, title, done: false };
+    const item: TodoItem = { _id: nextId.current++, title, done: false }; // a123
     todoDispatch({ type: 'ADD', value: item });
   }, []);
 

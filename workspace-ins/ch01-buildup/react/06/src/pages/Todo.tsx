@@ -18,7 +18,7 @@ function Todo(){
     console.log('할일 추가');
     // 데이터 갱신, itemList에 item 추가
     // num, title, done 속성을 가진 item 객체 생성
-    let lastNum = itemList[itemList.length-1]?.num ?? 0;
+    const lastNum = itemList[itemList.length-1]?.num ?? 0;
     const item = {
       num: lastNum+1,
       title,

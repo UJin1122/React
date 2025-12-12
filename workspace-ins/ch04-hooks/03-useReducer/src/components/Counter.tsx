@@ -1,5 +1,4 @@
 import Button from "@/components/Button";
-import useMyReducer from "@/hooks/useMyReducer";
 import { counterReducer } from "@/reducers";
 import { useReducer, useState } from "react";
 

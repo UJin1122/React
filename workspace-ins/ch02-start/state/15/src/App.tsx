@@ -70,7 +70,7 @@ function App() {
   function validate({ criteriaMode = 'firstError', data }: ValidateOptions = {}){
     const userInfo = data || user;
 
-    let newErrors: FormErrors = {};
+    const newErrors: FormErrors = {};
 
     // 필수 입력 체크
     if(userInfo.name.trim() === ''){

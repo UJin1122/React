@@ -1,7 +1,7 @@
 import Price from "@/Price";
 import Product from "@/Product";
 import Shipping from "@/Shipping";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 function App() {
   "use no memo"; // React Compiler에 의한 자동 메모이제이션 사용 안함

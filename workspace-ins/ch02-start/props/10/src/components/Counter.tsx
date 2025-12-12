@@ -21,7 +21,7 @@ export default function Counter(){
   return (
     <div id="counter">
       <Button type="submit" onClick={ countDown } color="red">-_-</Button>
-      <Button color="gray">0_0</Button>
+      <Button color="gray" onClick={ reset }>0_0</Button>
       <Button onClick={ countUp }>+_+</Button>
       <span>{ count }</span>
     </div>
