@@ -24,5 +24,5 @@ function TodoItem({ item, toggleDone, deleteItem }: TodoItemProps){
   );
 }
 
-export default TodoItem;
-// export default React.memo(TodoItem);
+// export default TodoItem;
+export default React.memo(TodoItem);
