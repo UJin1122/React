@@ -22,7 +22,7 @@ function TodoContainer(){
   // 상태가 수정되면 자동으로 화면이 리렌더링 된다.
   const [ itemList, todoDispatch ] = useReducer(todoReducer, initItemList);
 
-  // 할일 추가
+  // 할일 추가 
   const addItem = useCallback((title: string) => {
     const item: TodoItem = { _id: nextId.current++, title, done: false };
     todoDispatch({ type: 'ADD', value: item });
