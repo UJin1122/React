@@ -27,6 +27,8 @@ function TodoInfo() {
           <p>수정일: { data.item.updatedAt }</p>
         </div>
       }
+
+      <a href="/">목록</a>
       
     </>
   );
