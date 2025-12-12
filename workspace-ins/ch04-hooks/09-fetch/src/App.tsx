@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API_SERVER = 'https://fesdfdfp-api.koyeb.app/todo';
+const API_SERVER = 'https://fesp-api.koyeb.app/todo';
 
 // 아이템 타입
 interface Todo {
@@ -40,9 +40,15 @@ function App() {
   // 에러 메시지를 저장할 상태 (초기값: null)
   const [ error, setError ] = useState<ErrorRes | null>(null);
 
+  // 로딩 상태를 저장 (초기값: true)
+  const [ loading, setLoading ] = useState(true);
+
   // API 서버에서 할일 목록을 요청
   const fetchTodo = async (url: string) => {
     try{
+      // 로딩중 상태 표시
+      setLoading(true);
+
       const res = await fetch(API_SERVER + url);
       console.log('res', res);
 
@@ -51,19 +57,25 @@ function App() {
 
       if(jsonRes.ok === 1){ // 타입 가드
         setData(jsonRes);
+        setError(null);
       }else{
-        setError(jsonRes);
+        // API 서버에서 에러를 응답 받을 경우
+        throw new Error(jsonRes.message);
       }
     }catch(err){
-      console.error((err as Error).message);
+      // 네트워크 오류 같은 에러 발생 시
       setError(err as ErrorRes);
+      setData(null);
+    }finally{
+      // 성공, 실패 여부와 관계없이 로딩 상태를 false로 설정
+      setLoading(false);
     }
     
   };
 
   // 컴포넌트가 마운트 된 후에 실행
   useEffect(() => {
-    fetchTodo('/sdfsdf');
+    fetchTodo('/todolist?delay=2000');
   }, []); // 빈 배열을 전달해서 마운트시 한번만 호출되도록 설정
 
   const list = data?.items.map(item => <li key={ item._id }>{ item.title }</li>);
@@ -74,16 +86,14 @@ function App() {
       <h2>할일 목록</h2>
 
       {/* 로딩중일 때 로딩중 메시지 표시 */}
-      <p>로딩중...</p> 
+      { loading && <p>로딩중...</p> }
       
       {/* 에러가 있을 경우 빨간색으로 에러 메시지 표시 */}
-      { error && 
-        <p style={{color: 'red'}}>{ error.message }</p>
-      }
+      { error && <p style={{color: 'red'}}>{ error.message }</p> }
           
       {/* 서버에서 받은 Todo 목록을 렌더링 */}
       <ul>
-        { list }
+        { data && list }
       </ul>
     </>
   );
