@@ -7,9 +7,7 @@ function App() {
 
   return (
     <>
-      <TodoList />
-
-      { id && <TodoInfo /> }
+      { id ? <TodoInfo /> : <TodoList /> }
     </>
   );
 }
