@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API_SERVER = '11https://fesp-api.koyeb.app/todo';
+const API_SERVER = 'https://fesp-api.koyeb.app/todo';
 
 // 아이템 타입
 interface Todo{
@@ -30,29 +30,42 @@ function App(){
 // 서버에서 정상 응답을 받을 경우 " 로딩중 " 메세지 해제. 할일 목록 출력
 // 서버에서 에러를 응답 받을 경우 " 로딩중 " 메세지 해제. 에러 메세지 출력
 
-// Todo 목록을 저장할 상태
+// Todo 목록을 저장할 상태 (초기값: null)
 const [ data, setData ] = useState<TodoListRes | null>(null);
+
+// 에러 메세지를 저장할 상태 (초기값: null)
 const [ error, setError ] = useState<ErrorRes | null>(null);
+
+// 로딩 상태를 저장 (초기값: true)
+const [ loading, setLoading ] = useState(true);
 
 
 // API 서버에서 할일 목록을 요청
 const fetchTodo = async(url: string) => {
   try {
+    setLoading(true);
+
     const res = await fetch(API_SERVER + url);
     console.log('res', res);
 
     const jsonRes: ResData = await res.json();
     console.log('body', jsonRes);
     
-    if(jsonRes.ok === 1){
-    setData(jsonRes)
-    }else{
-      setError(jsonRes);
+    if(jsonRes.ok === 1){ // 타입 가드
+    setData(jsonRes);
+    setError(null);
+    }else{ 
+      // API 서버에서 에러를 응답받을 경우
+      throw new Error(jsonRes.message);
     }
     
-  } catch (error) {
-    console.error((error as Error).message);
+  }catch (error) {
+    // 네트워크 오류, API서버 오류
     setError(error as ErrorRes);
+    setData(null);
+  }finally{
+    // 성공, 실패 여부와 상관없이 로딩 상태를 false로 설정
+    setLoading(false);
   }
    
 };
@@ -70,14 +83,14 @@ return(
   <h2>할일 목록</h2>
 
   {/* <!-- 로딩중일 때 로딩중 메시지 표시 --> */}
-  {/* { loddig && <p>로딩중...</p> } */}
+  { loading && <p>로딩중...</p> }
   
   {/* <!-- 에러가 있을 경우 빨간색으로 에러 메시지 표시 --> */}
-  { error && <p style={{color: "red"}}>네트워크 연결 오류</p> } 
+  { error && <p style={{color: "red"}}>{ error.message }</p> } 
       
   {/* <!-- 서버에서 받은 Todo 목록을 렌더링 --> */}
   <ul>
-    { list }
+    { data && list }
   </ul>
   </>
 );
