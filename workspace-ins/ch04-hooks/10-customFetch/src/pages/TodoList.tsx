@@ -15,7 +15,7 @@ function TodoList() {
       { loading && <p>로딩중...</p> }
       
       {/* <!-- 에러가 있을 경우 빨간색으로 에러 메시지 표시 --> */}
-      { error && <p style={{color: 'red'}}>네트워크 연결 오류</p> }
+      { error && <p style={{color: 'red'}}>{ error.message }</p> }
           
       {/* <!-- 서버에서 받은 Todo 목록을 렌더링 --> */}
       <ul>
