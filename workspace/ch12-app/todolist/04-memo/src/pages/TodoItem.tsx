@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface TodoItem {
   _id: number;
   title: string;
@@ -9,7 +11,7 @@ interface TodoItemProps {
   toggleDone: (_id: number) => void;
   deleteItem: (_id: number) => void;
 }
-
+// TODO 1. React.memo()를 사용해 불필요한 리랜더링 방지
 function TodoItem({ item, toggleDone, deleteItem }: TodoItemProps){
   console.log('\t\t\t\tTodoItem 렌더링', item);
   return (
@@ -21,4 +23,4 @@ function TodoItem({ item, toggleDone, deleteItem }: TodoItemProps){
   );
 }
 
-export default TodoItem;
+export default React.memo(TodoItem);
