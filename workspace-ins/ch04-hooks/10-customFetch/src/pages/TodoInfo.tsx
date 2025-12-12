@@ -1,11 +1,11 @@
-import useFetch from "@/hooks/useFetch";
+import useAxios from "@/hooks/useAxios";
 import type { TodoInfoRes } from "@/types/todo";
 
 function TodoInfo() {
 
   const id = window.location.pathname.split('/').pop();
 
-  const { data, error, loading } = useFetch<TodoInfoRes>({ url: `/todolist/${id}` });
+  const { data, error, loading } = useAxios<TodoInfoRes>({ url: `/todolist/${id}` });
 
   return (
     <>
