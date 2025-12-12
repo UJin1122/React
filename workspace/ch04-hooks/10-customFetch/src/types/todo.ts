@@ -27,8 +27,7 @@ export interface ErrorRes{
 }
 
 // 서버의 응답
-// export type ResData = TodoListRes | ErrorRes;
-export type ResData = TodoListRes | TodoInfoRes | TodoCreateRes | ErrorRes;
+export type ResData<T extends TodoListRes | TodoInfoRes> = T | ErrorRes;
 
 
 // 할일 생성 요청 타입
@@ -39,6 +38,7 @@ export interface TodoCreateReq {
   finishAt?: string;
 }
 
+// 할일 생성 응답 타입
 export interface TodoCreateRes {
   ok: 1;
   item: Todo;

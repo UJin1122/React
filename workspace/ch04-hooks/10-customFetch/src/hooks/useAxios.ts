@@ -1,4 +1,5 @@
 import type { ErrorRes, ResData, TodoInfoRes, TodoListRes } from "@/types/todo";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const API_SERVER = 'https://fesp-api.koyeb.app/todo';
@@ -8,7 +9,7 @@ interface FetchParams {
   method?: 'GET' | 'POST';
 }
 
-function useFetch<T extends TodoInfoRes | TodoListRes>(fetchParams: FetchParams) {
+function useAxios<T extends TodoInfoRes | TodoListRes>(fetchParams: FetchParams) {
   // Todo 목록을 저장할 상태 (초기값: null)
   const [ data, setData ] = useState<T | null>(null);
 
@@ -23,10 +24,10 @@ function useFetch<T extends TodoInfoRes | TodoListRes>(fetchParams: FetchParams)
       // 로딩중 상태 표시
       setLoading(true);
 
-      const res = await fetch(API_SERVER + params.url);
+      const res = await axios.get(API_SERVER + params.url);
       console.log('res', res);
 
-      const jsonRes: ResData<T> = await res.json();
+      const jsonRes: ResData<T> = await res.data;
       console.log('body', jsonRes);
 
       if(jsonRes.ok === 1){ // 타입 가드
@@ -55,4 +56,4 @@ function useFetch<T extends TodoInfoRes | TodoListRes>(fetchParams: FetchParams)
   return { data, error, loading };
 }
 
-export default useFetch;
+export default useAxios;
