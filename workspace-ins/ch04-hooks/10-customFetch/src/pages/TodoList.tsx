@@ -1,6 +1,6 @@
 import useFetch from "@/hooks/useFetch";
 import type { TodoListRes } from "@/types/todo";
-import { ClipLoader } from "react-spinners";
+import { PacmanLoader } from "react-spinners";
 
 function TodoList() {
 
@@ -19,7 +19,7 @@ function TodoList() {
 
       {/* <!-- 로딩중일 때 로딩중 메시지 표시 --> */}
       { loading && 
-        <ClipLoader
+        <PacmanLoader
           color="gold"
           size={50}
           aria-label="Loading Spinner"
