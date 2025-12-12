@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface TodoItem {
   _id: number;
   title: string;
@@ -23,3 +25,4 @@ function TodoItem({ item, toggleDone, deleteItem }: TodoItemProps){
 }
 
 export default TodoItem;
+// export default React.memo(TodoItem);
