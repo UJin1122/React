@@ -5,6 +5,7 @@ import CurrencyRow from './components/currency/CurrencyRow';
 import ResultDisplay from './components/currency/ResultDisplay';
 import { useState } from 'react';
 import type { Currency } from '@/types';
+import { convertCurrency } from '@/utils/currency';
 
 /**
  * 환율 계산기 메인 컴포넌트
@@ -22,7 +23,24 @@ function App() {
   const [amount, setAmount] = useState('100');
   const [from, setFrom] = useState<Currency>('USD');
   const [to, setTo] = useState<Currency>('KRW');
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState<string | null>(null);
+
+  const handleConvert = async () => {
+    try{
+      const convertedAmount = await convertCurrency(Number(amount), from, to);
+      setResult(convertedAmount);
+    }catch(err){
+      console.error(err);
+      if(err instanceof Error){
+        setResult(err.message || '통화 변환에 실패했습니다.');
+      }
+    }
+  };
+
+  const handleSwap = () => {
+    setFrom(to);
+    setTo(from);
+  };
 
   return (
     <>
@@ -39,8 +57,8 @@ function App() {
         />
 
         <div className="row" style={{ marginTop: '12px' }}>
-          <Button id="convert" onClick={() => {}}>변환</Button>
-          <Button id="swap" type="button" onClick={() => {}}>↺ 교차</Button>
+          <Button id="convert" onClick={handleConvert}>변환</Button>
+          <Button id="swap" type="button" onClick={handleSwap}>↺ 교차</Button>
         </div>
 
         <ResultDisplay result={result} />

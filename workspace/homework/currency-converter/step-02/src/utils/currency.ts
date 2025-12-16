@@ -17,17 +17,27 @@ import type { Currency } from '../types';
  */
 async function convertCurrency(amount: number, from: Currency, to: Currency) {
   // https://frankfurter.dev 참고
+<<<<<<< HEAD:workspace/homework/currency-converter/step-02/src/utils/currency.ts
   if (from === to) {
     return `${amount.toLocaleString()} ${from} = ${amount.toLocaleString()} ${to}`;
   }
   const url = `https://api.frankfurter.dev/v1/latest?base=${from}&symbols=${to}`;
+=======
+  const url = `https://api.frankfurter.dev/v1/latest?base=${from}&symbols=${to}&amount=${amount}`;
+>>>>>>> 7d45b83 (환율 계산기 완료.):workspace-ins/homework/currency-converter/step-02/src/utils/currency.ts
   console.log(url);
   // TODO: 환율 계산 로직 구현
   const response = await fetch(url);
   const data = await response.json();
+<<<<<<< HEAD:workspace/homework/currency-converter/step-02/src/utils/currency.ts
   const rate = data?.rates[to];
   const converted = amount * rate;
   return `${amount.toLocaleString()} ${from} = ${converted.toLocaleString()} ${to}`;
+=======
+  console.log(data);
+  const result = Number(data.rates?.[to]).toLocaleString();
+  return data.message || `${amount.toLocaleString()} ${from} = ${result} ${to}`;
+>>>>>>> 7d45b83 (환율 계산기 완료.):workspace-ins/homework/currency-converter/step-02/src/utils/currency.ts
 }
 
 export { convertCurrency };
