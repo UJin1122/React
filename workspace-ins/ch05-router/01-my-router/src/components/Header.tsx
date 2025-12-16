@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 import MyLink from "@components/MyLink";
 
 function Header() {
-  
+
 
   return (
     <>
@@ -14,12 +13,6 @@ function Header() {
         <br/>
         <MyLink className="menu" to="page2">page2</MyLink>
       </header>
-=======
-function Header() {
-  return (
-    <>
-      
->>>>>>> d22a470 (5장 샘플 추가)
     </>
   )
 }
