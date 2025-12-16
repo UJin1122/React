@@ -18,13 +18,12 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
-      // eslint가 node_modules를 기준으로 프로젝트 루트를 인식함
+      // eslint가 node_modules를 기준으로 프로젝트 루트를 인식하므로
       // 프로젝트에서 자체 node_modules를 사용하지 않고 상위의 node_modules를 사용하도록 설정하면
-      // 하위의 여러 프로젝트에서 tsconfig 파일을 여러개 찾아내기 때문에 오류가 발생
-      // 명시적으로 프로젝트 루트를 지정해야 함.
+      // 하위의 여러 프로젝트에서 tsconfig 파일을 여러개 검색하면서 오류가 발생하므로 명시적으로 프로젝트 루트를 인식하도록 설정
       parserOptions: {
-        tsconfigRootDir: import.meta.dirname, // 현재 파일이 있는 디렉토리 경로
-      }
+        tsconfigRootDir: import.meta.dirname, // 현재 파일이 있는 디렉토리의 절대 경로
+      },
     },
   },
 ])
