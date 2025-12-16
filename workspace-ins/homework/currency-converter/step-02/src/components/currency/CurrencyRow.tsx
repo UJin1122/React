@@ -22,10 +22,10 @@ interface CurrencyRowProps {
  * KRW, USD, EUR, JPY 네 가지 통화를 제공합니다.
  */
 const CURRENCY_OPTIONS: Option[] = [
-  { value: 'KRW', label: 'KRW' },
-  { value: 'USD', label: 'USD' },
-  { value: 'EUR', label: 'EUR' },
-  { value: 'JPY', label: 'JPY' },
+  { value: 'KRW', label: '한국 원화' },
+  { value: 'USD', label: '미국 달러' },
+  { value: 'EUR', label: '유로화' },
+  { value: 'JPY', label: '일본 엔화' },
 ];
 
 /**
