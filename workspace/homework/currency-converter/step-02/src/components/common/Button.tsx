@@ -19,7 +19,11 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
  * @returns JSX.Element
  */
 function Button({ children, ...props }: ButtonProps) {
+<<<<<<< HEAD:workspace/homework/currency-converter/step-02/src/components/common/Button.tsx
   return <button { ...props }>{ children }</button>;
+=======
+  return <button {...props}>{children}</button>;
+>>>>>>> 8361eb5 (통화 변환기 과제 작업중...):workspace-ins/homework/currency-converter/step-02/src/components/common/Button.tsx
 }
 
 export default Button;

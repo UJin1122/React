@@ -23,8 +23,13 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 function Input({ label, id, ...props }: InputProps) {
   return (
     <>
+<<<<<<< HEAD:workspace/homework/currency-converter/step-02/src/components/common/Input.tsx
       <label htmlFor={ id }>{ label }</label>
       <input id={ id } { ...props } />
+=======
+      <label htmlFor={id}>{label}</label>
+      <input id={id} {...props} />
+>>>>>>> 8361eb5 (통화 변환기 과제 작업중...):workspace-ins/homework/currency-converter/step-02/src/components/common/Input.tsx
     </>
   );
 }

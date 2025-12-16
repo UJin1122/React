@@ -36,6 +36,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 function Select({ label, id, options, ...props }: SelectProps) {
   return (
     <>
+<<<<<<< HEAD:workspace/homework/currency-converter/step-02/src/components/common/Select.tsx
       <label htmlFor={ id }>{ label }</label>
 
       <select id={id} {...props}>
@@ -44,6 +45,15 @@ function Select({ label, id, options, ...props }: SelectProps) {
             {option.label}
           </option>
         ))}
+=======
+      <label htmlFor={id}>{label}</label>
+
+      <select id={id} {...props}>
+        { 
+          options.map(option => 
+            <option key={option.value} value={option.value}>{option.label}</option>) 
+        }
+>>>>>>> 8361eb5 (통화 변환기 과제 작업중...):workspace-ins/homework/currency-converter/step-02/src/components/common/Select.tsx
       </select>
     </>
   );

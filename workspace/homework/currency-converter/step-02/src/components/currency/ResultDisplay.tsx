@@ -16,7 +16,11 @@ interface ResultDisplayProps {
  * @returns JSX.Element
  */
 function ResultDisplay({ result }: ResultDisplayProps) {
+<<<<<<< HEAD:workspace/homework/currency-converter/step-02/src/components/currency/ResultDisplay.tsx
   return <div className="result" id="result">{ result ?? ' 변환 버튼을 눌러주세요 '}</div>;
+=======
+  return <div className="result" id="result">결과: {result || '???'}</div>;
+>>>>>>> 8361eb5 (통화 변환기 과제 작업중...):workspace-ins/homework/currency-converter/step-02/src/components/currency/ResultDisplay.tsx
 }
 
 export default ResultDisplay;
