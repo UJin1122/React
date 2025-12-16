@@ -1,5 +1,4 @@
 import Home from "@pages/Home";
-<<<<<<< HEAD
 import './App.css';
 import { useEffect, useState } from "react";
 import Page1 from "@pages/Page1";
@@ -43,13 +42,6 @@ function App(){
   return (
     <>
       { renderComponent() }
-=======
-
-function App(){
-  return (
-    <>
-      <Home />
->>>>>>> d22a470 (5장 샘플 추가)
     </>
   );
 }
