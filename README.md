@@ -3,7 +3,7 @@
 
 # 1. 목차
 
-## 1장 리액트 빌드업 
+## 1장 리액트 빌드업
 - [ch01-buildup](./workspace-ins/ch01-buildup)
 
 ## 2장 리액트 시작하기
@@ -349,10 +349,12 @@
       
 #### 과제
 ```
-## 주말 과제: 환율 변환기 앱 개발
+## 주말 과제: 환율 변환기 앱 개발 step-01
+- 과제 폴더 생성
+  - workspace/homework/currency-converter 폴더 생성
 - vite 프로젝트 생성
-  - vite-template 폴더 복사해서 workspace/homework 폴더에 복사한 후 currency-converter로 폴더명 변경(workspace/homework/currency-converter)
-- https://github.com/FEBC-15/react/blob/main/sample/homework/currency-converter/index.html 파일 참고해서 App.tsx에 화면 구현
+  - vite-template 폴더를 workspace/homework/currency-converter 폴더에 복사한 후 step-01로 폴더명 변경(workspace/homework/currency-converter/step-01)
+- https://github.com/FEBC-15/react/blob/main/sample/homework/currency-converter/step-01/index.html 파일 참고해서 App.tsx에 화면 구현
 - 가능하다면 실제 기능 구현에 도전!!!
 ```
 
@@ -367,6 +369,9 @@
 <summary><h3>9일차(2025.12.08 월)</h3></summary>
 
 #### 오전(3시간)
+* 주말 과제 풀이: 환율 변환기 앱 개발 step-01
+  - 💻 [환율 변환기 step-01](./workspace-ins/homework/currency-converter/step-01)
+
 * 🔊 [3장 클래스 컴포넌트와 컴포넌트의 라이프 사이클](./workspace-ins/ch03-class#3장-클래스-컴포넌트와-컴포넌트의-라이프-사이클)
   - 💻 [01 클래스 컴포넌트](./workspace-ins/ch03-class/01-classbase)
     + workspace/vite-template 폴더 복사해서 workspace/ch03-class/01-classbase 폴더 생성
@@ -517,10 +522,16 @@
 <summary><h3>14일차(2025.12.16 화)</h3></summary>
 
 #### 오전(3시간)
-
+* 주말 과제 풀이: 환율 변환기 앱 개발 step-02
+  - 💻 [환율 변환기 step-02](./workspace-ins/homework/currency-converter/step-02)
 
 #### 오후(3시간)
-
+* 🔊 [5장 리액트 라우터](./workspace-ins/ch05-router#5장-리액트-라우터)
+  * 🔊 [1. 클라이언트 측 라우팅이란?](./workspace-ins/ch05-router#1-클라이언트-측-라우팅이란)
+    - 💻 [01 클라이언트 라우팅 직접 구현](./workspace-ins/ch05-router/01-my-router)
+  * 🔊 [2. 리액트 라우터란?](./workspace-ins/ch05-router#2-리액트-라우터란)
+  * 🔊 [3. 리액트 라우터가 제공하는 라우터](./workspace-ins/ch05-router#3-리액트-라우터가-제공하는-라우터)
+    - 💻 [02 리액트 라우터 사용](./workspace-ins/ch05-router/02-react-router)
 
 </details>
 

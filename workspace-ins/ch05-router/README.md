@@ -529,7 +529,13 @@ const router = createBrowserRouter([
   ```
 
 ## 6.3 useMatch
+* useMatch(pattern)
+* pattern은 url 문자열이거나 다음 속성을 가진 객체를 지정
+  - caseSensitive?: boolean; // 대소문자 일치 여부. 기본 false
+  - end?: boolean; // true(기본값): url 전체 일치, false: 전방 일치
+  - path: Path; / url 경로
 * 현재 요청된 URL 경로가 인자로 전달한 경로 패턴과 매칭되는지 확인 후 PathMatch 객체를 반환
+* 현재 컴포넌트가 지정한 url에서 렌더링 되고 있는지 여부 확인에 사용
 * 일치하면 PathMatch 객체를 반환하고, 일치하지 않으면 `null`을 반환
 * PathMatch의 속성
   - params: URL 파라미터
@@ -557,7 +563,7 @@ const router = createBrowserRouter([
           <div>수정일 : 2025.06.16 13:45:12</div>
           { infoMatch && // 상세보기 화면에서만 노출
             <>
-              <Link to={`/todo/list/${id}/edit`}>수정</Link>
+              <Link to={`/todo/list/${id}/edit`}>저장</Link>
               <Link to="/todo/list">목록</Link>
             </>
           }   
@@ -632,10 +638,10 @@ const router = createBrowserRouter([
       navigate(-1);
     };
 
-    const handleSave = async () => {
-      // 저장 로직...
-      // 저장 후 홈으로 이동 (state 전달)
-      navigate('/', { state: { from: '/todo/list', message: '저장되었습니다.' } });
+    const handleSave = () => {
+      // 수정 로직...
+      // 수정 후 목록으로 이동 (state 전달)
+      navigate('/todo/list', { state: { from: 'edit', message: '수정되었습니다.' } });
     };
     
     return (
