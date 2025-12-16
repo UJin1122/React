@@ -1,6 +1,8 @@
 import Home from "@pages/Home";
 import './App.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Page1 from "@pages/Page1";
+import Page2 from "@pages/Page2";
 
 function App(){
 
@@ -15,11 +17,26 @@ function App(){
     setCurrentPath(newPath);
   };
 
-  window.addEventListener('popstate', handleLocationChange);
+  useEffect(() => { // setup(마운트 후에 호출)
+    window.addEventListener('popstate', handleLocationChange);
+    return () => { // cleanup(언마운트시에 호출)
+      // 컴포넌트가 언마운트되면 이벤트 핸들러 제거
+      window.removeEventListener('popstate', handleLocationChange);
+    };
+  }, []); // 빈 배열로 지정해서 마운트에만 호출
 
   // url에 맞는 컴포넌트를 반환
   const renderComponent = () => {
-
+    switch(currentPath){
+      case '/home':
+        return <Home />;
+      case '/page1':
+        return <Page1 />;
+      case '/page2':
+        return <Page2 />;
+      default:
+        return <p>404 에러</p>;
+    }
   };
 
   return (
