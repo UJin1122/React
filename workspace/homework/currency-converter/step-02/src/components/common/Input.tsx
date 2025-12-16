@@ -13,23 +13,18 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 /**
  * 공통 Input 컴포넌트
- * 
+ *
  * 재사용 가능한 입력 필드 컴포넌트입니다.
  * 레이블과 함께 input 요소를 렌더링합니다.
- * 
+ *
  * @param props - InputProps
  * @returns JSX.Element
  */
 function Input({ label, id, ...props }: InputProps) {
   return (
     <>
-<<<<<<< HEAD:workspace/homework/currency-converter/step-02/src/components/common/Input.tsx
       <label htmlFor={ id }>{ label }</label>
       <input id={ id } { ...props } />
-=======
-      <label htmlFor={id}>{label}</label>
-      <input id={id} {...props} />
->>>>>>> 8361eb5 (통화 변환기 과제 작업중...):workspace-ins/homework/currency-converter/step-02/src/components/common/Input.tsx
     </>
   );
 }

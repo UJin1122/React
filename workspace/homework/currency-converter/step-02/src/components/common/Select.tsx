@@ -26,17 +26,16 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 
 /**
  * 공통 Select 컴포넌트
- * 
+ *
  * 재사용 가능한 드롭다운 select 컴포넌트입니다.
  * 레이블과 함께 옵션 목록을 표시하는 select 요소를 렌더링합니다.
- * 
+ *
  * @param props - SelectProps
  * @returns JSX.Element
  */
 function Select({ label, id, options, ...props }: SelectProps) {
   return (
     <>
-<<<<<<< HEAD:workspace/homework/currency-converter/step-02/src/components/common/Select.tsx
       <label htmlFor={ id }>{ label }</label>
 
       <select id={id} {...props}>
@@ -45,15 +44,6 @@ function Select({ label, id, options, ...props }: SelectProps) {
             {option.label}
           </option>
         ))}
-=======
-      <label htmlFor={id}>{label}</label>
-
-      <select id={id} {...props}>
-        { 
-          options.map(option => 
-            <option key={option.value} value={option.value}>{option.label}</option>) 
-        }
->>>>>>> 8361eb5 (통화 변환기 과제 작업중...):workspace-ins/homework/currency-converter/step-02/src/components/common/Select.tsx
       </select>
     </>
   );
