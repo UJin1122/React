@@ -18,8 +18,13 @@ const router = createBrowserRouter([
     children: [
       { path: 'list', element: <TodoList /> },
       { path: 'add', element: <TodoAdd /> },
-      { path: 'info', element: <TodoInfo /> },
-      { path: 'edit', element: <TodoEdit /> },
+      { 
+        path: 'list/:_id', // 동적 세그먼트 지정. _id는 useParams() 훅으로 꺼낼 수 있음
+        element: <TodoInfo />, 
+        children: [
+          { path: 'edit', element: <TodoEdit /> },
+        ]
+      },
     ]
   },
 ]);

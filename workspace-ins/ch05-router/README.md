@@ -100,7 +100,7 @@ npm i react-router
 - createHashRouter를 사용하면 URL이 `http://example.com/#/home` 형태로 표시됨
 
 ### 사용 예시
-* routes.tsx
+* routes-hash.tsx
   ```tsx
   import { createHashRouter } from "react-router";
   import Home from "@pages/Home";
@@ -640,14 +640,14 @@ const router = createBrowserRouter([
 
     const handleSave = () => {
       // 수정 로직...
-      // 수정 후 목록으로 이동 (state 전달)
-      navigate('/todo/list', { state: { from: 'edit', message: '수정되었습니다.' } });
+      // 수정 후 상세 페이지로 이동 (state 전달)
+      navigate('/todo/list/3', { state: { from: 'edit', message: '수정되었습니다.' } });
     };
     
     return (
       <div>
-        <button onClick={handleSave}>저장</button>
-        <button onClick={handleCancel}>취소</button>
+        <button type="button" onClick={handleSave}>저장</button>
+        <button type="button" onClick={handleCancel}>취소</button>
       </div>
     );
   }
@@ -660,30 +660,26 @@ const router = createBrowserRouter([
 * pathname: 현재 요청된 경로
 * search: 쿼리 문자열
 * state: navigate()로 이동할 때 전달된 state 객체
-* `location.state`는 `navigate()`의 `state` 옵션으로 전달한 데이터. 페이지를 새로고침하면 `state`는 사라짐
+* `location.state`는 `navigate()`의 `state` 옵션으로 전달한 데이터
 
 ### 사용 예시
-* TodoList.tsx
+* TodoInfo.tsx
   ```tsx
   import { useLocation } from 'react-router';
 
-  function TodoList() {
+  function TodoInfo() {
     const location = useLocation();
     
     // navigate()로 전달한 state 접근
     const state = location.state;
     const message = state?.message;
-    
-    // 현재 경로 정보
-    console.log('state:', state);
-    console.log('message:', message);
-    console.log('pathname:', location.pathname); // '/todo/list'
-    console.log('search:', location.search);     // '?page=2&keyword=react'
-    console.log('hash:', location.hash);         // '#section1'
-    
+    console.log('state', state);
+    console.log('message', message);
+
     return (
-      <div>
-        {message && <div className="alert">{message}</div>}
+      <div id="main">
+        <h2>할일 상세 보기</h2>
+        { message && <p>{ message }</p> }
         {/* ... */}
       </div>
     );
@@ -715,6 +711,7 @@ const router = createBrowserRouter([
     return (
       <>
         <h2>할일 상세 보기</h2>
+        {/* ... */}
         <Outlet context={{ item }} />
       </>
     );
@@ -725,13 +722,19 @@ const router = createBrowserRouter([
   ```tsx
   import { useOutletContext } from 'react-router';
   
+  interface OutletContextProps {
+    item: TodoItem;
+  }
+
   function TodoEdit() {
-    const { item } = useOutletContext();
+    const { item } = useOutletContext<OutletContextProps>();
     
     return (
       <div>
         <h2>할일 수정</h2>
-        <p>제목: {item.title}</p>
+        <label htmlFor="title">제목 :</label>
+        <input type="text" id="title" value={ item.title } autoFocus />
+        {/* ... */}
       </div>
     );
   }
@@ -744,7 +747,7 @@ const router = createBrowserRouter([
 * React의 `lazy()` 함수와 동적 import를 사용하면 해당 컴포넌트가 별도의 청크 파일로 분리되어 필요할 때만 로드됨
 
 ### 사용 예시
-* routes.tsx
+* routes-lazy.tsx
   ```tsx
   import { lazy } from "react";
   import { createBrowserRouter, Navigate } from "react-router";
@@ -780,65 +783,130 @@ const router = createBrowserRouter([
 * fallback 속성을 이용해서 대체 UI를 지정
 
 ### 사용 예시
-* App.tsx
+* routes-lazy.tsx
   ```tsx
-  import { Suspense } from "react";
-  import { RouterProvider } from "react-router/dom";
-  import router from "./routes";
-
-  function App() {
-    return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <RouterProvider router={router} />
-      </Suspense>
-    );
-  }
-
-  export default App;
+  { path: '/home', element: <Suspense key="home" fallback={<div>로딩중...</div>}><Home /></Suspense> },
+  { path: '/page1', element: <Suspense key="page1" fallback={<div>로딩중...</div>}><Page1 /></Suspense> },
+  { path: '/page2', element: <Suspense key="page2" fallback={<div>로딩중...</div>}><Page2 /></Suspense> }
   ```
 
 # 9. 데이터 로딩 및 액션
-* Data Mode에서 제공하는 `loader`와 `action` 기능을 통해 서버와의 데이터 통신을 처리할 수 있습니다
+* Data Mode에서 제공하는 `loader`와 `action` 기능을 통해 서버와의 데이터 통신을 처리
 
 ## 9.1 데이터 로딩 (loader)
 * Data Mode에서 라우트가 렌더링되기 전에 데이터를 로드하는 함수
 * 비동기 함수로 작성하며, 반환값은 `useLoaderData` hook을 통해 접근 가능
 * 라우트 객체의 `loader` 속성에 함수를 지정
 
-### 사용 예시
-* routes.tsx
-  ```tsx
-  import { createBrowserRouter } from "react-router";
-  import TodoList from "@pages/TodoList";
+### loader 함수의 매개변수
+* `loader` 함수는 `LoaderFunctionArgs` 객체를 매개변수로 받음
+* `LoaderFunctionArgs` 객체의 주요 속성:
+  - `request`: 현재 요청에 대한 `Request` 객체 (URL, 헤더, 쿼리 파라미터 등 접근 가능)
+  - `params`: URL 파라미터 객체 (예: `/todos/:_id`에서 `_id` 값은 `params._id`로 사용)
+  - `context`: 라우터에 전달된 컨텍스트 데이터 (선택적)
 
-  async function loadTodos() {
-    const response = await fetch('/api/todos');
-    if (!response.ok) {
-      throw new Response('데이터를 불러올 수 없습니다.', { status: 500 });
+### 사용 예시
+* todo.ts
+  ```tsx
+  // 할일 목록 조회
+  export async function getTodoList(): Promise<TodoListRes> {
+    try{
+      const res = await fetch(`${API_URL}/todolist`);
+      console.log('getTodoList', res);
+      return res.json();
+    }catch(error){ // 네트워크 오류 처리
+      console.error(error);
+      throw new Error('일시적인 네트워크 문제가 발생했습니다. 잠시후 다시 이용해 주시기 바랍니다.');
     }
-    return response.json();
   }
 
-  const router = createBrowserRouter([
-    {
-      path: '/todos',
-      element: <TodoList />,
-      loader: loadTodos
+  // 할일 상세 조회
+  export async function getTodoInfo(_id: number): Promise<TodoInfoRes> {
+    try{
+      const res = await fetch(`${API_URL}/todolist/${_id}`);
+      console.log('getTodoInfo', res);
+      return res.json();
+    }catch(error){ // 네트워크 오류 처리
+      console.error(error);
+      throw new Error('일시적인 네트워크 문제가 발생했습니다. 잠시후 다시 이용해 주시기 바랍니다.');
     }
-  ]);
+  }
   ```
 
+* routes.tsx
+  ```tsx
+  const router = createBrowserRouter([
+    { path: 'list', element: <TodoList />, loader: getTodoList },
+    { 
+      path: 'list/:_id', 
+      element: <TodoInfo />,
+      loader: ({ params }) => getTodoInfo(Number(params._id)),
+      children: [
+        { path: 'edit', element: <TodoEdit /> }
+      ]
+    },
+  ]);
+  ```
+## 9.2 useLoaderData
+* Data Mode에서 라우트의 `loader` 함수가 반환한 데이터에 접근할 때 사용
+* `loader`는 라우트가 렌더링되기 전에 실행되어 데이터를 준비함
+
+### 사용 예시
 * TodoList.tsx
   ```tsx
   import { useLoaderData } from 'react-router';
 
   function TodoList() {
-    const todos = useLoaderData();
+    const data = useLoaderData<TodoListRes>();
     // ...
   }
   ```
 
-## 9.2 액션 (action)
+* TodoInfo.tsx
+  ```tsx
+  import { useLoaderData } from 'react-router';
+
+  function TodoInfo() {
+    const data = useLoaderData<TodoInfoRes>();
+    // ...
+  }
+  ```
+
+## 9.3 useNavigation
+* Data Mode에서 현재 네비게이션 상태를 확인할 때 사용
+* `state` 속성으로 `idle`, `loading`, `submitting` 상태를 확인 가능
+* `formData`, `formMethod` 등 폼 제출 정보도 확인 가능
+
+### useNavigation 반환 객체의 속성
+* `useNavigation()`은 네비게이션 상태를 담은 객체를 반환
+* 반환 객체의 주요 속성:
+  - `state`: 현재 네비게이션 상태
+    * `idle`: 네비게이션이 진행되지 않음
+    * `loading`: 라우트 전환 중 (loader가 실행 중)
+    * `submitting`: 폼 제출 중 (action이 실행 중)
+  - `location`: 현재 네비게이션 중인 `Location` 객체 (전환 중인 경로 정보)
+  - `formData`: 폼 제출 시 전달된 `FormData` 객체 (폼 제출이 아닌 경우 `undefined`)
+  - `formMethod`: 폼 제출 메서드 (`'get'`, `'post'`, `'put'`, `'patch'`, `'delete'` 중 하나, 폼 제출이 아닌 경우 `undefined`)
+  - `formAction`: 폼이 제출되는 URL (폼 제출이 아닌 경우 `undefined`)
+
+### 사용 예시
+* Layout.tsx
+  ```tsx
+  function Layout() {
+    const navigation = useNavigation();
+    const isLoading = navigation.state === "loading";
+
+    return (
+      <div className="todoapp">
+        <Header />
+        { isLoading ? <div> 로딩 중... </div> : <Outlet /> }
+        <Footer />
+      </div>
+    );
+  }
+  ```
+
+## 9.4 액션 (action)
 * Data Mode에서 폼 제출이나 뮤테이션을 처리하는 함수
 * `Form` 컴포넌트의 제출을 처리하며, 반환값은 `useActionData` hook을 통해 접근 가능
 * 라우트 객체의 `action` 속성에 함수를 지정
@@ -901,9 +969,9 @@ const router = createBrowserRouter([
   }
   ```
 
-## 9.3 Form 컴포넌트
+## 9.5 Form 컴포넌트
 * Data Mode에서 제공하는 폼 컴포넌트
-* 기본 HTML `<form>`과 유사하지만, React Router의 액션과 통합되어 사용됨
+* 기본 HTML `<form>`과 유사하지만, React Router의 `action`과 통합되어 사용됨
 * `action` 속성으로 라우트의 `action` 함수를 호출
 * 제출 시 자동으로 `useNavigation`의 `state`가 업데이트되어 pending 상태 관리 가능
 
@@ -925,50 +993,7 @@ const router = createBrowserRouter([
   export default TodoForm;
   ```
 
-## 9.4 useLoaderData
-* Data Mode에서 라우트의 `loader` 함수가 반환한 데이터에 접근할 때 사용
-* `loader`는 라우트가 렌더링되기 전에 실행되어 데이터를 준비함
-
-### 사용 예시
-* routes.tsx
-  ```tsx
-  import { createBrowserRouter } from "react-router";
-  import TodoList from "@pages/TodoList";
-
-  async function loadTodos() {
-    const response = await fetch('/api/todos');
-    return response.json();
-  }
-
-  const router = createBrowserRouter([
-    {
-      path: '/todos',
-      element: <TodoList />,
-      loader: loadTodos
-    }
-  ]);
-  ```
-
-* TodoList.tsx
-  ```tsx
-  import { useLoaderData } from 'react-router';
-
-  function TodoList() {
-    const todos = useLoaderData(); // loadTodos()의 반환값
-    
-    return (
-      <div>
-        {todos.map(todo => (
-          <div key={todo.id}>{todo.title}</div>
-        ))}
-      </div>
-    );
-  }
-
-  export default TodoList;
-  ```
-
-## 9.5 useActionData
+## 9.6 useActionData
 * Data Mode에서 라우트의 `action` 함수가 반환한 데이터에 접근할 때 사용
 * 폼 제출 후 `action` 함수의 반환값을 받아서 처리할 때 사용
 
@@ -1010,33 +1035,6 @@ const router = createBrowserRouter([
           <button type="submit">저장</button>
         </Form>
       </div>
-    );
-  }
-
-  export default TodoForm;
-  ```
-
-## 9.6 useNavigation
-* Data Mode에서 현재 네비게이션 상태를 확인할 때 사용
-* `state` 속성으로 `idle`, `loading`, `submitting` 상태를 확인 가능
-* `formData`, `formMethod` 등 폼 제출 정보도 확인 가능
-
-### 사용 예시
-* TodoForm.tsx
-  ```tsx
-  import { Form, useNavigation } from 'react-router';
-
-  function TodoForm() {
-    const navigation = useNavigation();
-    const isSubmitting = navigation.state === 'submitting';
-    
-    return (
-      <Form method="post">
-        <input type="text" name="title" disabled={isSubmitting} />
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? '저장 중...' : '저장'}
-        </button>
-      </Form>
     );
   }
 
@@ -1093,47 +1091,48 @@ const router = createBrowserRouter([
 ## 폴더 구조
 ```
 src/
-├── components/          # 재사용 가능한 컴포넌트
-│   ├── common/          # 공통 컴포넌트
-│   │   ├── Header.tsx
-│   │   ├── Footer.tsx
-│   │   └── Layout.tsx
-│   ├── ui/              # UI 컴포넌트
-│   │   ├── Button.tsx
-│   │   └── Modal.tsx
-├── pages/               # 페이지 컴포넌트
-│   ├── home/
-│   │   ├── Home.tsx
-│   │   └── About.tsx
-│   ├── auth/
-│   │   ├── Login.tsx
-│   │   ├── Register.tsx
-│   ├── todo/
-│   │   ├── TodoList.tsx
-│   │   ├── TodoInfo.tsx
-│   │   ├── TodoEdit.tsx
-│   └── error/
-│       ├── NotFound.tsx
-│       └── ErrorPage.tsx
-├── routes/              # 라우팅 설정
-│   ├── index.ts         # 메인 라우터
-│   ├── authRoutes.ts    # 인증 관련 라우트
-│   ├── todoRoutes.ts    # Todo 관련 라우트
-│   └── adminRoutes.ts   # 관리자 라우트
-├── contexts/            # Context API
-│   ├── AuthContext.tsx
-│   └── ThemeContext.tsx
-├── hooks/               # 커스텀 훅
-│   ├── useAxios.ts
-│   ├── useAuth.ts
-│   └── useLocalStorage.ts
-├── utils/               # 유틸리티 함수
-│   ├── api.ts
-│   └── constants.ts
-├── types/               # 타입 정의
-│   ├── auth.ts
-│   ├── todo.ts
-│   └── routes.ts
-└── App.tsx
+├── api/                  # API 호출 함수
+│   ├── auth.ts             # 인증 관련 API 함수 (로그인, 로그아웃, 회원가입 등)
+│   ├── todo.ts             # Todo 관련 API 함수 (CRUD 작업)
+│   └── user.ts             # 사용자 관련 API 함수 (프로필 조회, 수정 등)
+├── components/           # 재사용 가능한 컴포넌트
+│   ├── common/             # 공통 컴포넌트
+│   │   ├── Footer.tsx        # 푸터 컴포넌트
+│   │   ├── Header.tsx        # 헤더 컴포넌트
+│   │   └── Layout.tsx        # 레이아웃 컴포넌트 (Header, Footer, Outlet 포함)
+│   ├── ui/                 # UI 컴포넌트
+│   │   ├── Button.tsx        # 버튼 컴포넌트
+│   │   └── Modal.tsx         # 모달 컴포넌트
+├── hooks/                # 커스텀 훅
+│   ├── useAuth.ts          # 인증 관련 커스텀 훅
+│   ├── useAxios.ts         # API 클라이언트 설정 (axios/fetch 인스턴스)
+│   └── useLocalStorage.ts  # 로컬 스토리지 관련 커스텀 훅
+├── pages/                # 페이지 컴포넌트
+│   ├── auth/               # 인증 관련 페이지
+│   │   ├── Login.tsx         # 로그인 페이지
+│   │   └── Register.tsx      # 회원가입 페이지
+│   ├── error/              # 에러 페이지
+│   │   ├── ErrorPage.tsx     # 일반 에러 페이지
+│   │   └── NotFound.tsx      # 404 페이지
+│   ├── home/               # 홈 관련 페이지
+│   │   ├── About.tsx         # 소개 페이지
+│   │   └── Home.tsx          # 홈 페이지
+│   └── todo/               # Todo 관련 페이지
+│       ├── TodoEdit.tsx      # Todo 수정 페이지
+│       ├── TodoInfo.tsx      # Todo 상세 페이지
+│       └── TodoList.tsx      # Todo 목록 페이지
+├── routes/               # 라우팅 설정
+│   ├── adminRoutes.ts      # 관리자 라우트
+│   ├── authRoutes.ts       # 인증 관련 라우트
+│   ├── index.ts            # 메인 라우터 (모든 라우트 통합)
+│   └── todoRoutes.ts       # Todo 관련 라우트
+├── types/                # 타입 정의
+│   ├── auth.ts             # 인증 관련 타입 정의
+│   ├── routes.ts           # 라우트 관련 타입 정의
+│   └── todo.ts             # Todo 관련 타입 정의
+├── utils/                # 유틸리티 함수
+│   ├── api.ts              # API 관련 유틸리티 (인터셉터, 헬퍼 함수 등)
+│   └── constants.ts        # 상수 정의
+└── App.tsx               # 루트 컴포넌트
 ```
 
