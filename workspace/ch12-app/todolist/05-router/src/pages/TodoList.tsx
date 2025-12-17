@@ -20,6 +20,7 @@ function TodoList() {
     }]
   };
 
+  
   const list = dummyData.items.map(item => <TodoListItem key={item._id} item={item} />);
 
   return (

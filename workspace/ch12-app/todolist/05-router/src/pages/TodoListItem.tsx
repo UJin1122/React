@@ -10,7 +10,7 @@ function TodoListItem({ item }:TodoListItemProps) {
     <ul className="todolist">
       <li>
         <span>{ item._id }</span>
-        <NavLink to="/todo/info"><s>{ item.title }</s></NavLink>
+        <NavLink to={`/todo/info/${item._id}`}><s>{ item.title }</s></NavLink>
         <NavLink to="/todo/list">삭제</NavLink>
       </li>
     </ul>
