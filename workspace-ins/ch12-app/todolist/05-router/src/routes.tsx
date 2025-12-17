@@ -16,13 +16,12 @@ const router = createBrowserRouter([
     path: '/todo',
     element: <Layout />,
     children: [
-      { path: 'todolist', element: <TodoList /> },
-      { path: 'todoadd', element: <TodoAdd /> },
-      { path: 'todoinfo', element: <TodoInfo /> },
-      { path: 'todoedit', element: <TodoEdit /> },
+      { path: 'list', element: <TodoList /> },
+      { path: 'add', element: <TodoAdd /> },
+      { path: 'info', element: <TodoInfo /> },
+      { path: 'edit', element: <TodoEdit /> },
     ]
-  }, 
-  
+  },
 ]);
 
 export default router;
