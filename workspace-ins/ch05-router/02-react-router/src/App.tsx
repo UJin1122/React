@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useState } from 'react';
 import Home from '@pages/Home';
 import Page1 from '@pages/Page1';
@@ -50,8 +51,23 @@ function App() {
   return (
     <>
       {renderComponent()}
+=======
+import router from '@/routes';
+// import router from '@/routes-hash';
+import './App.css';
+import { RouterProvider } from 'react-router';
+
+function App(){
+  return (
+    <>
+      <RouterProvider router={router} />
+>>>>>>> upstream/main
     </>
   );
 }
 
+<<<<<<< HEAD
 export default App;
+=======
+export default App;
+>>>>>>> upstream/main
