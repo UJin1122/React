@@ -1,5 +1,3 @@
-import Header from "@components/Header";
-
 function Home() {
 <<<<<<< HEAD
 =======
@@ -7,7 +5,6 @@ function Home() {
 >>>>>>> upstream/main
   return (
     <>
-      <Header />
       <h2>SPA Home</h2>
     </>
 <<<<<<< HEAD
