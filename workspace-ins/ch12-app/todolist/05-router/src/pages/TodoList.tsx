@@ -1,11 +1,12 @@
 import TodoListItem from "@/pages/TodoListItem";
+import { Link } from "react-router";
 
 function TodoList() {
   return (
     <div id="main">
       <h2>할일 목록</h2>
       <div className="todo">
-        <a href="./todoadd.html">추가</a>
+        <Link to="/todo/add">추가</Link>
         <br />
         <form className="search">
           <input type="text" autoFocus />
