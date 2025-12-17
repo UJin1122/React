@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import About from "@/pages/About";
+import ErrorPage from "@/pages/ErrorPage";
 import Home from "@/pages/Home";
 import TodoAdd from "@/pages/TodoAdd";
 import TodoEdit from "@/pages/TodoEdit";
@@ -15,7 +16,9 @@ const router = createBrowserRouter([
   {
     path: '/todo',
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
+      { index: true, element: <TodoList /> }, // index 라우트: URL이 부모 라우트의 URL 까지만 일치할 경우 기본으로 렌더링 될 자식 라우트 지정
       { path: 'list', element: <TodoList /> },
       { path: 'add', element: <TodoAdd /> },
       { 

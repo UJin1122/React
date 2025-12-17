@@ -28,12 +28,12 @@ function TodoInfo() {
         <div>상태 : { data.done ? '완료' : '미완료' }</div>
         <div>작성일 : { data.createdAt }</div>
         <div>수정일 : { data.updatedAt }</div>
-        <Link to="/todo/edit">수정</Link>
+        <Link to={`/todo/list/${_id}/edit`}>수정</Link>
         <Link to="/todo/list">목록</Link>
       </div>
 
       <Outlet />
-      
+
     </div>
   );
 }

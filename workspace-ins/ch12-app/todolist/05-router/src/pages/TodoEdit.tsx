@@ -1,6 +1,9 @@
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 
 function TodoEdit() {
+  
+  const { _id } = useParams();
+
   return (
     <>
       <h2>할일 수정</h2>
@@ -15,8 +18,8 @@ function TodoEdit() {
           <label htmlFor="done">완료 :</label>
           <input type="checkbox" id="done" checked />
           <br />
-          <Link to="/todo/info">저장</Link>
-          <Link to="/todo/info">취소</Link>
+          <Link to={`/todo/list/${_id}`}>저장</Link>
+          <Link to={`/todo/list/${_id}`}>취소</Link>
         </form>
       </div>
     </>
