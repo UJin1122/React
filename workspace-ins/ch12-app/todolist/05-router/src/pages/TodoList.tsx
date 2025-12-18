@@ -23,6 +23,8 @@ const dummyData = {
 
 function TodoList() {
 
+  console.log('TodoList 렌더링');
+
   // url의 쿼리스트링 관리
   const [ searchParams, setSearchParams ] = useSearchParams();
 

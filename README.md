@@ -568,7 +568,9 @@
     - 4. useLocation(): 요청된 URL 정보를 담고 있는 location 객체 반환
 
 #### 오후(3시간)
-
+* 12장 앱 개발 - 12-1 Todo List
+  - 💻 [05 리액트 라우터 적용](./workspace-ins/ch12-app/todolist/05-router)
+    - 1. useOutletContect(): 중첩 라우팅에서 부모가 Outlet 컴포넌트의 context 속성으로 전달한 값을 자식 컴포넌트에서 꺼냄
 
 </details>
 

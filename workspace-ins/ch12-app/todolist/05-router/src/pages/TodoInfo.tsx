@@ -45,7 +45,8 @@ function TodoInfo() {
         
       </div>
 
-      <Outlet />
+      {/* 중첩된 라우트의 컴포넌트를 표시하고 할일 정보를 전달 */}
+      <Outlet context={{ item: data }} />
 
     </div>
   );
