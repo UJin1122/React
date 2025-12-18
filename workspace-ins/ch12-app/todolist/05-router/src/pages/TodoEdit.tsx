@@ -21,7 +21,7 @@ function TodoEdit() {
           <input type="checkbox" id="done" checked />
           <br />
           <button type="button" onClick={ () => navigate(-1) }>저장</button>
-          <button type="reset" onClick={ () => navigate(`/todo/list/${_id}`) }>취소</button>
+          <button type="reset" onClick={() => navigate(`/todo/list/${_id}`, {state:{from:'edit', message:'수정 취소'}})}>취소</button>
         </form>
       </div>
     </>

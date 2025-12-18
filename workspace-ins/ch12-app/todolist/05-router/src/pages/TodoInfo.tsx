@@ -1,5 +1,5 @@
 import type { Todo } from "@/types/todo";
-import { Link, Outlet, useMatch, useParams } from "react-router";
+import { Link, Outlet, useLocation, useMatch, useParams } from "react-router";
 
 // 임시 데이터 - API 연동 전까지 사용할 더미 데이터
 const dummyData: Todo = {
@@ -21,9 +21,13 @@ function TodoInfo() {
 
   const data = dummyData;
 
+  // 요청된 URL 정보를 담고 있는 location 객체 반환
+  const location = useLocation();
+
   return (
     <div id="main">
       <h2>할일 상세 보기</h2>
+      <p>{ location.state?.message }</p>
       <div className="todo">
         <div>id : { _id }</div>
         <div>제목 : { data.title }</div>
