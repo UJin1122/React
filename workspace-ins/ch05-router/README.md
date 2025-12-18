@@ -619,7 +619,7 @@ const router = createBrowserRouter([
     return (
       <div>
         <button type="button" onClick={() => navigate(-1)}>수정</button>
-        <button type="reset" onClick={() => navigate(`/todo/list/${item._id}`, {state:{from:'edit', message:'수정 취소'}})}>취소</button>
+        <button type="reset" onClick={() => navigate(`/todo/list/${_id}`, {state:{from:'edit', message:'수정 취소'}})}>취소</button>
       </div>
     );
   }
