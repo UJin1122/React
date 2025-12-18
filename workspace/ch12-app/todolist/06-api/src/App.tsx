@@ -1,7 +1,13 @@
+import { RouterProvider } from 'react-router';
+import './App.css';
+import router from '@/routes';
+
 function App(){
   return (
     <>
-      <h1>vite-template</h1>
+    <div className='todoapp'>
+      <RouterProvider router = { router } />
+    </div>
     </>
   );
 }
