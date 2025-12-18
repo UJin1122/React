@@ -572,6 +572,11 @@
   - 💻 [05 리액트 라우터 적용](./workspace-ins/ch12-app/todolist/05-router)
     - 1. useOutletContect(): 중첩 라우팅에서 부모가 Outlet 컴포넌트의 context 속성으로 전달한 값을 자식 컴포넌트에서 꺼냄
 
+* 5장 리액트 라우터
+  - 💻 [02 리액트 라우터 사용](./workspace-ins/ch05-router/02-react-router)
+    - lazy loading 적용
+    - Suspense 컴포넌트 사용
+
 </details>
 
 <details>
