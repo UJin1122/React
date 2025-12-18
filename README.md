@@ -539,10 +539,20 @@
 <summary><h3>15일차(2025.12.17 수)</h3></summary>
 
 #### 오전(3시간)
+* 🔊 [4. 리액트 라우터가 제공하는 주요 컴포넌트](./workspace-ins/ch05-router#4-리액트-라우터가-제공하는-주요-컴포넌트)
 
+* 12장 앱 개발
+  * 12-1 Todo List
+    - 💻 [05 리액트 라우터 적용](./workspace-ins/ch12-app/todolist/05-router)
 
 #### 오후(3시간)
-
+* 5장 리액트 라우터
+  * 🔊 [5. 리액트 라우터가 제공하는 주요 기능](./workspace-ins/ch05-router#5-리액트-라우터가-제공하는-주요-기능)
+  * 🔊 [6. 리액트 라우터가 제공하는 주요 Hook](./workspace-ins/ch05-router#6-리액트-라우터가-제공하는-주요-hook)
+  
+* 12장 앱 개발
+  * 12-1 Todo List
+    - 💻 [05 리액트 라우터 적용](./workspace-ins/ch12-app/todolist/05-router)
 
 </details>
 
@@ -550,7 +560,12 @@
 <summary><h3>16일차(2025.12.18 목)</h3></summary>
 
 #### 오전(3시간)
-
+* 12장 앱 개발 - 12-1 Todo List
+  - 💻 [05 리액트 라우터 적용](./workspace-ins/ch12-app/todolist/05-router)
+    - 1. 페이지네이션 기능 추가 - [Pagination.tsx](./workspace-ins/ch12-app/todolist/05-router/src/pages/Pagination.tsx)
+    - 2. 검색 기능 추가
+    - 3. useNavigate(): 프로그래밍 방식으로 페이지 이동
+    - 4. useLocation(): 요청된 URL 정보를 담고 있는 location 객체 반환
 
 #### 오후(3시간)
 
