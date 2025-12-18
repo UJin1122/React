@@ -1,5 +1,5 @@
 import type { Todo } from "@/types/todo";
-import { Link, Outlet, useMatch, useParams } from "react-router";
+import { Link, Outlet, useLocation, useMatch, useParams } from "react-router";
 
 // 임시 데이터 - API 연동 전까지 사용할 더미 데이터
 const dummyData: Todo = {
@@ -16,16 +16,18 @@ function TodoInfo() {
   // path가 '/list/:_id'로 지정하고 실제 URL이 '/list/3'일 때 useParams()는 { _id: '3' }을 반환
   const { _id } = useParams();
 
-  // 현재 URL이 지정한 패턴의 URL과 일치하면 PathMatch 객체를, 일치하지 않으면 null을 반환
-  const infoMatch = useMatch('/todo/list/:_id');
+  // 현재의 URL이 지정한 패턴의 URL과 일치하면 PathMatch 객체를, 일치하지 않으면 null을 반환
+  const infoMatch = useMatch('/todo/list/:_id'); // 동적 세그먼트 지정 가능
 
   const data = dummyData;
 
-  
+  // 요청된 URL 정보를 담고 있는 location 객체 반환
+  const location = useLocation();
 
   return (
     <div id="main">
       <h2>할일 상세 보기</h2>
+      <p>{ location.state?.message }</p>
       <div className="todo">
         <div>id : { _id }</div>
         <div>제목 : { data.title }</div>
@@ -33,12 +35,19 @@ function TodoInfo() {
         <div>상태 : { data.done ? '완료' : '미완료' }</div>
         <div>작성일 : { data.createdAt }</div>
         <div>수정일 : { data.updatedAt }</div>
-        <Link to={`/todo/list/${_id}/edit`}>수정</Link>
-        <Link to={`/todo/list`}>목록</Link>
+        
+        { infoMatch && 
+          <>
+            <Link to={`/todo/list/${_id}/edit`}>수정</Link>
+            <Link to="/todo/list">목록</Link>
+          </> 
+        }
+        
       </div>
 
-      <Outlet />
-      
+      {/* 중첩된 라우트의 컴포넌트를 표시하고 할일 정보를 전달 */}
+      <Outlet context={{ item: data }} />
+
     </div>
   );
 }

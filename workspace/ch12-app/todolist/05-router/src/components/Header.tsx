@@ -1,19 +1,21 @@
-import { NavLink } from "react-router";
+import { Link } from "react-router";
 
 function Header() {
   return (
-    <header>
-      <h1>Todo List</h1>
-      <nav>
-        <div>
-          <ul>
-            <li><NavLink className={({ isActive }) => isActive ? "menu-dark" : "menu"} to="/home">Home</NavLink></li>
-            <li><NavLink className={({ isActive }) => isActive ? "menu-dark" : "menu"} to="/about">About</NavLink></li>
-            <li><NavLink className={({ isActive }) => isActive ? "menu-dark" : "menu"} to="/todo/list">TodoList</NavLink></li>
-          </ul>
-        </div>
-      </nav>
-    </header>
+    <>
+      <header>
+        <h1>Todo List</h1>
+        <nav>
+          <div>
+            <ul>
+              <li><Link className="menu-dark" to="/">Home</Link></li>
+              <li><Link className="menu" to="/about">About</Link></li>
+              <li><Link className="menu" to="/todo/list">TodoList</Link></li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    </>
   );
 }
 
