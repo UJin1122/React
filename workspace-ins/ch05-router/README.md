@@ -513,7 +513,7 @@ const router = createBrowserRouter([
     return (
       <div>
         <h2>할일 상세 보기</h2>
-        <div>ID: {id}</div>
+        <div>ID: { _id }</div>
       </div>
     );
   }
@@ -526,7 +526,7 @@ const router = createBrowserRouter([
 * pattern은 url 문자열이거나 다음 속성을 가진 객체를 지정
   - caseSensitive?: boolean; // 대소문자 일치 여부. 기본 false
   - end?: boolean; // true(기본값): url 전체 일치, false: 전방 일치
-  - path: Path; / url 경로
+  - path: Path; // url 경로
 * 일치하면 PathMatch 객체를 반환하고, 일치하지 않으면 `null`을 반환
 * PathMatch의 속성
   - params: URL 파라미터
