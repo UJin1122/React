@@ -1,20 +1,17 @@
 import type { Todo } from "@/types/todo";
-import { NavLink } from "react-router";
-interface TodoListItemProps{
+import { Link } from "react-router";
+
+interface TodoListItemProps {
   item: Todo;
 }
 
-function TodoListItem({ item }:TodoListItemProps) {
+function TodoListItem({ item }: TodoListItemProps) {
   return (
-    <>
-    <ul className="todolist">
-      <li>
-        <span>{ item._id }</span>
-        <NavLink to={`/todo/info/${item._id}`}><s>{ item.title }</s></NavLink>
-        <NavLink to="/todo/list">삭제</NavLink>
-      </li>
-    </ul>
-    </>
+    <li>
+      <span>{item._id}</span>
+      <Link to={`/todo/list/${item._id}`}>{item.title}</Link>
+      <Link to="/todo/list">삭제</Link>
+    </li>
   );
 }
 
