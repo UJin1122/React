@@ -32,6 +32,10 @@ export async function createTodo(formData: FormData): Promise<ResData<TodoInfoRe
     title: formData.get('title'),
     content: formData.get('content'),
   };
+
+  // FormData를 일반 Object로 변환
+  // const body = Object.fromEntries(formData.entries());
+
   // https://github.com/FEBC-15/js/blob/main/docs/09.js_ajax.md#52-fetchresource-options
   const res = await fetch(`${API_URL}/todolist`, {
     method: 'POST',
