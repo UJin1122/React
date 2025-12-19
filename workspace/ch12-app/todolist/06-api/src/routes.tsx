@@ -9,6 +9,7 @@ import Layout from "@components/Layout";
 import Home from "@pages/Home";
 
 import { createBrowserRouter, Navigate } from "react-router";
+import { TodoInfoLoader, todoListLoader } from "@/routes/todo.loader";
 
 const router = createBrowserRouter([
   
@@ -23,9 +24,14 @@ const router = createBrowserRouter([
       // index 라우트: URL이 부모 라우트의 URL까지만 일치할 경우
       // 기본으로 렌더링 될 자식 라우트 지정
       { index: true, element: <TodoList /> }, 
-      { path: 'list', element: <TodoList /> },
+      {
+        path: 'list',
+        loader: todoListLoader,
+        element: <TodoList />,
+      },
       { path: 'add', element: <TodoAdd /> },
       { path: 'list/:_id',
+        loader: TodoInfoLoader,
         element:<TodoInfo/>,
         children:[{ path: 'edit', element: <TodoEdit /> },]
       }
