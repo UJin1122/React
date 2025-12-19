@@ -15,6 +15,13 @@ export async function getTodoList(): Promise<TodoListRes> {
 }
 
 // 할일 상세 조회
-export async function getTodoInfo() {
-  
+export async function getTodoInfo(_id: string) {
+  const res = await fetch(`${API_URL}/todolist/${_id}`);
+  const data = await res.json();
+
+  if(!res.ok){
+    // 서버의 응답 상태코드가 4xx, 5xx인 에러일 경우 라우터 에러로 변환
+    throw new Response(data.message, { status: res.status });
+  }
+  return data;
 }

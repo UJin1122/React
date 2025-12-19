@@ -1,7 +1,6 @@
-import { getTodoList } from "@/api/todo";
 import Pagination from "@/pages/Pagination";
 import TodoListItem from "@/pages/TodoListItem";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
 
 const dummyData = {
@@ -24,9 +23,9 @@ const dummyData = {
 
 function TodoList() {
 
-  useEffect(() => {
-    getTodoList().then((result) => console.log(result));
-  }, []);
+  // useEffect(() => {
+  //   getTodoList().then((result) => console.log(result));
+  // }, []);
 
   console.log('TodoList 렌더링');
 
