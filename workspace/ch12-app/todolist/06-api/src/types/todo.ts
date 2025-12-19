@@ -44,4 +44,17 @@ export interface TodoCreateRes {
   item: Todo;
 }
 
+// 할일 수정 요청 타입
+export interface TodoUpdateReq {
+  title?: string;
+  content?: string;
+  done?: boolean;
+}
+
+// 할일 수정 응답 타입
+export interface TodoUpdateRes {
+  ok: 1;
+  item: Todo;
+}
+
 

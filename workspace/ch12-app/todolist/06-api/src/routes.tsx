@@ -10,6 +10,7 @@ import Home from "@pages/Home";
 
 import { createBrowserRouter, Navigate } from "react-router";
 import { TodoInfoLoader, todoListLoader } from "@/routes/todo.loader";
+import { TodoAddAction, TodoDeleteAction, TodoUpdateAction } from "@/routes/todo.action";
 
 const router = createBrowserRouter([
   
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
     path: '/todo',
     element: <Layout />,
     errorElement: <ErrorPage />,
+    hydrateFallbackElement: <div>서버응답 대기중...</div>,
     children: [
       // index 라우트: URL이 부모 라우트의 URL까지만 일치할 경우
       // 기본으로 렌더링 될 자식 라우트 지정
@@ -28,12 +30,25 @@ const router = createBrowserRouter([
         path: 'list',
         loader: todoListLoader,
         element: <TodoList />,
+        action: TodoDeleteAction,
       },
-      { path: 'add', element: <TodoAdd /> },
-      { path: 'list/:_id',
+      { 
+        path: 'add',
+         element: <TodoAdd />,
+         action: TodoAddAction, 
+      },
+      {
+        path: 'list/:_id',
         loader: TodoInfoLoader,
         element:<TodoInfo/>,
-        children:[{ path: 'edit', element: <TodoEdit /> },]
+        action: TodoDeleteAction,
+        children:[
+          {
+            path: 'edit',
+            element: <TodoEdit />,
+            action: TodoUpdateAction,
+          },
+          ]
       }
     ],
   },
