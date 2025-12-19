@@ -3,8 +3,10 @@ import type { ResData, TodoInfoRes, TodoListRes } from "@/types/todo";
 const API_SERVER = 'https://fesp-api.koyeb.app/todo';
 
 // 할일 목록 조회
-export async function getTodoList(): Promise<TodoListRes> {
-  const res = await fetch(`${API_SERVER}/todolist`);
+export async function getTodoList({ page='1', limit='10', keyword='' }
+  : { page:string, limit:string, keyword:string}): Promise<TodoListRes> {
+  const query = new URLSearchParams({ page, limit, keyword })
+  const res = await fetch(`${API_SERVER}/todolist?${query.toString()}`);
   const data = await res.json();
 
   if(!res.ok){

@@ -1,6 +1,11 @@
-import { Form, Link } from "react-router";
+import { Form, Link, useNavigation } from "react-router";
 
 function TodoAdd() {
+
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
+  const isSubmitting = navigation.state === 'submitting';
+  const isProcessing = isSubmitting || isLoading;
 
   return (
     <div id="main">
@@ -20,7 +25,10 @@ function TodoAdd() {
           cols={23} rows={5}>
           </textarea>
           <br />
-          <button type="submit">추가</button>
+          <button 
+          type="submit"
+          disabled = {isProcessing}
+          >{ isProcessing ? '추가중...' : '추가'}</button>
           <Link to="/todo/list">취소</Link>
         </Form>
       </div>
