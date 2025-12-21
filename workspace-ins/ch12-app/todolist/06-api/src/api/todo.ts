@@ -3,8 +3,13 @@ import type { ResData, TodoInfoRes, TodoListRes } from "@/types/todo";
 const API_URL = 'https://fesp-api.koyeb.app/todo';
 
 // 할일 목록 조회
-export async function getTodoList(): Promise<TodoListRes> {
-  const res = await fetch(`${API_URL}/todolist`);
+export async function getTodoList({ page='1', limit='10', keyword='' }
+    : { page: string, limit: string, keyword: string }): Promise<TodoListRes> {
+
+  const query = new URLSearchParams({ page, limit, keyword });
+  console.log(query.toString());
+
+  const res = await fetch(`${API_URL}/todolist?${query.toString()}`);
   const data = await res.json();
 
   if(!res.ok){
@@ -32,6 +37,10 @@ export async function createTodo(formData: FormData): Promise<ResData<TodoInfoRe
     title: formData.get('title'),
     content: formData.get('content'),
   };
+
+  // FormData를 일반 Object로 변환
+  // const body = Object.fromEntries(formData.entries());
+
   // https://github.com/FEBC-15/js/blob/main/docs/09.js_ajax.md#52-fetchresource-options
   const res = await fetch(`${API_URL}/todolist`, {
     method: 'POST',

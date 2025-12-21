@@ -10,6 +10,7 @@ function TodoInfo() {
 
   const infoMatch = useMatch('/todo/list/:_id');
 
+  // loader에서 반환한 값
   const data = useLoaderData<ResData<TodoInfoRes>>();
 
   // 요청된 URL 정보를 담고 있는 location 객체 반환
@@ -39,7 +40,7 @@ function TodoInfo() {
           </div>
 
           {/* 중첩된 라우트의 컴포넌트를 표시하고 할일 정보를 전달 */}
-          <Outlet context={{ item: data }} />
+          <Outlet context={{ item: data.item }} />
         </>
       )
       : (

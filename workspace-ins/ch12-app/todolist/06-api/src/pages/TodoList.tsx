@@ -31,6 +31,7 @@ function TodoList() {
   // const data = useLoaderData<TodoListRes>(); // 에러 처리는 loader, errorElement에서 했기 때문에 정상 응답으로 간주
   // const list = data.items.map(item => <TodoListItem key={item._id} item={item} />);
 
+  // loader에서 반환한 값
   const data = useLoaderData<ResData<TodoListRes>>();
   const list = data.ok ? data.items.map(item => <TodoListItem key={item._id} item={item} />) : <div>{ data.message }</div>;
 
