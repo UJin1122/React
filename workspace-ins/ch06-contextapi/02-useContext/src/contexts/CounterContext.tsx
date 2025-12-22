@@ -12,7 +12,7 @@ const CounterContext = createContext<CounterContextType | null>(null);
 
 // 2. Provider 컴포넌트를 만들어서 export
 export function CounterProvider({ children }: { children: React.ReactNode }){
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(10);
 
   const countUp = (step: number) => {
     setCount(count + step);
