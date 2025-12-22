@@ -1,4 +1,5 @@
 import type { ResData, TodoInfoRes, TodoListRes } from "@/types/todo";
+import dayjs from "dayjs";
 
 const API_SERVER = 'https://fesp-api.koyeb.app/todo';
 
@@ -30,11 +31,21 @@ export async function getTodoInfo(_id: string) {
 
 // 할일 수정
 export async function updateTodo(_id: string, formData: FormData) {
-  const body={
-    title:formData.get('title'),
-    content:formData.get('content'),
-    done:formData.get('done') === 'on',
+  const finishAt = formData.get('finishAt');
+  if(finishAt){
+    const formatFinishAt = dayjs(finishAt as string).format('YYYY.MM.DD HH:mm:ss');
+    formData.set('finishAt', formatFinishAt);
+  }else{
+    formData.delete('finishAt');
+  }
+
+  const bodyRow = Object.fromEntries(formData.entries());
+  const body = {
+    ...bodyRow,
+    done: bodyRow.done === 'on',
+    important: bodyRow.important === 'on',
   };
+
   const res = await fetch(`${API_SERVER}/todolist/${_id}`, {
     method: 'PATCH',
     headers: {
@@ -53,10 +64,25 @@ export async function updateTodo(_id: string, formData: FormData) {
 
 // 할일 추가
 export async function addTodo(formData: FormData):Promise<ResData<TodoInfoRes>> {
-  const body={
-    title:formData.get('title'),
-    content:formData.get('content'),
-  };
+  // const body={
+  //   title:formData.get('title'),
+  //   content:formData.get('content'),
+  // };
+  const finishAt = formData.get('finishAt');
+  if(finishAt){
+    const formatFinishAt = dayjs(finishAt as string).format('YYYY.MM.DD HH:mm:ss');
+    formData.set('finishAt',formatFinishAt);
+  }else{
+    formData.delete('finishAt');
+  }
+
+  const bodyRow = Object.fromEntries(formData.entries());
+  const body = {
+    ...bodyRow,
+    important: bodyRow.important === 'on',
+  }
+
+ 
   const res = await fetch(`${API_SERVER}/todolist`, {
     method: 'POST',
     headers: {

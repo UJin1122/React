@@ -8,6 +8,9 @@ interface TodoListItemProps {
 function TodoListItem({ item }: TodoListItemProps) {
   // action이나 loader를 직접 호출
   const fetcher = useFetcher();
+  const isLoading = fetcher.state === 'loading';
+  const isSubmitting = fetcher.state === 'submitting';
+  const isProcessing = isSubmitting || isLoading;
 
   const handleDelete = () => {
     fetcher.submit(null,{
@@ -21,9 +24,10 @@ function TodoListItem({ item }: TodoListItemProps) {
       <span>{item._id}</span>
       <Link to={`/todo/list/${item._id}`}>{item.title}</Link>
       <button 
-      type="button"
+      type="submit"
+      disabled = {isProcessing}
       onClick={ handleDelete }
-      >삭제</button>
+      >{ isProcessing ? '삭제중...' : '삭제'}</button>
     </li>
   );
 }
