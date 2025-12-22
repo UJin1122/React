@@ -584,10 +584,44 @@
 
 #### 오전(3시간)
 
+* 12장 앱 개발 - 12-1 Todo List
+  - 💻 [06 API 서버 연동](./workspace-ins/ch12-app/todolist/06-api)
+    + 할일 상세 조회 api 호출 추가
+    + 할일 상세 조회 loader 추가
+    + 할일 등록, 수정, 삭제 api 호출 추가
 
 #### 오후(3시간)
+* 12장 앱 개발 - 12-1 Todo List
+  - 💻 [06 API 서버 연동](./workspace-ins/ch12-app/todolist/06-api)
+    + 할일 등록, 수정, 삭제 action 추가
+    + 할일 등록 시 두번 클릭 방지(useNavigation 훅을 이용한 submit 상태 추적)
 
+#### 과제
+```
+## 주말 과제: Todo List에 기능 추가
+- workspace/ch12-app/todolist/06-api 폴더에서 작업
 
+### 수정, 삭제 버튼이 두번 클릭되지 않게 바꾸기
+- 할일 수정중에 `수정` 버튼을 `수정중...`으로 바꾸고 비활성화
+- 할일 삭제중에 `삭제` 버튼을 `삭제중...`으로 바꾸고 비활성화
+
+### 등록/수정 화면에 항목 추가
+- `카테고리` 추가
+  - 카테고리 항목은 `공부`, `취미`, `기타`로 구분해서 select로 제공
+  - `category` 속성으로 study, hobby, etc 중 하나로 API 서버에 전송
+  - 초기값은 비어있음
+- `중요` 추가
+  - 체크박스로 제공
+  - 체크했을 경우 `important` 속성으로 true 값을 API 서버에 전송
+- `마감일` 추가
+  - `<input type="datetime-local">`로 제공
+  - 선택했을 경우 `finishAt` 속성으로 `YYYY.MM.DD HH:mm:ss` 형태로 API 서버에 전송
+  - 날짜 포맷 변경은 [dayjs](https://day.js.org) 사용
+  - https://github.com/FEBC-15/js/blob/main/workspace-ins/ch07/ex07-09-03.js 예제 참고
+
+### 상세조회 화면에 항목 추가
+- `카테고리`, `중요`, `마감일`이 등록되어 있을 경우 상세조회 화면에 추가로 보여줌
+```
 </details>
 
 </details>

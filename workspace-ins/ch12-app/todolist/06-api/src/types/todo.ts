@@ -4,6 +4,9 @@ export interface Todo {
   title: string;
   done: boolean;
   content: string;
+  category: string;
+  important: boolean;
+  finishAt: string;
   createdAt: string;
   updatedAt: string;
 }

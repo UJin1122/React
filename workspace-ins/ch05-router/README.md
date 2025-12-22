@@ -1,6 +1,48 @@
 # 5장 리액트 라우터
 * 코드 실행(GitHub Page): <https://febc-15.github.io/react/workspace-ins/index.html#05>
 
+## 목차
+- [1. 클라이언트 측 라우팅이란?](#1-클라이언트-측-라우팅이란)
+  - [1.1 전통적인 웹의 페이지 이동](#11-전통적인-웹의-페이지-이동)
+  - [1.2 리액트(SPA)의 페이지 이동](#12-리액트spa의-페이지-이동)
+- [2. 리액트 라우터란?](#2-리액트-라우터란)
+  - [2.1 리액트 라우터 모드](#21-리액트-라우터-모드)
+  - [2.2 패키지 설치](#22-패키지-설치)
+- [3. 리액트 라우터가 제공하는 라우터](#3-리액트-라우터가-제공하는-라우터)
+  - [3.1 createBrowserRouter](#31-createbrowserrouter)
+  - [3.2 createHashRouter](#32-createhashrouter)
+  - [3.3 MemoryRouter](#33-memoryrouter)
+  - [3.4 NativeRouter](#34-nativerouter)
+  - [3.5 StaticRouter](#35-staticrouter)
+- [4. 리액트 라우터가 제공하는 주요 컴포넌트](#4-리액트-라우터가-제공하는-주요-컴포넌트)
+  - [4.1 Link](#41-link)
+  - [4.2 NavLink](#42-navlink)
+  - [4.3 Outlet](#43-outlet)
+  - [4.4 Navigate](#44-navigate)
+- [5. 리액트 라우터가 제공하는 주요 기능](#5-리액트-라우터가-제공하는-주요-기능)
+  - [5.1 동적 세그먼트](#51-동적-세그먼트)
+  - [5.2 중첩 라우트 (nested route)](#52-중첩-라우트-nested-route)
+  - [5.3 index 라우트](#53-index-라우트)
+  - [5.4 fallback UI와 404 라우트](#54-fallback-ui와-404-라우트)
+- [6. 리액트 라우터가 제공하는 주요 Hook](#6-리액트-라우터가-제공하는-주요-hook)
+  - [6.1 useRouteError](#61-userouteerror)
+  - [6.2 useParams](#62-useparams)
+  - [6.3 useMatch](#63-usematch)
+  - [6.4 useSearchParams](#64-usesearchparams)
+  - [6.5 useNavigate](#65-usenavigate)
+  - [6.6 useLocation](#66-uselocation)
+  - [6.7 useOutletContext](#67-useoutletcontext)
+- [7. 레이지 로딩 (lazy loading)](#7-레이지-로딩-lazy-loading)
+- [8. React.Suspense 컴포넌트](#8-reactsuspense-컴포넌트)
+- [9. 데이터 로딩 및 액션](#9-데이터-로딩-및-액션)
+  - [9.1 데이터 로딩 (loader)](#91-데이터-로딩-loader)
+  - [9.2 useLoaderData](#92-useloaderdata)
+  - [9.3 useNavigation](#93-usenavigation)
+  - [9.4 액션 (action)](#94-액션-action)
+  - [9.5 Form 컴포넌트](#95-form-컴포넌트)
+  - [9.6 useActionData](#96-useactiondata)
+- [10. 라우터가 적용된 프로젝트 구조](#10-라우터가-적용된-프로젝트-구조)
+
 # 1. 클라이언트 측 라우팅이란?
 
 ## 1.1 전통적인 웹의 페이지 이동
@@ -782,7 +824,7 @@ const router = createBrowserRouter([
 
   // 할일 목록 조회
   export async function getTodoList(): Promise<TodoListRes> {
-    const res = await fetch(`${API_URL}/todolist?${query.toString()}`);
+    const res = await fetch(`${API_URL}/todolist`);
     const data = await res.json();
     console.log('getTodoList', data);
     if(!res.ok){
@@ -829,11 +871,15 @@ const router = createBrowserRouter([
 * routes.tsx
   ```tsx
   const router = createBrowserRouter([
-    { path: 'list', element: <TodoList />, loader: todoListLoader },
+    { 
+      path: 'list', 
+      loader: todoListLoader,
+      element: <TodoList />, 
+    },
     { 
       path: 'list/:_id', 
-      element: <TodoInfo />,
       loader: todoInfoLoader,
+      element: <TodoInfo />,
       children: [
         { path: 'edit', element: <TodoEdit /> }
       ]
@@ -1049,7 +1095,7 @@ const router = createBrowserRouter([
         <div className="todo">
           <Form method="post">
             <label htmlFor="title">제목 :</label>
-            <input type="text" id="title" name="title"autoFocus /><br />
+            <input type="text" id="title" name="title" autoFocus /><br />
             <label htmlFor="content">내용 :</label>
             <textarea id="content" name="content" cols={23} rows={5}></textarea><br />
             <button 

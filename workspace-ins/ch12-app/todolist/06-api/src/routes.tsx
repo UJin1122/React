@@ -7,6 +7,7 @@ import TodoAdd from "@/pages/TodoAdd";
 import TodoEdit from "@/pages/TodoEdit";
 import TodoInfo from "@/pages/TodoInfo";
 import TodoList from "@/pages/TodoList";
+import { todoCreateAction, todoDeleteAction, todoUpdateAction } from "@/routes/todo.action";
 import { todoInfoLoader, todoListLoader } from "@/routes/todo.loader";
 import { createBrowserRouter, Navigate } from "react-router";
 
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
     path: '/todo',
     element: <Layout />,
     errorElement: <ErrorPage />,
+    hydrateFallbackElement: <div></div>,
     children: [
       { index: true, element: <TodoList /> }, // index 라우트: URL이 부모 라우트의 URL 까지만 일치할 경우 기본으로 렌더링 될 자식 라우트 지정
       { 
@@ -26,13 +28,22 @@ const router = createBrowserRouter([
         loader: todoListLoader,
         element: <TodoList />, 
       },
-      { path: 'add', element: <TodoAdd /> },
+      { 
+        path: 'add', 
+        element: <TodoAdd />,
+        action: todoCreateAction,
+      },
       { 
         path: 'list/:_id', // 동적 세그먼트 지정. _id는 useParams() 훅으로 꺼낼 수 있음
         loader: todoInfoLoader,
         element: <TodoInfo />, 
+        action: todoDeleteAction,
         children: [
-          { path: 'edit', element: <TodoEdit /> },
+          { 
+            path: 'edit', 
+            element: <TodoEdit />,
+            action: todoUpdateAction,
+          },
         ]
       },
     ]
