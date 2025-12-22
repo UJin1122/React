@@ -1,6 +1,20 @@
 # 6장 Context API
 * 코드 실행(GitHub Page): <https://febc-15.github.io/react/workspace-ins/index.html#06>
 
+## 목차
+- [1. Context API란?](#1-context-api란)
+  - [1.2 상태 끌어올리기](#12-상태-끌어올리기)
+  - [1.3 Prop Drilling](#13-prop-drilling)
+- [2. 사용 방법](#2-사용-방법)
+  - [2.1 Context 객체 생성](#21-context-객체-생성)
+  - [2.2 Provider 컴포넌트를 작성해서 export](#22-provider-컴포넌트를-작성해서-export)
+  - [2.3 자식 컴포넌트에 Context 제공](#23-자식-컴포넌트에-context-제공)
+  - [2.4 자식 컴포넌트에서 Context 사용](#24-자식-컴포넌트에서-context-사용)
+- [3. Context API 사용 사례](#3-context-api-사용-사례)
+- [4. Context API의 단점 및 주의사항](#4-context-api의-단점-및-주의사항)
+  - [4.1 Context API의 한계](#41-context-api의-한계)
+  - [4.2 Context 남용 주의](#42-context-남용-주의)
+
 # 1. Context API란?
 ## Props의 단점
 * 컴포넌트 트리에서 부모 컴포넌트의 상태나 데이터를 자식 컴포넌트에 전달할 때 보통 props를 사용하지만, 컴포넌트 트리가 깊어질수록 불편해짐.
