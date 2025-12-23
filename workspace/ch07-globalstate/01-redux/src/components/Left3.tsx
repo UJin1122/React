@@ -4,6 +4,9 @@ function Left3() {
   useEffect(()=>{
     console.log('#### Left3 렌더링.');
   });
+
+  // 5. Store 사용
+  
   return (
     <div>
       <h3>Left3</h3>

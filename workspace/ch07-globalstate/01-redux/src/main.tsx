@@ -5,6 +5,8 @@ import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    {/* 4. Store 적용 */}
+
     <App />
   </StrictMode>,
 )

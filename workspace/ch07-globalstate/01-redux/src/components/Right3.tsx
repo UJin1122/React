@@ -4,6 +4,9 @@ function Right3() {
   useEffect(()=>{
     console.log('#### Right3 렌더링.');
   });
+
+  // 5. Store 사용
+  
   return (
     <div>
       <h3>Right3</h3>
