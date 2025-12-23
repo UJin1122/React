@@ -2,38 +2,38 @@
 * 코드 실행(GitHub Page): <https://febc-15.github.io/react/workspace-ins/index.html#07>
 
 ## 목차
-1. [전역 상태 관리란?](#1-전역-상태-관리란)
-   - [1.1 상태 관리](#11-상태-관리)
-   - [1.2 전역 상태 관리](#12-전역-상태-관리)
-   - [1.3 전역 상태 관리 라이브러리](#13-전역-상태-관리-라이브러리)
-   - [1.4 전역 상태 관리 사용 사례](#14-전역-상태-관리-사용-사례)
-2. [Redux](#2-redux)
-   - [2.1 Redux란?](#21-redux란)
-   - [2.2 Redux의 특징](#22-redux의-특징)
-   - [2.3 Redux 사용 사례](#23-redux-사용-사례)
-   - [2.4 Flux 아키텍처](#24-flux-아키텍처)
-   - [2.5 Redux 구성 요소](#25-redux-구성-요소)
-   - [2.6 Redux 설치](#26-redux-설치)
-   - [2.7 Redux DevTools 설치](#27-redux-devtools-설치)
-   - [2.8 Redux의 단점](#28-redux의-단점)
-   - [2.9 Redux Toolkit](#29-redux-toolkit)
-3. [Jotai](#3-jotai)
-   - [3.1 설치](#31-설치)
-   - [3.2 atom](#32-atom)
-   - [3.3 derived atom (파생 atom)](#33-derived-atom-파생-atom)
-4. [Zustand](#4-zustand)
-   - [4.1 설치](#41-설치)
-   - [4.2 Store](#42-store)
-   - [4.3 Store 사용](#43-store-사용)
-   - [4.4 성능 최적화를 위해 Store 사용시 고려 사항](#44-성능-최적화를-위해-store-사용시-고려-사항)
-5. [전역 상태 관리 라이브러리 비교](#5-전역-상태-관리-라이브러리-비교)
-   - [5.1 라이브러리별 특징](#51-라이브러리별-특징)
-   - [5.2 라이브러리 선택 기준](#52-라이브러리-선택-기준)
-6. [Context API vs 전역 상태 관리 라이브러리](#6-context-api-vs-전역-상태-관리-라이브러리)
-   - [6.1 Context API의 한계](#61-context-api의-한계)
-   - [6.2 전역 상태 관리 라이브러리의 장점](#62-전역-상태-관리-라이브러리의-장점)
-   - [6.3 Context API를 사용하는 경우](#63-context-api를-사용하는-경우)
-   - [6.4 전역 상태 관리 라이브러리를 사용하는 경우](#64-전역-상태-관리-라이브러리를-사용하는-경우)
+- [전역 상태 관리란?](#1-전역-상태-관리란)
+  - [1.1 상태 관리](#11-상태-관리)
+  - [1.2 전역 상태 관리](#12-전역-상태-관리)
+  - [1.3 전역 상태 관리 라이브러리](#13-전역-상태-관리-라이브러리)
+  - [1.4 전역 상태 관리 사용 사례](#14-전역-상태-관리-사용-사례)
+- [Redux](#2-redux)
+  - [2.1 Redux란?](#21-redux란)
+  - [2.2 Redux의 특징](#22-redux의-특징)
+  - [2.3 Redux 사용 사례](#23-redux-사용-사례)
+  - [2.4 Flux 아키텍처](#24-flux-아키텍처)
+  - [2.5 Redux 구성 요소](#25-redux-구성-요소)
+  - [2.6 Redux 설치](#26-redux-설치)
+  - [2.7 Redux DevTools 설치](#27-redux-devtools-설치)
+  - [2.8 Redux의 단점](#28-redux의-단점)
+  - [2.9 Redux Toolkit](#29-redux-toolkit)
+- [Jotai](#3-jotai)
+  - [3.1 설치](#31-설치)
+  - [3.2 atom](#32-atom)
+  - [3.3 derived atom (파생 atom)](#33-derived-atom-파생-atom)
+- [Zustand](#4-zustand)
+  - [4.1 설치](#41-설치)
+  - [4.2 Store](#42-store)
+  - [4.3 Store 사용](#43-store-사용)
+  - [4.4 성능 최적화를 위해 Store 사용시 고려 사항](#44-성능-최적화를-위해-store-사용시-고려-사항)
+- [전역 상태 관리 라이브러리 비교](#5-전역-상태-관리-라이브러리-비교)
+  - [5.1 라이브러리별 특징](#51-라이브러리별-특징)
+  - [5.2 라이브러리 선택 기준](#52-라이브러리-선택-기준)
+- [Context API vs 전역 상태 관리 라이브러리](#6-context-api-vs-전역-상태-관리-라이브러리)
+  - [6.1 Context API의 한계](#61-context-api의-한계)
+  - [6.2 전역 상태 관리 라이브러리의 장점](#62-전역-상태-관리-라이브러리의-장점)
+  - [6.3 Context API를 사용하는 경우](#63-context-api를-사용하는-경우)
+  - [6.4 전역 상태 관리 라이브러리를 사용하는 경우](#64-전역-상태-관리-라이브러리를-사용하는-경우)
 
 # 1 전역 상태 관리란?
 
@@ -180,6 +180,7 @@ npm i @reduxjs/toolkit
 
 # 3. Jotai
 * Recoil의 아이디어를 계승하여 만들어진 현대적인 상태 관리 라이브러리
+* 작은 단위의 상태(atom)를 만들고, 이를 조합해 전체 앱 상태를 구성하는 방식
 * 더 가볍고 단순한 구조를 가지며, key가 필요 없고 Provider도 선택적으로만 사용
 * 서버사이드 렌더링(SSR) 지원과 작은 번들 크기, 빠른 업데이트 등의 장점을 가짐
 
@@ -196,11 +197,69 @@ npm i jotai
 
 ### 3.2.1 atom을 정의하는 방법
 * atom 함수 사용
-* Jotai는 Recoil과 달리 key가 필요 없음
+
+#### 기본 atom (Read-Write atom)
+* 초기값만 전달하면 자동으로 getter/setter가 생성됨
+* 가장 일반적으로 사용하는 방법
 * atoms.ts
   ```ts
   import { atom } from "jotai";
-  export const countAtom = atom(20);
+  export const countAtom = atom(5);
+  export const nameAtom = atom("홍길동");
+  export const isLoggedInAtom = atom(false);
+  ```
+
+#### Read-Only atom (파생 atom)
+* getter 함수만 제공하면 읽기 전용
+* 다른 atom의 값을 기반으로 계산된 값을 제공할 때 사용
+* atoms.ts
+  ```ts
+  import { atom } from "jotai";
+  import { countAtom } from "@/jotai/atoms";
+  
+  // 파생 atom - 계산된 값 제공
+  export const doubleCountAtom = atom((get) => get(countAtom) * 2);
+  export const isEvenAtom = atom((get) => get(countAtom) % 2 === 0);
+  
+  // 내부 atom 캡슐화 - 직접 수정 방지
+  const _internalCountAtom = atom(0);
+  export const readOnlyCountAtom = atom((get) => get(_internalCountAtom));
+  ```
+
+#### Write-Only atom
+* getter 함수를 null로 설정하고 setter 함수만 제공
+* 값 변경만 필요하고 읽을 필요가 없을 때 사용 (성능 최적화)
+* atoms.ts
+  ```ts
+  import { atom } from "jotai";
+  import { countAtom } from "@/jotai/atoms";
+  
+  export const countUpAtom = atom(
+    null, // getter 함수 - null일 경우 "읽기 불가능"을 의미
+    (get, set, step: number) => { // setter 함수
+      const count = get(countAtom);
+      set(countAtom, count + step);
+    }
+  );
+  ```
+
+#### Read-Write atom (커스텀)
+* getter와 setter 함수를 모두 직접 정의
+* 유효성 검사나 복잡한 로직이 필요할 때 사용
+* atoms.ts
+  ```ts
+  import { atom } from "jotai";
+  
+  const _countAtom = atom(0);
+  
+  export const countAtom = atom(
+    (get) => get(_countAtom), // getter 함수
+    (get, set, value: number) => { // setter 함수
+      if (value >= 0 && value <= 100) { // 유효성 검사
+        set(_countAtom, value);
+      }
+    }
+  );
   ```
 
 ### 3.2.2 atom에서 읽기(getter)
@@ -278,7 +337,7 @@ npm i jotai
 * 파생 atom은 기본 atom 값이 변하지 않으면 언제나 같은 값을 반환하는 순수 함수로 만들어야 함
 
 ### 3.3.1 파생 atom을 정의하는 방법
-* atom 함수에 get 함수를 전달하여 파생 atom 생성
+* atom 함수에 getter 함수를 전달하여 파생 atom 생성
 * derived.ts
   ```ts
   import { atom } from "jotai";
@@ -433,7 +492,14 @@ function Right3() {
 ```
 
 ### 4.4.2 Store 분할 (Store Splitting)
-* 관련 없는 상태들은 별도 Store로 분할하여 성능 최적화
+* Zustand는 선택적 구독을 지원하므로 하나의 큰 스토어를 사용해도 구독한 속성에 대해서만 변경이 발생했을 때 리렌더링이 발생하므로 하나의 큰 Store에서 여러 상태를 관리해도 성능상 큰 차이는 없음
+* 코드 조직화와 유지보수 측면에서 관련 없는 상태들은 별도 Store로 분할하여 코드 구조 개선
+* Store 분할의 장점
+  - 코드 조직화: 관련된 상태를 논리적으로 그룹화
+  - 타입 안정성: 작은 스토어가 타입 추론을 더 쉽게 만듦
+  - 모듈화: 필요한 스토어만 import 가능
+  - 유지보수성: 작은 스토어가 더 관리하기 쉬움
+  - 테스트 용이성: 작은 단위로 테스트 가능
 
 ```tsx
 // 사용자 정보 Store
@@ -458,7 +524,7 @@ const useCounterStore = create((set) => ({
 | 라이브러리 | 번들 크기 | 학습 곡선 | 사용 편의성 | 적합한 프로젝트 |
 |-----------|---------|----------|------------|---------------|
 | Redux | 큼 | 가파름 | 복잡 | 대규모, 복잡한 상태 관리 |
-| Redux Toolkit | 중간 | 중간 | 중간 | Redux를 사용하되 간소화하고 싶을 때 |
+| Redux Toolkit | 큼 (Redux + 추가 유틸리티) | 중간 | 중간 | Redux를 사용하되 간소화하고 싶을 때 |
 | Jotai | 작음 | 낮음 | 높음 | 작은 단위의 상태 관리, 원자적 접근 |
 | Zustand | 매우 작음 | 낮음 | 매우 높음 | 소규모~중규모, 간단한 상태 관리 |
 | Context API | 없음 | 낮음 | 중간 | 간단한 전역 상태, 테마/인증 등 |
@@ -475,7 +541,7 @@ const useCounterStore = create((set) => ({
 - 작은 단위의 상태를 독립적으로 관리하고 싶을 때
 - 파생 상태(derived state)를 많이 사용할 때
 - 번들 크기를 최소화하고 싶을 때
-- Recoil과 유사하지만 더 가벼운 대안이 필요할 때
+- 팀이 Recoil에 익숙한 경우. 더 가벼운 대안이 필요할 때
 
 ### Zustand
 - 간단하고 직관적인 API를 원할 때
