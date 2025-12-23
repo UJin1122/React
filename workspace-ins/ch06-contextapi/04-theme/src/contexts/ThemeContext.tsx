@@ -23,7 +23,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }){
     setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
   };
   
-  // force가 true면 해당 클래스를 추가하고 false이면 해당 클래스를 제거
+  // force가 true면 해당 클래스를 추가하고 false면 해당 클래스를 제거
   document.body.classList.toggle('dark', theme === 'dark');
 
   return (
