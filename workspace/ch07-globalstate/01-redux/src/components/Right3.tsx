@@ -1,5 +1,6 @@
 import counterActionCreator from '@/redux/counterActionCreator';
 import { useEffect } from 'react';
+
 import { useDispatch } from 'react-redux';
 
 function Right3() {
@@ -7,8 +8,7 @@ function Right3() {
     console.log('#### Right3 렌더링.');
   });
 
-  // 5. Store 사용
-  // Redux Store에 액션을 전달하기 위해 useDispatch 사용
+
   const dispatch = useDispatch();
 
   return (
