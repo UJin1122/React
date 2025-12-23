@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 
 type Theme = 'light' | 'dark'
 interface ThemeContextType{
@@ -7,30 +7,24 @@ interface ThemeContextType{
 }
 
 // 1. Context 객체 생성
-const ThemeContext = createContext<ThemeContextType | null>(null);
+const ThemeContext = createContext<ThemeContextType>({
+  theme: 'light',
+  toggleTheme: () =>{},
+});
 
 // 2. Provider 컴포넌트를 만들어 export
 export function ThemeProvider({ children }:{ children: React.ReactNode}){
 
   const [theme, setTheme] = useState<Theme>('light');
 
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
-  }, [theme]);
-
-
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    const newTheme = (theme === 'dark' ? 'light' : 'dark');
+    setTheme(newTheme);
+    document.body.classList.toggle('dark');
   };
-
-  const context = { theme, toggleTheme };
-
+  
   return (
-    <ThemeContext value={ context }>
+    <ThemeContext value={{ theme, toggleTheme }}>
       { children }
     </ThemeContext>
   );

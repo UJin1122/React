@@ -9,16 +9,16 @@ function Left3() {
 
   let counter = null;
   counter = use(CounterContext);
-  const theme = use(ThemeContext);
+  const { theme } = use(ThemeContext);
 
-  const stars = theme?.theme === 'dark' ? '⭐'.repeat(counter?.count || 0) : '';
+  const stars = theme === 'dark' ? '⭐'.repeat(counter?.count || 0) : '';
 
   return (
 
     <div className='theme'>
       <h3>Left3</h3>
 
-      { theme?.theme === 'dark'
+      { theme === 'dark'
         ?
         <div className="stars">{stars}</div>
         :

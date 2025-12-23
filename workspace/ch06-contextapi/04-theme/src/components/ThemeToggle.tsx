@@ -7,11 +7,11 @@ function ThemeToggle(){
     console.log("## ThemeToggle 렌더링.");
   });
 
-  const theme = use(ThemeContext);
+  const { theme, toggleTheme } = use(ThemeContext);
 
   return(<button
     className="theme-toggle"
-    onClick={theme?.toggleTheme}
-  >{theme?.isDark ? '라이트 모드' : '다크 모드'}</button>);
+    onClick={ toggleTheme }
+  >{ theme === 'dark' ? '☀️라이트 모드' : '🌙다크 모드' }</button>);
 }
 export default ThemeToggle;
