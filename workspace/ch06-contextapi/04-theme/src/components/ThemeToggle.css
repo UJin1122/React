@@ -13,6 +13,19 @@
 }
 
 body.dark .theme-toggle {
-  border-color: #555555;
-  color: #ffffff;
+  border-color: #8b7355;
+  color: #f5e6d3;
+  background: linear-gradient(135deg, rgba(26, 61, 46, 0.8) 0%, rgba(45, 26, 26, 0.8) 100%);
+  box-shadow: 0 0 8px rgba(139, 115, 85, 0.3);
+  position: relative;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+body.dark .theme-toggle:hover {
+  background: linear-gradient(135deg, rgba(45, 90, 63, 0.9) 0%, rgba(61, 42, 42, 0.9) 100%);
+  box-shadow: 0 0 15px rgba(139, 115, 85, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-color: #a67c52;
+  transform: translateY(-2px);
+  color: #fff;
 }
