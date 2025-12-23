@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
 interface CounterContextType{
   count:number;
@@ -34,15 +34,6 @@ export function CounterProvider({ children }:{ children: React.ReactNode}){
     </CounterContext>
   );
 
-}
-
-// 3. 커스텀 훅 - null 체크 포함
-export function useCounter() {
-  const context = useContext(CounterContext);
-  if (context === null) {
-    throw new Error('useCounter는 CounterProvider 내부에서 사용해야 합니다.');
-  }
-  return context;
 }
 
 export default CounterContext;

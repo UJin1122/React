@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-      <h1>01 Prop Drilling</h1>
+      <h1>02 Context API - useContext 훅</h1>
       <div id="container">
         <h1>App</h1>
         <div id="grid">
