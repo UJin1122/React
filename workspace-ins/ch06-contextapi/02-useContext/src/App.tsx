@@ -16,7 +16,7 @@ function App() {
       <div id="container">
         <h1>App</h1>
         <div id="grid">
-          {/* 자식 컴포넌트에 Context 제공 */}
+          {/* 3. 자식 컴포넌트에 Context 제공 */}
           <CounterProvider>
             <Left1 />
             <Right1 />

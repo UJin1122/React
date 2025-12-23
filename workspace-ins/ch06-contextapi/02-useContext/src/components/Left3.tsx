@@ -8,12 +8,12 @@ function Left3() {
 
   // 4. 자식 컴포넌트에서 Context 사용
   // 4-1 useContext 훅 사용
-  const counter = useContext(CounterContext);
+  const { count } = useContext(CounterContext);
   
   return (
     <div>
       <h3>Left3</h3>
-      <span>{ counter?.count }</span>
+      <span>{ count }</span>
     </div>
   );
 }
