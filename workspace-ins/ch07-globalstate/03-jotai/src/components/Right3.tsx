@@ -1,4 +1,4 @@
-import { countAtom } from '@/jotai/atoms';
+import { countAtom, countDownAtom } from '@/jotai/atoms';
 import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 
@@ -16,9 +16,14 @@ function Right3() {
     setCount((count) => count + step);
   };
 
+  // 상태 변경 로직은 atom에 직접 정의한 경우
+  const countDown = useSetAtom(countDownAtom);
+
   return (
     <div>
       <h3>Right3</h3>
+      <button onClick={ () => countDown(1) }>-1</button>
+      <button onClick={ () => setCount(0) }>0</button>
       <button onClick={ () => countUp(1) }>+1</button>
     </div>
   );
