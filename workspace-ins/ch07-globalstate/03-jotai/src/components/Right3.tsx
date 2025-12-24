@@ -16,7 +16,7 @@ function Right3() {
     setCount((count) => count + step);
   };
 
-  // 상태 변경 로직은 atom에 직접 정의한 경우
+  // 상태 변경 로직을 atom에 직접 정의한 경우
   const countDown = useSetAtom(countDownAtom);
 
   return (
