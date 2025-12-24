@@ -633,10 +633,17 @@
 <summary><h3>18일차(2025.12.22 월)</h3></summary>
 
 #### 오전(3시간)
-
+* 주말 과제 풀이: Todo List에 기능 추가
+  - 💻 [06 API 서버 연동](./workspace-ins/ch12-app/todolist/06-api)
+    + 수정, 삭제 버튼이 두번 클릭되지 않게 바꾸기
+    + 등록/수정 화면에 카테고리, 중요, 마감일 항목 추가
 
 #### 오후(3시간)
-
+* 🔊 [6장 Context API](./workspace-ins/ch06-contextapi)
+  * 🔊 [1. Context API란?](./workspace-ins/ch06-contextapi#1-context-api란)
+    - 💻 [01 Prop Drilling](./workspace-ins/ch06-contextapi/01-prop-drilling)
+  * 🔊 [2. 사용 방법](./workspace-ins/ch06-contextapi#2-사용-방법)
+    - 💻 [02 Context API - useContext 훅](./workspace-ins/ch06-contextapi/02-useContext)
 
 </details>
 
@@ -644,10 +651,23 @@
 <summary><h3>19일차(2025.12.23 화)</h3></summary>
 
 #### 오전(3시간)
-
+  * 🔊 [2. 사용 방법](./workspace-ins/ch06-contextapi#2-사용-방법)
+    - 💻 [03 Context API - use 훅](./workspace-ins/ch06-contextapi/03-use)
+    - 💻 [04 Context API - 테마 변경](./workspace-ins/ch06-contextapi/04-theme)
 
 #### 오후(3시간)
+* 🔊 [7장 전역 상태 관리](./workspace-ins/ch07-globalstate#7장-전역-상태-관리)
+  * 🔊 [2. Redux](./workspace-ins/ch07-globalstate#2-redux)
+    - 💻 [01 Redux](./workspace-ins/ch07-globalstate/01-redux)
 
+#### 과제
+```
+## 리액트의 전역 상태 관리 라이브러리가 어떤게 있는지 조사한 후 마음에 드는 라이브러리를 이용해서 counter 기능 구현
+- sample/07/workspace/ch07-globalstate/01-redux 폴더를 workspace/homework 하위로 복사 후 라이브러리 이름에 맞게 폴더명 수정
+  - 예시, recoil을 사용할 경우 workspace/homework/recoil 폴더로 이름 변경
+- Right3 컴포넌트의 +1 버튼 클릭 시 Left3 컴포넌트의 count가 증가하는 기능 구현
+  - 개발자도구 콘솔에 `#### Left3 렌더링.`만 출력되는지 확인
+```
 
 </details>
 

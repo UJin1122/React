@@ -5,6 +5,7 @@ import './App.css';
 import { CounterProvider } from '@/contexts/CounterContext';
 import ThemeToggle from '@components/ThemeToggle';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import ChristmasMusic from '@components/ChristmasMusic';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
   return (
     <>
       <ThemeProvider>
+        <ChristmasMusic />
         <h1>04 Context API - 테마 변경 <ThemeToggle /></h1>
         <div id="container">
           <h1>App</h1>

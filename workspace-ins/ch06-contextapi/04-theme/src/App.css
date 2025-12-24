@@ -5,45 +5,234 @@ body {
 }
 
 body.dark {
-  background-color: #1a1a1a;
+  background: linear-gradient(135deg, #0d2818 0%, #1a0d0d 50%, #0d2818 100%);
+  background-attachment: fixed;
   color: #ffffff;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body.dark::before {
+  content: '';
+  position: fixed;
+  width: 195px;
+  height: 130px;
+  background-image: url('/santa.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 20;
+  pointer-events: none;
+  animation: santaRide 20s linear infinite;
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+}
+
+@keyframes santaRide {
+  0% {
+    left: -150px;
+    top: calc(100vh - 120px);
+    transform: scaleX(-1);
+  }
+  25% {
+    left: 25%;
+    top: calc(100vh - 120px);
+    transform: scaleX(-1);
+  }
+  49% {
+    left: calc(100% - 50px);
+    top: calc(100vh - 120px);
+    transform: scaleX(-1);
+  }
+  50% {
+    left: calc(100% + 50px);
+    top: calc(100vh - 120px);
+    transform: scaleX(1);
+  }
+  75% {
+    left: 25%;
+    top: calc(100vh - 120px);
+    transform: scaleX(1);
+  }
+  99% {
+    left: -50px;
+    top: calc(100vh - 120px);
+    transform: scaleX(1);
+  }
+  100% {
+    left: -150px;
+    top: calc(100vh - 120px);
+    transform: scaleX(-1);
+  }
+}
+
+body.dark::after {
+  content: '';
+  position: fixed;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+    radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.6) 1px, transparent 1px),
+    radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.7) 1px, transparent 1px),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+  background-size: 200px 200px, 150px 150px, 180px 180px, 160px 160px;
+  animation: snow 20s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes snow {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
 }
 
 h1, h2, h3 {
   transition: 0.5s ease;
+  position: relative;
+  z-index: 3;
 }
 
+body.dark h1, body.dark h2, body.dark h3 {
+  text-shadow: 
+    0 0 8px rgba(214, 165, 116, 0.4),
+    0 0 15px rgba(214, 165, 116, 0.2),
+    2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #f5e6d3;
+  position: relative;
+}
+
+
 #container, #container > div div {
-  border: 5px solid gray;
+  border: 1px solid gray;
   margin: 10px;
   padding: 5px;
 }
 #grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  position: relative;
+  z-index: 10;
 }
 
 body #container, body #container > div div {
   transition: 0.5s ease;
   border-color: gray;
   background-color: #ffffff;
+  position: relative;
+  z-index: 10;
 }
 
 body.dark #container, body.dark #container > div div {
-  border-color: #555555;
-  background-color: #2a2a2a;
+  border: 1px solid #8b7355;
+  background: linear-gradient(135deg, #1a3d2e 0%, #2d1a1a 100%);
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  animation: borderPulse 3s ease-in-out infinite;
+}
+
+@keyframes borderPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 8px rgba(139, 115, 85, 0.25),
+      inset 0 0 20px rgba(0, 0, 0, 0.3),
+      inset 0 0 30px rgba(214, 165, 116, 0.1),
+      0 0 15px rgba(214, 165, 116, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 0 12px rgba(139, 115, 85, 0.4),
+      inset 0 0 20px rgba(0, 0, 0, 0.3),
+      inset 0 0 30px rgba(214, 165, 116, 0.2),
+      0 0 20px rgba(214, 165, 116, 0.4);
+  }
+}
+
+body.dark #container::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 100vh);
+  max-height: 300vh;
+  background-image: 
+    radial-gradient(circle at 15% 30%, rgba(255, 255, 255, 0.9) 1px, transparent 1px),
+    radial-gradient(circle at 35% 60%, rgba(255, 255, 255, 0.7) 1px, transparent 1px),
+    radial-gradient(circle at 55% 20%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+    radial-gradient(circle at 75% 80%, rgba(255, 255, 255, 0.6) 1px, transparent 1px),
+    radial-gradient(circle at 90% 40%, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+  background-size: 150px 150px, 120px 120px, 130px 130px, 140px 140px, 110px 110px;
+  animation: snow 15s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.dark #container > div div {
+  overflow: hidden;
+}
+
+body.dark #container > div div::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 100vh);
+  max-height: 300vh;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+    radial-gradient(circle at 50% 70%, rgba(255, 255, 255, 0.6) 1px, transparent 1px),
+    radial-gradient(circle at 75% 30%, rgba(255, 255, 255, 0.7) 1px, transparent 1px);
+  background-size: 100px 100px, 90px 90px, 110px 110px;
+  animation: snow 12s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.dark #container {
+  position: relative;
+  background-image: 
+    radial-gradient(circle at 0% 0%, rgba(214, 165, 116, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(214, 165, 116, 0.2) 0%, transparent 50%);
+  background-size: 100px 100px;
+  background-position: top left, bottom right;
+  background-repeat: no-repeat;
 }
 
 button {
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: all 0.3s ease;
   border-color: #000000;
   background-color: #ffffff;
   color: #000000;
+  cursor: pointer;
 }
 
 body.dark button {
-  border-color: #555555;
-  background-color: #2a2a2a;
-  color: #ffffff;
+  border-color: #8b7355;
+  background: linear-gradient(135deg, #1a3d2e 0%, #2d1a1a 100%);
+  color: #f5e6d3;
+  box-shadow: 0 0 8px rgba(139, 115, 85, 0.3);
+  position: relative;
+  z-index: 10;
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
+
+
+body.dark button:hover {
+  background: linear-gradient(135deg, #2d5a3f 0%, #3d2a2a 100%);
+  box-shadow: 0 0 20px rgba(214, 165, 116, 0.6), 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-color: #d4a574;
+  transform: translateY(-2px);
+  color: #fff;
+}
+
 
