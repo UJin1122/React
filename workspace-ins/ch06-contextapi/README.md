@@ -34,19 +34,19 @@
 * 여러 컴포넌트가 상태를 공유해야 한다면 공통의 부모 컴포넌트에서 상태를 관리해야 함.
 
 
-<img src="https://github.com/FEBC-15/react/blob/main/images/context-lifting.webp">
+<img src="../../images/context-lifting.webp">
 [그림 1. 상태 끌어올리기]
 
-<img src="https://github.com/FEBC-15/react/blob/main/images/context-lifting2.webp">
+<img src="../../images/context-lifting2.webp">
 [그림 2. Context API]
 
 ## 1.3 Prop Drilling
 * 상위 컴포넌트의 데이터(state나 함수)를 하위 컴포넌트로 전달하기 위해 중간에 있는 여러 컴포넌트들을 거쳐서 props로 계속 전달하는 작업
 
-<img src="https://github.com/FEBC-15/react/blob/main/images/context-propdrilling.webp">
+<img src="../../images/context-propdrilling.webp">
 [그림 3. prop drilling]
 
-<img src="https://github.com/FEBC-15/react/blob/main/images/context-propdrilling2.webp">
+<img src="../../images/context-propdrilling2.webp">
 [그림 4. Context API]
 
 # 2. 사용 방법
