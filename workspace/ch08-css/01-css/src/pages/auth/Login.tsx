@@ -1,3 +1,4 @@
+import Button from '@components/ui/Button';
 import './Login.css';
 function Login() {
   return (
@@ -12,9 +13,9 @@ function Login() {
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" className="input" autoComplete="current-password" required />
         </div>
-        <button>회원가입</button>
-        <button>로그인</button>
-        <button>아이디 찾기</button>
+        <Button>회원가입</Button>
+        <Button>로그인</Button>
+        <Button>아이디 찾기</Button>
       </form>
     </div>
   );
