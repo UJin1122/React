@@ -5,7 +5,7 @@ function Login() {
   return (
     <div className={ styles.container }>
       <h2>Login</h2>
-      <form className={ styles.from }>
+      <form className={ styles.form }>
         <div className={ styles['input-group'] }>
           <label htmlFor="email">Email:</label>
           <input type="email" id="email" className={ styles.input } autoComplete="email" required />
