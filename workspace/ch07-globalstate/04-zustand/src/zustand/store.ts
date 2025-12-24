@@ -10,19 +10,17 @@ interface CounterState{
 
 const useCounterStore = create<CounterState>((set, get) => ({
   count: 5,
-  countUp: (step) => {
-    const count = get().count;
-    const newCount = count + step;
-    const newState = { count: newCount };
-    set(newState);
-  },
   countReset: () => set({ count: 0 }),
-  countDown: (step) => { 
-    const count = get().count;
-    const newCount = count - step;
-    const newState = { count: newCount };
-    set(newState);
-   },
+  countDown: (step) => {
+    const count = get().count; // 현재 count 값
+    let newCount = count - step; // 새로운 count 값
+    if(newCount < 0){
+      newCount = 0;
+    }
+    const newState = { count: newCount }; // 새로운 상태값
+    set(newState); // 새로운 상태로 변경
+  },
+  countUp: (step) => set({ count: get().count + step }),
    user:{ name:'dd', age: 11}
 }));
 
