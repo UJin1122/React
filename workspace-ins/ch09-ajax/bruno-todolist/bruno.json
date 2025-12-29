@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "게시판",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
