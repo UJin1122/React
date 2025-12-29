@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 function CommentNew() {
 
   const requestAddComment = async (formData: FormData) => {
@@ -10,7 +11,6 @@ function CommentNew() {
   }
   
   // 등록 버튼 누르면 댓글 등록 요청
-  
   const handleAddComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
