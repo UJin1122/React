@@ -1,0 +1,23 @@
+meta {
+  name: 게시물 댓글 등록
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/posts/1/replies
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "content": "댓글 등록",
+    "name": "GD"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
