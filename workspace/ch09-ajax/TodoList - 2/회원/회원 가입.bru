@@ -1,0 +1,28 @@
+meta {
+  name: 회원 가입
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{url}}/users/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "baba93@market.com",
+    "password": "babo",
+    "name": "바바",
+    "phone": "01011112222",
+    "address": "보령보령보령",
+    "type": "user",
+    "image": "https://res.cloudinary.com/ddedslqvv/image/upload/v1762361889/openmarket/bK6Io05NOx1.png"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

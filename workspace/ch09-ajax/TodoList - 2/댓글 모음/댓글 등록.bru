@@ -1,0 +1,22 @@
+meta {
+  name: 댓글 등록
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{url}}/posts/1/replies
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "content": "이유진A"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,22 @@
+meta {
+  name: 댓글 수정
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{url}}/posts/1/replies/2
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "content": "배부르면 졸려요"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
