@@ -24,12 +24,11 @@ function BoardInfo() {
         데이터가 있으면 <h2>{ data.title }</h2><p>{ data.content }</p>
       */}
 
-      <h1>01 Fetch API</h1>
       <h2>1번 게시물 제목</h2>
       <p>1번 게시물 상세 내용</p>
       
       <CommentList />
-      
+
     </>
   );
 }

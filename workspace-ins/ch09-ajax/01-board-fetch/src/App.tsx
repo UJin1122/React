@@ -6,7 +6,10 @@ import BoardInfo from "@/pages/board/BoardInfo";
 
 function App() {
   return (
-    <BoardInfo />
+    <>
+      <h1>01 Fetch API</h1>
+      <BoardInfo />
+    </>
   );  
 }
 
