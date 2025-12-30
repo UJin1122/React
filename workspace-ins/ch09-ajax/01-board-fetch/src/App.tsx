@@ -2,9 +2,14 @@
 //  http://localhost:5173/boardinfo.html 접속하여 확인하기
 //  http://localhost:5173/ 접속하여 확인하기
 
+import BoardInfo from "@/pages/board/BoardInfo";
+
 function App() {
   return (
-    <h1>vite-template</h1>
+    <>
+      <h1>01 Fetch API</h1>
+      <BoardInfo />
+    </>
   );  
 }
 
