@@ -129,8 +129,10 @@ useQuery(options)
 * staleTime: 데이터가 fresh 상태에서 stale 상태로 변경되는 시간 (밀리초, 기본값: 0)
 * gcTime: 사용되지 않는 캐시 데이터가 메모리에서 제거되기까지의 시간 (기본값: 5분)
 * refetchOnMount: 컴포넌트 마운트 시 stale 데이터를 자동으로 재요청할지 여부 (기본값: true)
+  - `false`: stale 데이터를 재요청 안함
   - `"always"`: fresh 상태에서도 재요청
 * refetchOnWindowFocus: 브라우저 창이 포커스를 받을 때 stale 데이터를 자동으로 재요청할지 여부 (기본값: true)
+  - `false`: stale 데이터를 재요청 안함
   - `"always"`: fresh 상태에서도 재요청
 * enabled: 쿼리 실행 여부를 제어 (기본값: true)
   - `false`로 설정하면 쿼리가 실행되지 않음

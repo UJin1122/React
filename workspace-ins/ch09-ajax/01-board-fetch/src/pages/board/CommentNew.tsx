@@ -1,9 +1,8 @@
-import type { BoardReplyCreateRes } from "@/types/board";
+import type { BoardReplyCreateRes, ResData } from "@/types/board";
 import { useState } from "react";
 
 function CommentNew({ reload }: { reload: () => void }) {
-  const [data, setData] = useState<BoardReplyCreateRes | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   const requestAddComment = async (formData: FormData) => {
@@ -24,18 +23,22 @@ function CommentNew({ reload }: { reload: () => void }) {
         body: JSON.stringify(jsonBody)
       });
 
-      if(response.ok){ // 등록 성공
+      const jsonData: ResData<BoardReplyCreateRes> = await response.json();
+
+      if(jsonData.ok){ // 등록 성공
         console.log('등록 성공');
         // 댓글 목록 다시 조회
         reload();
         return true;
       }else{
-        throw new Error('등록 실패');
+        if(jsonData.errors){
+          throw new Error(jsonData.errors.content.msg);
+        }
+        throw new Error(jsonData.message);
       }
       
     }catch(err){ // 네트워크 문제일 경우
       setError(err as Error);
-      setData(null);
       return false;
     }finally{
       // try, catch 블럭이 실행된 후 호출
@@ -59,7 +62,8 @@ function CommentNew({ reload }: { reload: () => void }) {
       <h4>댓글 등록</h4>
       <form onSubmit={handleAddComment}>
         <textarea rows={3} cols={30} placeholder="댓글 내용" name="content"></textarea><br />
-        <button type="submit">등록</button>
+        <button type="submit" disabled={isLoading}>등록</button>
+        { error && <span>{error.message}</span> }
       </form>
     </>
   );
