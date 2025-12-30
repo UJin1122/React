@@ -47,11 +47,57 @@ export interface BoardReplyCreateRes {
   item: BoardReply;
 }
 
+// 데이터 검증 오류 타입
+interface FieldError{
+  type: string;
+  value: string;
+  msg: string;
+  location: string;
+}
+
 // 서버에서 에러를 응답할 경우
 export interface ErrorRes {
   ok: 0;
   message: string;
+  errors:{
+    [field: string]: FieldError;
+  }
 }
 
 // 서버의 응답
 export type ResData<T extends BoardListRes | BoardInfoRes | BoardReplyListRes | BoardReplyCreateRes> = T | ErrorRes;
+
+// 상품 이미지 타입
+export interface ProductImage {
+  path: string;
+  name: string;
+}
+
+// 상품 판매자 타입
+export interface ProductSeller {
+  _id: number;
+  name: string;
+}
+
+// 상품 추가 정보 타입
+export interface ProductExtra {
+  isBest: boolean;
+  isNew: boolean;
+}
+
+// 상품 타입
+export interface ProductType {
+  _id: number;
+  name: string;
+  price: number;
+  shippingFees: number;
+  mainImages: ProductImage[];
+  seller: ProductSeller;
+  extra: ProductExtra;
+}
+
+// 상품 상세 조회 결과 타입
+export interface ProductDetailResponse {
+  ok: 1;
+  item: ProductType;
+}

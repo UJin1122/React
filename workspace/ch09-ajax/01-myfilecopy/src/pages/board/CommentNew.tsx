@@ -1,77 +1,66 @@
-import { _id, url } from "@/types/board";
-import React, { useState } from "react";
+import { useState } from "react";
 import "@/pages/style/CommentNew.css";
 
+function CommentNew({ reload }: { reload: () => void }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
-function CommentNew({ reload }: { reload: () => void; }) {
-  const [name, setName] = useState("");
-  const [content, setContent] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!content.trim()) {
-      alert("댓글 내용을 입력하세요.");
-      return;
-    }
-
-    const formElem = e.currentTarget;
-    const formData = new FormData(formElem);
-    
-    try {
+  const requestAddComment = async (formData: FormData) => {
+    try{
       setIsLoading(true);
+      // FormData를 일반 Object로 변환
       const jsonBody = Object.fromEntries(formData.entries());
-      const response = await fetch(
-        `${url}/posts/${_id}/replies`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "client-id": "openmarket",
-          },
-          body: JSON.stringify(jsonBody),
-        }
-      );
-      if(response.ok){
+      console.log('요청 바디', jsonBody);
+      const response = await fetch('https://fesp-api.koyeb.app/market/posts/1/replies', {
+        headers: {
+          'Client-Id': 'openmarket',
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify(jsonBody)
+      });
+
+      const jsonData = await response.json();
+
+      if(response.ok){ // 등록 성공
         console.log('등록 성공');
-        setName('');
-        setContent('');
+        // 댓글 목록 다시 조회
         reload();
+        return true;
       }else{
-        throw new Error();
+        if(jsonData.errors.msg){
+        throw new Error('등록 실패');
+        }
       }
-    } catch (err) {
+      
+    }catch(err){ // 네트워크 문제일 경우
       setError(err as Error);
-      setData(null);
       return false;
     }finally{
+      // try, catch 블럭이 실행된 후 호출
       setIsLoading(false);
     }
   }
-  const handleAddComment = async(e:React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault
+  
+  // 등록 버튼 누르면 댓글 등록 요청
+  const handleAddComment = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // submit 기본 동작 취소
+    const formElem = event.currentTarget;
+    const formData = new FormData(formElem);
+    const result = await requestAddComment(formData);
+    if(result){ // 등록에 성공했을 경우
+      formElem.reset();
+    }
   }
 
   return (
     <>
       <h4>댓글 등록</h4>
-      <form onSubmit={handleSubmit} className="comment-form">
-        <input
-          type="text"
-          name="name"
-          placeholder="이름"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="text"
-          name="content"
-          className="comment-content"
-          placeholder="댓글 내용"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
-        <button type="submit">등록</button>
+      <form onSubmit={handleAddComment} className="comment-form">
+        <input type="text" name="name" placeholder="이름" />
+        <input type="text" name="content" className="comment-content" placeholder="댓글 내용" />
+        <button type="submit" disabled={isLoading}>{isLoading ? '등록 중...' : '등록'}</button>
+        { error && <span>{ error.message }</span>}
       </form>
     </>
   );

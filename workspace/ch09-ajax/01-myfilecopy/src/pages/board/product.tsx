@@ -1,7 +1,7 @@
 import { _id, url } from "@/types/board";
 import type { ProductType, ProductDetailResponse } from "@/types/board";
 import { useEffect, useState } from "react";
-import "./product.css";
+import "@/pages/style/product.css";
 
 function Product() {
   const [product, setProduct] = useState<ProductType | null>(null);
