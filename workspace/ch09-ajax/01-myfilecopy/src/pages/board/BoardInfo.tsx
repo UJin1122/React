@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { _id, url, type Post } from "@/types/board";
+import { _id, url, type BoardInfo, type BoardInfoRes, type ResData } from "@/types/board";
 import CommentList from "@/pages/board/CommentList";
 
 function BoardInfo() {
-  const [data, setData] = useState<Post | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [data, setData] = useState<BoardInfo | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const requestInfo = async () => {
     try {
@@ -18,17 +18,24 @@ function BoardInfo() {
           },
         }
       );
+      console.log('response', response);
+      const jsonBody: ResData<BoardInfoRes> = await response.json();
+      console.log('jsonBody', (jsonBody as BoardInfoRes).item);
 
-      if (!response.ok) {
-        throw new Error("게시물 정보를 불러오지 못함.");
+      if(jsonBody.ok){
+        // 서버의 응답 상태코드가 2xx(ok:1 성공)일 때는 밑의 내용 표시
+        setData(jsonBody.item);
+        setError(null);
+      }else{ 
+        // 서버의 응답 상태코드가 4xx, 5xx(ok:0 실패)일 때는 밑의 내용 표시
+        // const err = new Error(jsonBody.message) 
+        // setError(err);
+        // setData(null);
+        throw new Error(jsonBody.message);
       }
-
-      const result = await response.json();
-      setData(result.item);
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      }
+      setError(err as Error);
+      setData(null);
     } finally {
       setIsLoading(false);
     }
@@ -38,42 +45,21 @@ function BoardInfo() {
     requestInfo();
   }, []);
 
- 
-  if (isLoading) {
-    return <p>로딩 중...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (!data) {
-    return null;
-  }
-
   return (
     <>
+
+    { isLoading && <><h2>로딩중...</h2><p>잠시만 기다려주세요...</p></>}
+    { error && <><h2>에러 발생</h2><p>{ error.message }</p></>}
+    
+    { data && <>
       <h2>{data.title}</h2>
       <p>{data.content}</p>
-      <CommentList/>
+      </>
+    }
+    <CommentList/>
     </>
   );
 
-  // 삼항 연산자 방식
-  // return (
-  //   <>
-  //     {isLoading ? (<p>로딩 중...</p>) : error 
-  //     ? (<p>{error}</p>) : !data 
-  //     ? null : 
-  //     (
-  //       <>
-  //         <h2>{data.title}</h2>
-  //         <p>{data.content}</p>
-  //       </>
-  //     )
-  //     }
-  //   </>
-  // );
 }
 
 export default BoardInfo;

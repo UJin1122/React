@@ -2,90 +2,56 @@
 // API 참고: https://fesp-api.koyeb.app/market/apidocs/#/게시판
 export const url = "https://fesp-api.koyeb.app/market";
 export const _id = 1;
-
-export interface Post {
+// TODO 2: 타입 추가
+// 아이템 타입
+export interface BoardInfo {
   _id: number;
   title: string;
   content: string;
 }
 
-export interface CommentUser {
+// 목록 조회 결과 타입
+export interface BoardListRes {
+  ok: 1;
+  item: BoardInfo[];
+}
+
+// 상세 조회 결과 타입
+export interface BoardInfoRes {
+  ok: 1;
+  item: BoardInfo;
+}
+
+// 댓글 작성자 타입
+export interface ReplyUser {
   _id: number;
   name: string;
 }
 
-export interface Comment {
+// 댓글 타입
+export interface BoardReply {
   _id: number;
   content: string;
-  user: CommentUser;
-  createdAt: string;
-  updatedAt: string;
-  like?: number;
+  user: ReplyUser;
 }
 
-// 상품 상세 조회 타입
-export interface MainImage {
-  path: string;
-  name: string;
+// 댓글 목록 조회 결과 타입
+export interface BoardReplyListRes {
+  ok: 1;
+  item: BoardReply[];
 }
 
-export interface AddressBook {
-  id: number;
-  name: string;
-  value: string;
+// 댓글 등록 결과 타입
+export interface BoardReplyCreateRes {
+  ok: 1;
+  item: BoardReply;
 }
 
-export interface SellerExtra {
-  confirm: boolean;
-  birthday: string;
-  membershipClass: string;
-  addressBook: AddressBook[];
+// 서버에서 에러를 응답할 경우
+export interface ErrorRes {
+  ok: 0;
+  message: string;
 }
 
-export interface Seller {
-  _id: number;
-  email: string;
-  name: string;
-  phone: string;
-  address: string;
-  type: string;
-  loginType: string;
-  createdAt: string;
-  updatedAt: string;
-  extra: SellerExtra;
-}
-
-export interface ProductExtra {
-  isNew: boolean;
-  isBest: boolean;
-  category: string[];
-  sort: number;
-}
-
-export interface ProductType {
-  _id: number;
-  seller_id: number;
-  price: number;
-  shippingFees: number;
-  show: boolean;
-  active: boolean;
-  name: string;
-  quantity: number;
-  buyQuantity: number;
-  mainImages: MainImage[];
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  extra: ProductExtra;
-  seller: Seller;
-  replies: Comment[];
-  bookmarks: number;
-  rating: number;
-  myBookmarkId: number;
-  options: unknown[];
-}
-
-export interface ProductDetailResponse {
-  ok: number;
-  item: ProductType;
-}
+// 서버의 응답
+export type ResData<T extends BoardListRes | BoardInfoRes | BoardReplyListRes | BoardReplyCreateRes> = T | ErrorRes;

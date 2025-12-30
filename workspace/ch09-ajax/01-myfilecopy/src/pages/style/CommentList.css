@@ -1,0 +1,44 @@
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comment-list li {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.pagination-btn {
+  border: none;
+  cursor: pointer;
+}
+
+.page-btn {
+  border: none;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.page-btn.active {
+  font-weight: bold;
+  background-color: #333333;
+  color: #fff;
+}
+
+.page-btn:not(.active) {
+  font-weight: normal;
+  background-color: transparent;
+  color: #000;
+}

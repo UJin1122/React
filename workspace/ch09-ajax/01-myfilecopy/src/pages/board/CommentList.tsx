@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
-import { _id, url, type Comment } from "@/types/board";
+import { _id, url, type BoardReply, type BoardReplyListRes, type ResData } from "@/types/board";
 import CommentNew from "@/pages/board/CommentNew";
+import "@/pages/style/CommentList.css";
 
 const ITEMS_PER_PAGE = 5;
 const PAGES_PER_GROUP = 5;
 
 function CommentList() {
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState<BoardReply[] | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const requestInfo = async () => {
-    try {
+    try{
       const response = await fetch(
-        `${url}/posts/${_id}`,
+        `${url}/posts/${_id}/replies`,
         {
           method: "GET",
           headers: {
@@ -22,17 +23,19 @@ function CommentList() {
           },
         }
       );
+      console.log('response', response);
+      const jsonBody: ResData<BoardReplyListRes> = await response.json();
+      console.log('jsonBody', (jsonBody as BoardReplyListRes).item);
 
-      if (!response.ok) {
-        throw new Error("댓글을 불러오지 못함.");
+      if(jsonBody.ok){
+        setData(jsonBody.item);
+        setError(null);
+      }else{
+        throw new Error(jsonBody.message);
       }
-
-      const result = await response.json();
-      setComments(result.item.replies);
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      }
+      setError(err as Error);
+      setData(null);
     } finally {
       setIsLoading(false);
     }
@@ -42,20 +45,8 @@ function CommentList() {
     requestInfo();
   }, []);
 
-  if (isLoading) {
-    return <p>로딩 중...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (!comments) {
-    return null;
-  }
-
   // 댓글을 역순으로 정렬
-  const reversedComments = [...comments].reverse();
+  const reversedComments = data ? [...data].reverse() : [];
 
   // 총 페이지 수 계산
   const totalPages = Math.ceil(reversedComments.length / ITEMS_PER_PAGE);
@@ -91,9 +82,13 @@ function CommentList() {
 
   return (
     <>
-    <CommentNew/>
+    <CommentNew reload={requestInfo}/>
       <h3>댓글 목록</h3>
-      <ul>
+
+      { isLoading && <p>댓글 로딩중...</p>}
+      { error && <p>에러: { error.message }</p>}
+
+      <ul className="comment-list">
         {currentComments.map((comment) => (
           <li key={comment._id}>
             {comment.user.name} : {comment.content}
@@ -102,11 +97,12 @@ function CommentList() {
       </ul>
 
       {totalPages > 1 && (
-        <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
-          <button 
-          onClick={handlePrevGroup} 
-          disabled={currentGroup === 1}
-          style={{ border:"none", cursor: "pointer",}}>
+        <div className="pagination">
+          <button
+            onClick={handlePrevGroup}
+            disabled={currentGroup === 1}
+            className="pagination-btn"
+          >
             이전
           </button>
 
@@ -114,16 +110,7 @@ function CommentList() {
             <button
               key={page}
               onClick={() => handlePageChange(page)}
-              style={{
-                fontWeight: currentPage === page ? "bold" : "normal",
-                backgroundColor: currentPage === page ? "#333333" : "transparent",
-                color: currentPage === page ? "#fff" : "#000",
-                border: "none",
-                cursor: "pointer",
-                width: "28px",
-                height: "28px",
-                borderRadius: "50%",                
-              }}
+              className={`page-btn ${currentPage === page ? "active" : ""}`}
             >
               {page}
             </button>
@@ -132,12 +119,11 @@ function CommentList() {
           <button
             onClick={handleNextGroup}
             disabled={groupEndPage === totalPages}
-            style={{ border:"none", cursor: "pointer",}}>
+            className="pagination-btn"
+          >
             다음
           </button>
-          
         </div>
-        
       )}
     </>
   );
