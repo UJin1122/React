@@ -8,12 +8,192 @@
 - [4. XMLHttpRequest 객체](https://github.com/FEBC-15/js/blob/main/docs/09.js_ajax.md#4-xmlhttprequest-객체)
 - [5. Fetch API](https://github.com/FEBC-15/js/blob/main/docs/09.js_ajax.md#5-fetch-api)
 - [6. axios 라이브러리](https://github.com/FEBC-15/js/blob/main/docs/09.js_ajax.md#6-axios-라이브러리)
-- [7. 쿠키를 이용한 클라이언트 상태 관리](https://github.com/FEBC-15/js/blob/main/docs/09.js_ajax.md#7-쿠키를-이용한-클라이언트-상태-관리)
+- [7. React Query(TanStack Query)](#7-react-querytanstack-query)
+  - [7.1 설치](#71-설치)
+  - [7.2 사용 설정](#72-사용-설정)
+  - [7.3 useQuery](#73-usequery)
+  - [7.4 useMutation](#74-usemutation)
 - [8. 데이터 패칭 패턴](#8-데이터-패칭-패턴)
   - [8.1 Fetch-on-render](#81-fetch-on-render)
   - [8.2 Fetch-then-render](#82-fetch-then-render)
   - [8.3 Render-as-you-fetch](#83-render-as-you-fetch)
   - [8.4 패턴 비교 및 선택 가이드](#84-패턴-비교-및-선택-가이드)
+
+## 7. React Query(TanStack Query)
+* 공식 문서: https://tanstack.com/query
+* React에서 서버 상태 관리를 위한 데이터 페칭 라이브러리
+* API 서버로부터 받아온 데이터를 자동으로 캐시하고, 서버 상태와 클라이언트 상태를 동기화
+* Pagination, Infinite Scroll 등 대용량 데이터 처리에 필요한 성능 최적화 기능 제공
+
+### 7.1 설치
+* React Query
+  ```sh
+  npm i @tanstack/react-query
+  ```
+
+* 개발자 도구
+  ```sh
+  npm i @tanstack/react-query-devtools
+  ```
+  - 개발자 도구 사용 방법 참고: https://tanstack.com/query/latest/docs/framework/react/devtools
+
+### 7.2 사용 설정
+* main.tsx에 추가
+  ```tsx
+  import { StrictMode } from 'react'
+  import { createRoot } from 'react-dom/client'
+  import App from './App.tsx'
+  import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+  import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+  const queryClient = new QueryClient();
+
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <QueryClientProvider client={ queryClient }>
+        <App />
+        <ReactQueryDevtools initialIsOpen={ false } />
+      </QueryClientProvider>
+    </StrictMode>,
+  )
+  ```
+
+### 7.3 useQuery
+* 서버의 데이터를 조회할 때 사용하는 Hook (GET 요청)
+* 응답받은 데이터는 자동으로 캐시되며, 동일한 쿼리 요청 시 서버에 재요청하지 않고 캐시된 데이터를 반환
+* 캐시 상태
+  - fresh: 쿼리 실행 후 캐시된 데이터가 최신 상태로 유지되는 기간
+    + 이 상태에서는 동일한 쿼리 요청 시 서버에 요청하지 않고 캐시된 데이터를 즉시 반환
+    + `staleTime` 속성으로 fresh 상태 유지 시간을 설정 가능 (기본값: 0)
+  - stale: fresh 상태가 지난 후의 캐시 상태
+    + 동일한 쿼리 요청 시 먼저 캐시된 데이터를 반환하고, 백그라운드에서 서버에 새로운 데이터를 요청
+    + 서버에서 데이터가 도착하면 캐시를 업데이트하고 컴포넌트를 리렌더링
+
+#### API
+```tsx
+useQuery(options)
+```
+
+##### options
+* queryKey (필수)
+  - 쿼리를 식별하는 고유한 키 값 (배열 형태)
+  - 동일한 `queryKey`를 사용하는 쿼리는 같은 요청으로 인식되어 캐시된 결과를 공유
+  - 계층적 구조로 작성하여 관련된 쿼리를 그룹화 가능
+    
+* queryFn (필수)
+  - 쿼리 실행 시 호출되는 함수로, Promise를 반환해야 함
+  - 일반적으로 axios나 fetch를 사용한 API 호출 함수를 반환
+
+  ```tsx
+  // 게시물 목록 조회
+  useQuery({
+    queryKey: ['posts'],
+    queryFn: () => axiosInstance.get('/posts'),
+  });
+  
+  // 3번 게시물 상세 조회
+  useQuery({
+    queryKey: ['posts', '3'],
+    queryFn: () => axiosInstance.get('/posts/3'),
+  });
+  
+  // 3번 게시물 댓글 목록 조회
+  useQuery({
+    queryKey: ['posts', '3', 'replies'],
+    queryFn: () => axiosInstance.get('/posts/3/replies'),
+  });
+  ```
+
+* select: queryFn이 반환한 데이터를 변환하거나 특정 부분만 추출하는 함수 (선택사항)
+  - 원본 데이터를 변환하거나 필요한 필드만 추출할 때 사용
+  - select 함수가 반환한 값이 쿼리의 `data`로 설정됨
+  - 사용 예시
+    ```tsx
+    // axios 응답에서 실제 데이터만 추출
+    useQuery({
+      queryKey: ['posts', '1'],
+      queryFn: () => axiosInstance.get('/posts/1'),
+      select: (response) => response.data.item, // response.data.item만 반환
+    });
+    
+    // 배열에서 특정 필드만 추출
+    useQuery({
+      queryKey: ['posts'],
+      queryFn: () => axiosInstance.get('/posts'),
+      select: (response) => response.data.items.map(post => ({
+        id: post._id,
+        title: post.title
+      })),
+    });
+    ```
+* staleTime: 데이터가 fresh 상태에서 stale 상태로 변경되는 시간 (밀리초, 기본값: 0)
+* gcTime: 사용되지 않는 캐시 데이터가 메모리에서 제거되기까지의 시간 (기본값: 5분)
+* refetchOnMount: 컴포넌트 마운트 시 stale 데이터를 자동으로 재요청할지 여부 (기본값: true)
+  - `"always"`: fresh 상태에서도 재요청
+* refetchOnWindowFocus: 브라우저 창이 포커스를 받을 때 stale 데이터를 자동으로 재요청할지 여부 (기본값: true)
+  - `"always"`: fresh 상태에서도 재요청
+* enabled: 쿼리 실행 여부를 제어 (기본값: true)
+  - `false`로 설정하면 쿼리가 실행되지 않음
+* retry: 실패한 쿼리의 재시도 설정 (기본값: 3)
+  - `true`: 무한 재시도
+  - `false`: 재시도하지 않음
+  - 정수: 재시도 횟수
+* suspense: React Suspense와 함께 사용할지 여부 (기본값: false)
+  - `true`로 설정하면 `useSuspenseQuery`와 동일하게 동작
+* 기타 옵션: https://tanstack.com/query/latest/docs/framework/react/reference/useQuery
+
+##### 반환값
+* 다음 속성을 가진 객체를 반환
+  - isLoading: 쿼리가 처음 실행 중이거나 데이터가 없을 때 `true` (캐시된 데이터가 있으면 `false`)
+  - isFetching: 쿼리가 현재 실행 중일 때 `true` (백그라운드 재요청 포함)
+  - error: 쿼리 실행 중 발생한 에러 객체
+  - data: 쿼리 성공 시 받은 데이터 (초기에는 `undefined`)
+  - status: 쿼리 상태 (`'pending'`, `'error'`, `'success'`)
+  - 기타 속성: https://tanstack.com/query/latest/docs/framework/react/reference/useQuery
+
+### 7.4 useMutation
+* 서버의 데이터를 변경할 때 사용하는 Hook (POST, PUT, PATCH, DELETE)
+* `useMutation`은 Hook이므로 컴포넌트의 최상위 레벨에서 호출해야 함
+* 데이터 변경 작업(등록, 수정, 삭제)은 대부분 사용자 액션에 의해 실행되므로, `useMutation`은 쿼리를 즉시 실행하지 않고 실행 함수(`mutate`)를 반환
+* 이벤트 핸들러 내에서 반환된 `mutate` 함수를 호출하여 실제 데이터 변경 요청 실행
+
+#### API
+* useMutation(options)
+
+##### options
+* mutationFn (필수)
+  - `mutate` 함수 호출 시 실행되는 함수로, Promise를 반환해야 함
+  - 일반적으로 axios의 POST, PUT, PATCH, DELETE 메서드를 사용한 API 호출 함수를 반환
+* gcTime, retry: `useQuery` 옵션과 동일 (참조: useQuery 설명)
+* onSuccess: mutation 성공 시 실행되는 콜백 함수 (매개변수: 서버 응답 데이터)
+* onError: mutation 실패 시 실행되는 콜백 함수 (매개변수: 에러 객체)
+* onSettled: mutation 성공/실패와 관계없이 실행되는 콜백 함수 (매개변수: data, error)
+  - `onSuccess`, `onError`, `onSettled`는 `useMutation` 옵션뿐만 아니라 `mutate` 함수 호출 시 옵션으로도 전달 가능(useMutation의 콜백 함수가 먼저 실행된 후 mutate의 콜백 함수도 실행)
+* 기타 옵션: https://tanstack.com/query/latest/docs/react/reference/useMutation
+
+##### 반환값
+* 다음 속성을 가진 객체를 반환
+  - mutate: mutation을 실행하는 함수 (이벤트 핸들러에서 호출)
+  - mutateAsync: Promise를 반환하는 mutation 실행 함수
+  - isLoading: mutation이 실행 중일 때 `true`
+  - error: mutation 실행 중 발생한 에러 객체
+  - data: mutation 성공 시 받은 서버 응답 데이터
+  - status: mutation 상태 (`'idle'`, `'pending'`, `'error'`, `'success'`)
+  - 기타 속성: https://tanstack.com/query/latest/docs/react/reference/useMutation
+
+##### invalidateQueries
+* 특정 쿼리를 무효화(stale)하여 자동으로 재요청하도록 하는 메서드
+* 데이터 변경 후 관련된 쿼리 데이터를 최신 상태로 갱신할 때 사용
+* 사용 예시
+  ```tsx
+  import { useQueryClient } from '@tanstack/react-query';
+  
+  const queryClient = useQueryClient();
+  
+  // 새로운 댓글 작성 후 3번 게시물의 댓글 목록을 무효화하여 재요청
+  queryClient.invalidateQueries({ queryKey: ['posts', 3, 'replies'] });
+  ```
+* 참고: https://tanstack.com/query/latest/docs/reference/QueryClient/#queryclientinvalidatequeries
 
 # 8. 데이터 패칭 패턴
 * 컴포넌트 렌더링과 비동기 데이터 로드 간의 관계를 정의하는 패턴으로, 각 패턴은 데이터 요청과 UI 렌더링의 타이밍을 다르게 처리함
@@ -366,6 +546,6 @@ function App() {
 | Render-as-you-fetch | 가져오는 동시에 렌더링 | 최적화됨 | 중복 없음 | 높음 | 성능이 중요한 대규모 프로젝트 |
 
 ### 8.4.2 선택 가이드
-* **Fetch-on-render**: 프로토타입이나 작은 프로젝트에서 빠르게 개발할 때 적합
-* **Fetch-then-render**: 부모-자식 컴포넌트 간 데이터 공유가 필요한 경우 적합
-* **Render-as-you-fetch**: 사용자 경험과 성능이 중요한 프로덕션 환경에서 적합
+* Fetch-on-render: 프로토타입이나 작은 프로젝트에서 빠르게 개발할 때 적합
+* Fetch-then-render: 부모-자식 컴포넌트 간 데이터 공유가 필요한 경우 적합
+* Render-as-you-fetch: 사용자 경험과 성능이 중요한 프로덕션 환경에서 적합
