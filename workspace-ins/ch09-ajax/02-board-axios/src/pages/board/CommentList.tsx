@@ -1,5 +1,6 @@
 import CommentNew from "@/pages/board/CommentNew";
 import type { BoardReply, BoardReplyListRes, ResData } from "@/types/board";
+import { getAxiosInstance } from "@/utils/axiosInstance";
 import { useEffect, useState } from "react";
 
 function CommentList() {
@@ -8,21 +9,16 @@ function CommentList() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+  const axiosInstance = getAxiosInstance();
+
   const requestCommentList = async () => {
     // TODO 3: API 서버에 1번 게시물의 댓글 목록을 axios 라이브러리로 요청을 보낸다.
     // API 참고: https://fesp-api.koyeb.app/market/apidocs/#/게시판/get_posts___id__replies
     // client-id: 'openmarket'
     try{
       setIsLoading(true);
-      const response = await fetch('https://fesp-api.koyeb.app/market/posts/1/replies', {
-        headers: {
-          'Client-Id': 'openmarket'
-        }
-      });
-
-      console.log('respons', response);
-      const jsonBody: ResData<BoardReplyListRes> = await response.json();
-      console.log('jsonBody', jsonBody);
+      const response = await axiosInstance.get<ResData<BoardReplyListRes>>('/posts/2/replies');
+      const jsonBody = response.data;
 
       if(jsonBody.ok){ // 서버의 응답 상태코드가 2xx일 경우 ok는 true가 됨
         setData(jsonBody.item);

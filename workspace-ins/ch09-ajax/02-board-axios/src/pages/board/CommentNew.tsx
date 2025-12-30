@@ -1,9 +1,11 @@
-import type { BoardReplyCreateRes, ResData } from "@/types/board";
+import { getAxiosInstance } from "@/utils/axiosInstance";
 import { useState } from "react";
 
 function CommentNew({ reload }: { reload: () => void }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+
+  const axiosInstance = getAxiosInstance();
 
   const requestAddComment = async (formData: FormData) => {
     // TODO 4: API 서버에 댓글 등록을 axios 라이브러리로 요청을 보낸다.
@@ -11,19 +13,9 @@ function CommentNew({ reload }: { reload: () => void }) {
     // client-id: 'openmarket'
     try{
       setIsLoading(true);
-      // FormData를 일반 Object로 변환
-      const jsonBody = Object.fromEntries(formData.entries());
-      console.log('요청 바디', jsonBody);
-      const response = await fetch('https://fesp-api.koyeb.app/market/posts/1/replies', {
-        headers: {
-          'Client-Id': 'openmarket',
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify(jsonBody)
-      });
 
-      const jsonData: ResData<BoardReplyCreateRes> = await response.json();
+      const response = await axiosInstance.post('/posts/2/replies', formData);
+      const jsonData = response.data;
 
       if(jsonData.ok){ // 등록 성공
         console.log('등록 성공');
