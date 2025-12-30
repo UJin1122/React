@@ -1,7 +1,7 @@
 function CommentNew() {
   const requestAddComment = async (formData: FormData) => {
     console.log(formData);
-    // TODO 7: API 서버에 댓글 등록을 axios 라이브러리로 요청 보낸다.
+    // TODO 8: API 서버에 댓글 등록을 axios 라이브러리로 요청 보낸다.
     // API 참고: https://fesp-api.koyeb.app/market/apidocs/#/게시판/post_posts___id__replies
     // client-id: 'openmarket'
 

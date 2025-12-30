@@ -2,11 +2,11 @@ import CommentList from "@/pages/board/CommentList";
 import { useEffect } from "react";
 
 function BoardInfo() {
-  // TODO 2: data, error, isLoading 상태 관리
+  // TODO 3: data, error, isLoading 상태 관리
 
 
   const requestInfo = async () => {
-    // TODO 1: API 서버에 1번 게시물의 상세정보를 axios 라이브러리로 요청 보낸다.
+    // TODO 2: API 서버에 1번 게시물의 상세정보를 axios 라이브러리로 요청 보낸다.
     // API 참고: https://fesp-api.koyeb.app/market/apidocs/#/게시판/get_posts___id_
     // client-id: 'openmarket'
     
@@ -19,7 +19,7 @@ function BoardInfo() {
     
   return (
     <>
-      {/* TODO 3: 로딩중, 에러, 데이터가 있을 때 화면에 표시
+      {/* TODO 4: 로딩중, 에러, 데이터가 있을 때 화면에 표시
         로딩중에는 <p>로딩중...</p> 표시
         에러가 발생하면 <p>{ error.message }</p>
         데이터가 있으면 <h2>{ data.title }</h2><p>{ data.content }</p>
