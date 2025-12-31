@@ -7,8 +7,8 @@ const axiosInstance = getAxiosInstance();
 
 function BoardInfo({ postId }: { postId: number }) {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['posts', '3'],
-    queryFn: () => axiosInstance.get<BoardInfoRes>('/posts/3'),
+    queryKey: ['posts', postId],
+    queryFn: () => axiosInstance.get<BoardInfoRes>(`/posts/${postId}`),
     select: (response) => response.data.item,
   });
 
@@ -21,7 +21,7 @@ function BoardInfo({ postId }: { postId: number }) {
         <h2>{ data._id } 번 게시물: { data.title }</h2>
         <p>{ data.content }</p>
       </> }      
-      <CommentList />
+      <CommentList postId={postId}/>
     </>
   );
 }

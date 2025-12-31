@@ -5,10 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 
 const axiosInstance = getAxiosInstance();
 
-function CommentList() {
+function CommentList({ postId }: { postId: number }) {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['posts', '3', 'replies'],
-    queryFn: () => axiosInstance.get<BoardReplyListRes>('/posts/3/replies'),
+    queryKey: ['posts', postId, 'replies'],
+    queryFn: () => axiosInstance.get<BoardReplyListRes>(`/posts/${postId}/replies`),
     select: (response) => response.data.item,
     staleTime: 1000*10, // 일정 시간동안 캐시해서 서버 호출 횟수 줄임
     refetchOnWindowFocus: false, // 다른탭이나 앱에서 작업 후에 돌아오면 데이터를 자동으로 갱신할지 여부
@@ -29,7 +29,7 @@ function CommentList() {
         </ul>
       </> }
 
-      <CommentNew />
+      <CommentNew postId={postId}/>
     </>
   );
 }
