@@ -714,10 +714,12 @@
 <summary><h3>21일차(2025.12.29 월)</h3></summary>
 
 #### 오전(3시간)
-
+* 🔊 1장에서 8장까지 정리
+* 🔊 [9장 HTTP 통신과 Ajax](./workspace-ins/ch09-ajax#9장-http-통신과-ajax)
 
 #### 오후(3시간)
-
+* 9장 HTTP 통신과 Ajax
+  * 💻 [01 Fetch API](./workspace-ins/ch09-ajax/01-board-fetch) 수강생 실습
 
 </details>
 
@@ -725,10 +727,15 @@
 <summary><h3>22일차(2025.12.30 화)</h3></summary>
 
 #### 오전(3시간)
-
+* 9장 HTTP 통신과 Ajax
+  * 💻 [01 Fetch API](./workspace-ins/ch09-ajax/01-board-fetch)
 
 #### 오후(3시간)
-
+* 9장 HTTP 통신과 Ajax
+  * 💻 [02 Axios 라이브러리](./workspace-ins/ch09-ajax/02-board-axios)
+    + workspace/ch09-ajax/01-board-fetch 폴더 복사해서 workspace/ch09-ajax/02-board-axios 폴더 생성
+  * 💻 [03 React Query 라이브러리](./workspace-ins/ch09-ajax/03-board-reactquery)
+    + workspace/ch09-ajax/01-board-axios 폴더 복사해서 workspace/ch09-ajax/03-board-reactquery 폴더 생성
 
 </details>
 
