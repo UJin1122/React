@@ -1,37 +1,18 @@
-import { useEffect, useState } from "react";
-import { _id, type BoardInfo as BoardInfoType, type BoardInfoRes } from "@/types/board";
+import { type BoardInfoRes } from "@/types/board";
 import CommentList from "@/pages/board/CommentList";
 import { getAxios } from "@/pages/utils/axiosInstance";
+import { useQuery } from "@tanstack/react-query";
 
 const axiosInstance = getAxios();
 
-function BoardInfo() {
-  const [data, setData] = useState<BoardInfoType | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  
-  
-  const requestInfo = async () => {
-    try {
-      setIsLoading(true);
-      
-      const response = await axiosInstance.get<BoardInfoRes>(`/posts/${_id}`);
-      console.log('response', response);
-      console.log('jsonBody', response.data.item);
+function BoardInfo({ postId }: { postId: number }) {
 
-      setData(response.data.item);
-      setError(null);
-    } catch (err) {
-      setError(err as Error);
-      setData(null);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    requestInfo();
-  }, []);
+  const {data, isLoading, error} = useQuery({
+    queryKey: ['post', postId],
+    queryFn: () => axiosInstance.get<BoardInfoRes>(`/posts/${postId}`),
+    select: (response) => response.data.item,
+  });
+  
 
   return (
     <>
@@ -44,7 +25,7 @@ function BoardInfo() {
       <p>{data.content}</p>
       </>
     }
-    <CommentList/>
+    <CommentList postId={postId}/>
     </>
   );
 

@@ -1,41 +1,28 @@
-import { useEffect, useState } from "react";
-import { _id, type BoardReply, type BoardReplyListRes } from "@/types/board";
+import { useState } from "react";
+import { type BoardReplyListRes } from "@/types/board";
 import CommentNew from "@/pages/board/CommentNew";
 import DeleteComment from "@/pages/board/DeleteComment";
 import "@/pages/style/CommentList.css";
 import { getAxios } from "@/pages/utils/axiosInstance";
+import { useQuery } from "@tanstack/react-query";
 
 const ITEMS_PER_PAGE = 5;
 const PAGES_PER_GROUP = 5;
 const axiosInstance = getAxios();
 
-function CommentList() {
-  const [data, setData] = useState<BoardReply[] | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  
+function CommentList({ postId }: { postId: number }) {
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const requestInfo = async () => {
-    try{
-      const response = await axiosInstance.get<BoardReplyListRes>(`/posts/${_id}/replies`);
-      console.log('response', response);
-      console.log('jsonBody', response.data.item);
+  const {data, isLoading, error, refetch} = useQuery({
+    queryKey: ['post', postId, 'replies'],
+    queryFn: () => axiosInstance.get<BoardReplyListRes>(`/posts/${ postId }/replies`),
+    select: (response) => response.data.item,
+    staleTime: 1000*10,
+    refetchOnWindowFocus: false,  // 다른 탭/앱에 
+    refetchInterval: 2000,
+  });
 
-      setData(response.data.item);
-      setError(null);
-    } catch (err) {
-      setError(err as Error);
-      setData(null);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    requestInfo();
-  }, []);
-
+ 
   // 댓글을 역순으로 정렬
   const reversedComments = data ? [...data].reverse() : [];
 
@@ -48,6 +35,12 @@ function CommentList() {
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
+  const list = currentComments.map((comment) => (
+    <li key={comment._id}>
+      {comment.user.name} : {comment.content}
+      <DeleteComment postId={postId} commentId={comment._id} onDelete={refetch} />
+    </li>
+  ))
 
   // 현재 페이지 그룹 계산 (1~5, 6~10, 11~15 ...)
   const currentGroup = Math.ceil(currentPage / PAGES_PER_GROUP);
@@ -73,19 +66,14 @@ function CommentList() {
 
   return (
     <>
-    <CommentNew reload={requestInfo}/>
+    <CommentNew postId={ postId }/>
       <h3>댓글 목록</h3>
 
       { isLoading && <p>댓글 로딩중...</p>}
       { error && <p>에러: { error.message }</p>}
 
       <ul className="comment-list">
-        {currentComments.map((comment) => (
-          <li key={comment._id}>
-            {comment.user.name} : {comment.content}
-            <DeleteComment commentId={comment._id} onDelete={requestInfo} />
-          </li>
-        ))}
+        { list }
       </ul>
 
       {totalPages > 1 && (

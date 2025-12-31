@@ -1,44 +1,31 @@
-import { useState } from "react";
 import "@/pages/style/CommentNew.css";
 import { getAxios } from "@/pages/utils/axiosInstance";
-import { _id } from "@/types/board";
+import { type BoardReplyCreateRes } from "@/types/board";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const axiosInstance = getAxios();
 
-function CommentNew({ reload }: { reload: () => void }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-  
-  
+function CommentNew({ postId }: { postId: number }) {
+  const queryClient = useQueryClient();
 
-  const requestAddComment = async (formData: FormData) => {
-    try{
-      setIsLoading(true);
-      
-      const response = await axiosInstance.post(`/posts/${_id}/replies`, formData);
-
-      console.log('등록 성공', response.data);
-      // 댓글 목록 다시 조회
-      reload();
-      return true;
-    }catch(err){ // 네트워크 문제일 경우
-      setError(err as Error);
-      return false;
-    }finally{
-      // try, catch 블럭이 실행된 후 호출
-      setIsLoading(false);
-    }
-  }
+  const { mutate: requestAddComment, isPending, error } = useMutation({
+    mutationFn: (formData: FormData) => axiosInstance.post<BoardReplyCreateRes>(`/posts/${ postId }/replies`, formData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['post', `${ postId }`, 'replies'] });
+    },
+  });
 
   // 등록 버튼 누르면 댓글 등록 요청
   const handleAddComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // submit 기본 동작 취소
     const formElem = event.currentTarget;
     const formData = new FormData(formElem);
-    const result = await requestAddComment(formData);
-    if(result){ // 등록에 성공했을 경우
-      formElem.reset();
-    }
+    requestAddComment(formData,{
+      onSuccess: () =>{
+        formElem.reset();
+      }
+    });
+    
   }
 
   return (
@@ -47,7 +34,7 @@ function CommentNew({ reload }: { reload: () => void }) {
       <form onSubmit={handleAddComment} className="comment-form">
         <input type="text" name="name" placeholder="이름" />
         <input type="text" name="content" className="comment-content" placeholder="댓글 내용" />
-        <button type="submit" disabled={isLoading}>{isLoading ? '등록 중...' : '등록'}</button>
+        <button type="submit" disabled={ isPending }>등록</button>
         { error && <span>{ error.message }</span>}
       </form>
     </>

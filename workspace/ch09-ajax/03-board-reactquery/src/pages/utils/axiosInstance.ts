@@ -10,6 +10,7 @@ export function getAxios() {
       // 설정하지 않으면 크롬일 경우 "application/json, text/plain, */*"
       Accept: 'application/json', // 응답 바디의 데이터 타입이 json이면 좋겠음
       'Client-Id': 'openmarket',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjYsInR5cGUiOiJ1c2VyIiwiaWF0IjoxNzY3MTU0Njg5LCJleHAiOjE3NjcyNDEwODksImlzcyI6IkZFQkMifQ.g8ruQSm0DWs1Bk2zSSEMnllz60zAaGsFV0FCPUkGLCM',
     }
   });
 

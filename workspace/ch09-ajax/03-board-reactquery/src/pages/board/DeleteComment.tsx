@@ -1,13 +1,13 @@
 import { getAxios } from "@/pages/utils/axiosInstance";
 import { useState } from "react";
-import { _id } from "@/types/board";
 
 interface DeleteCommentProps {
+  postId: number;
   commentId: number;
   onDelete: () => void;
 }
 
-function DeleteComment({ commentId, onDelete }: DeleteCommentProps) {
+function DeleteComment({ postId, commentId, onDelete }: DeleteCommentProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleDelete = async () => {
@@ -18,9 +18,9 @@ function DeleteComment({ commentId, onDelete }: DeleteCommentProps) {
     setIsLoading(true);
     try {
       const axios = getAxios();
-      // DELETE /posts/{_id}/replies/{reply_id}
-      console.log('삭제 요청:', `/posts/${_id}/replies/${commentId}`);
-      const response = await axios.delete(`/posts/${_id}/replies/${commentId}`);
+      // DELETE /posts/{postId}/replies/{reply_id}
+      console.log('삭제 요청:', `/posts/${postId}/replies/${commentId}`);
+      const response = await axios.delete(`/posts/${postId}/replies/${commentId}`);
       console.log('댓글 삭제 성공:', response);
       onDelete(); // 삭제 후 목록 새로고침
     } catch (err: unknown) {

@@ -1,19 +1,13 @@
 meta {
-  name: 댓글 수정
+  name: 댓글 삭제
   type: http
-  seq: 5
+  seq: 4
 }
 
-patch {
+delete {
   url: {{url}}/posts/3/replies/315
-  body: json
+  body: none
   auth: inherit
-}
-
-body:json {
-  {
-    "content": "배부르면 졸려요"
-  }
 }
 
 settings {

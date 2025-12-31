@@ -92,17 +92,6 @@ function Product() {
       )}
     </>
   );
-
-  // 원래 return 코드
-  // if (!product) {
-  //   return <div className="loading">로딩 중...</div>;
-  // }
-  //
-  // return (
-  //   <div className="product-container">
-  //     ...
-  //   </div>
-  // );
 }
 
 export default Product;
