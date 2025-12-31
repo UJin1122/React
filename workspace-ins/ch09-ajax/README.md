@@ -177,7 +177,7 @@ useQuery(options)
 * 다음 속성을 가진 객체를 반환
   - mutate: mutation을 실행하는 함수 (이벤트 핸들러에서 호출)
   - mutateAsync: Promise를 반환하는 mutation 실행 함수
-  - isLoading: mutation이 실행 중일 때 `true`
+  - isPending: mutation이 실행 중일 때 `true`
   - error: mutation 실행 중 발생한 에러 객체
   - data: mutation 성공 시 받은 서버 응답 데이터
   - status: mutation 상태 (`'idle'`, `'pending'`, `'error'`, `'success'`)
