@@ -186,8 +186,6 @@
     resolve: {
       alias: [
         { find: "@", replacement: "/src" },
-        { find: "@components", replacement: "/src/components" },
-        { find: "@pages", replacement: "/src/pages" },
       ],
     },
   })
@@ -200,9 +198,7 @@
     "compilerOptions": {
       "baseUrl": ".",
       "paths": {
-        "@components/*": ["src/components/*"],
-        "@pages/*": ["src/pages/*"],
-        "@/*": ["src/*"],
+        "@/*": ["./*"],
       },
     }
   }
