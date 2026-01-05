@@ -84,7 +84,7 @@ npm install next@latest react@latest react-dom@latest
 * pages 디렉토리: Pages 라우터 사용
 
   ```sh
-  mkdir -p src/app
+  mkdir -p app
   ```
 
 <img src="../../images/nextjs/app-getting-started.png" width="800">
@@ -1248,7 +1248,7 @@ export function POST(request: NextRequest) {
 * 게시물 등록
 
 ```tsx
-// src/data/actions/boardAction.ts
+// data/actions/boardAction.ts
 'use server';
 
 import { PostRes } from "@/types/board";
@@ -1269,7 +1269,7 @@ export async function createPost(prevState: PostRes, formData: FormData) {
 ```
 
 ```tsx
-// src/app/posts/new/RegistForm.tsx
+// app/posts/new/RegistForm.tsx
 'use client';
 
 import { createPost } from "@/data/actions/boardAction";
@@ -1293,7 +1293,7 @@ export default function RegistForm() {
 * 게시물 목록 조회
 
 ```tsx
-// src/data/functions/boardFetch.ts
+// data/functions/boardFetch.ts
 import { Post } from "@/types/board";
 
 export async function fetchPosts(): Promise<Post[]> {
@@ -1308,7 +1308,7 @@ export async function fetchPosts(): Promise<Post[]> {
 ```
 
 ```tsx
-// src/app/posts/page.tsx
+// app/posts/page.tsx
 import Link from "next/link";
 import { fetchPosts } from "@/data/functions/boardFetch";
 
