@@ -3,6 +3,37 @@
 * React
 * Vite
 
+## 목차
+- [0 개발 준비](#0-개발-준비)
+  - [0.1 샘플 코드 테스트](#01-샘플-코드-테스트)
+  - [0.2 프로젝트 생성](#02-프로젝트-생성)
+  - [0.3 추가 패키지 설치](#03-추가-패키지-설치)
+  - [0.4 불필요한 파일 정리](#04-불필요한-파일-정리)
+  - [0.5 프로젝트 설정](#05-프로젝트-설정)
+- [1 Step 01 - html 파일을 리액트 컴포넌트로 변환](#1-step-01---html-파일을-리액트-컴포넌트로-변환)
+  - [1.1 정적인 자원 처리](#11-정적인-자원-처리)
+  - [1.2 UI 컴포넌트 작성](#12-ui-컴포넌트-작성)
+  - [1.3 라우터 작성](#13-라우터-작성)
+  - [1.4 src 폴더 전체 구조](#14-src-폴더-전체-구조)
+  - [1.5 Step 01 완료](#15-step-01-완료)
+- [2 Step 02 - API 서버 연동](#2-step-02---api-서버-연동)
+  - [2.1 준비](#21-준비)
+  - [2.2 타입 정의](#22-타입-정의)
+  - [2.3 React Query 설정](#23-react-query-설정)
+  - [2.4 axios 유틸리티 작성](#24-axios-유틸리티-작성)
+  - [2.5 API 서버 호출 로직 작성](#25-api-서버-호출-로직-작성)
+  - [2.6 게시물 목록 조회 컴포넌트 작성](#26-게시물-목록-조회-컴포넌트-작성)
+  - [2.7 게시물 상세 조회 컴포넌트 작성](#27-게시물-상세-조회-컴포넌트-작성)
+  - [2.8 댓글 목록 조회 컴포넌트 작성](#28-댓글-목록-조회-컴포넌트-작성)
+  - [2.9 회원 가입 컴포넌트 작성](#29-회원-가입-컴포넌트-작성)
+  - [2.10 로그인 컴포넌트 작성](#210-로그인-컴포넌트-작성)
+  - [2.11 게시물 등록 컴포넌트 작성](#211-게시물-등록-컴포넌트-작성)
+  - [2.12 게시물 수정 컴포넌트 작성](#212-게시물-수정-컴포넌트-작성)
+  - [2.13 댓글 등록 컴포넌트 작성](#213-댓글-등록-컴포넌트-작성)
+  - [2.14 댓글 삭제 기능 구현](#214-댓글-삭제-기능-구현)
+  - [2.15 게시물 삭제 기능 구현](#215-게시물-삭제-기능-구현)
+  - [2.16 Step 02 완료](#216-step-02-완료)
+
 # 0 개발 준비
 
 ## 0.1 샘플 코드 테스트
@@ -445,11 +476,1324 @@ export default MainPage;
 * submit 버튼을 제외한 모든 링크 클릭시 페이지 새로고침이 발생하지 않아야 함
   - 개발자 도구의 Network 탭에 서버에 요청한 내역이 없어야 함
 
-## 1.4 Step 01 완료
+## 1.4 src 폴더 전체 구조
+```
+src/
+├── components/                   # 재사용 가능한 컴포넌트
+│   └── layout/                   # 레이아웃 관련 컴포넌트
+│       │── Footer.tsx            # 하단 푸터 컴포넌트
+│       │── Header.tsx            # 상단 헤더 컴포넌트
+│       └── index.tsx             # 레이아웃 컴포넌트
+│── pages/                        # 페이지 컴포넌트
+│    │── board/                   # 게시판 관련 페이지
+│    │   ├── CommentList.tsx      # 댓글 목록 컴포넌트
+│    │   ├── CommentListItem.tsx  # 댓글 아이템 컴포넌트
+│    │   ├── CommentNew.tsx       # 댓글 작성 컴포넌트
+│    │   ├── Detail.tsx           # 게시글 상세 페이지
+│    │   ├── Edit.tsx             # 게시글 수정 페이지
+│    │   ├── List.tsx             # 게시판 목록 페이지
+│    │   ├── ListItem.tsx         # 게시판 목록 아이템 컴포넌트
+│    │   └── New.tsx              # 게시글 작성 페이지
+│    │── user/                    # 회원 관련 페이지
+│    │   ├── Login.tsx            # 로그인 페이지
+│    │   └── Signup.tsx           # 회원가입 페이지
+│    │── ErrorPage.tsx            # 에러 페이지
+│    └── index.tsx                # 메인 페이지
+│── App.css                       # 앱 스타일
+│── App.tsx                       # 메인 앱 컴포넌트
+│── index.css                     # 전역 스타일
+│── main.tsx                      # 앱 진입점
+└── routes.tsx                    # 라우터 설정
+```
+
+## 1.5 Step 01 완료
 * 완성된 코드 참고: https://github.com/FEBC-15/react/tree/main/workspace-ins/ch11-skeleton/lion-board-react-01
 
 # 2 Step 02 - API 서버 연동
+* 참고: https://github.com/FEBC-15/react/tree/main/workspace-ins/ch09-ajax#9장-http-통신과-ajax
+* 작업 폴더: workspace/ch11-skeleton/lion-board-react-02
 
-# 3 Step 03 - 전역 상태 관리
+## 2.1 준비
+### 2.1.1 프로젝트 생성
+* workspace/ch11-skeleton 폴더에서 실행
 
-# 4 Step 04 - 배포 및 최적화
+  ```sh
+  # lion-board-react-01 폴더를 복사해서 lion-board-react-02 폴더 생성
+  cp -r lion-board-react-01 lion-board-react-02
+  ```
+
+* lion-board-react-02/src/components/layout/Header.tsx 파일 수정
+  - `라이언 보드 v.01` -> `라이언 보드 v.02`
+
+## 2.2 타입 정의
+### 2.2.1 유저 타입 정의
+* src/types/user.ts 생성
+
+  ```ts
+  // 사용자 정보 인터페이스
+  export interface User {
+    _id: number,
+    email: string,
+    name: string,
+    image?: string,
+    token?: {
+      accessToken: string,
+      refreshToken: string,
+    },
+  }
+
+  // 회원가입 폼 타입
+  export type UserCreateForm = Pick<User, 'name' | 'email'> & {
+    password: string,
+    attach?: FileList,
+  }
+
+  // 로그인 폼 타입
+  export type LoginForm = Pick<User, 'email'> & {
+    password: string,
+  }
+  ```
+
+### 2.2.2 게시물 타입 정의
+* src/types/post.ts 생성
+
+  ```ts
+  import type { User } from "@/types/user";
+
+  // 댓글 상세
+  export interface Reply {
+    _id: number;
+    content: string;
+    user: User;
+    createdAt: string;
+    updatedAt: string;
+  }
+
+  // 댓글 생성 폼 타입
+  export type ReplyCreateForm = Pick<Reply, 'content'>;
+
+  // 게시글 타입
+  export type PostType = 'info' | 'free' | 'qna';
+
+  // 게시글 상세
+  export interface Post {
+    _id: number;
+    type: PostType;
+    title: string;
+    content: string;
+    user: Pick<User, '_id' | 'name' | 'image'>;
+    views: number;
+    replies?: Reply[];
+    createdAt: string;
+    updatedAt: string;
+  }
+
+  // 목록에서 사용할 게시글 타입
+  export type PostListItem = Pick<Post, '_id' | 'type' | 'title' | 'user' | 'views' | 'updatedAt'> & {
+    repliesCount: number;
+  };
+
+  // 게시글 수정 폼 타입
+  export type PostUpdateForm = Pick<Post, 'title' | 'content'>;
+
+  // 게시글 생성 폼 타입
+  export type PostCreateForm = PostUpdateForm & {
+    type: PostType;
+  };
+  ```
+
+### 2.2.3 서버 응답 데이터 타입 정의
+* src/types/api.ts 작성
+
+  ```ts
+  import type { Post, PostListItem, Reply } from "@/types/post";
+  import type { User } from "@/types/user";
+
+  // 게시물 목록 조회 결과 타입
+  export interface PostListRes {
+    ok: 1;
+    item: PostListItem[];
+  }
+
+  // 게시물 상세 조회 결과 타입
+  export interface PostInfoRes {
+    ok: 1;
+    item: Post;
+  }
+
+  // 댓글 목록 조회 결과 타입
+  export interface ReplyListRes {
+    ok: 1;
+    item: Reply[];
+  }
+
+  // 댓글 등록 결과 타입
+  export interface ReplyInfoRes {
+    ok: 1;
+    item: Reply;
+  }
+
+  // 파일 업로드 결과 타입
+  export interface FileUploadRes {
+    ok: 1;
+    item: {
+      name: string;
+      path: string;
+    }[];
+  }
+
+  // 회원가입 결과 타입
+  export interface UserCreateRes {
+    ok: 1;
+    item: User;
+  }
+
+  // 게시글, 댓글 삭제 결과 타입
+  export interface DeleteRes {
+    ok: 1;
+  }
+
+  // 서버 검증 에러 타입
+  export interface ServerValidationError {
+    type: string,
+    value: string,
+    msg: string,
+    location: string
+  }
+
+  // 에러 타입
+  export interface ErrorRes {
+    ok: 0;
+    message: string;
+    errors?: {
+      [fieldName: string]: ServerValidationError;
+    };
+  }
+  ```
+
+### 2.2.4 통합 타입 정의
+* src/types/index.ts 작성
+* 여러 타입을 모아서 하나로 export
+
+  ```ts
+  export * from './user';
+  export * from './post';
+  export * from './api';
+  ```
+
+## 2.3 React Query 설정
+* QueryClient 지정
+* 참고: https://github.com/FEBC-15/react/tree/main/workspace-ins/ch09-ajax#7-react-querytanstack-query
+
+* main.tsx 수정
+  ```tsx
+  import { StrictMode } from 'react'
+  import { createRoot } from 'react-dom/client'
+  import './index.css'
+  import App from './App.tsx'
+  import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+  import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+  const client = new QueryClient();
+
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <QueryClientProvider client={ client }>
+        <App />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </StrictMode>,
+  )
+  ```
+
+## 2.4 axios 유틸리티 작성
+#### src/utils/axiosInstance.ts 작성
+```ts
+import axios from "axios";
+// API 서버 주소
+const API_SERVER = 'https://fesp-api.koyeb.app/market';
+
+// Axios 인스턴스 생성 함수
+export function getAxiosInstance() {
+  const instance = axios.create({
+    baseURL: API_SERVER,
+    timeout: 1000*15,
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Client-Id': 'openmarket',
+    }
+  });
+
+  // 요청 인터셉터 추가
+  instance.interceptors.request.use((config) => {
+    // 로그인 후에 응답받은 Access Token을 Authorization 헤더로 전달
+    // config.headers.Authorization = `Bearer xxx`;
+    config.params = {
+      // delay: 500,
+      ...config.params,
+    };
+    return config;
+  }, (error) => {
+    return Promise.reject(error);
+  });
+
+  // 응답 인터셉터 추가
+  instance.interceptors.response.use((response) => {
+    return response;
+  }, (error) => {
+    console.error('에러 응답 인터셉터 호출', error);
+    return Promise.reject(error);
+  });
+
+  return instance;
+}
+```
+
+## 2.5 API 서버 호출 로직 작성
+### 2.5.1 게시판 API
+#### src/api/post.ts 작성
+```ts
+import type { DeleteRes, PostInfoRes, PostListRes, ReplyInfoRes, ReplyListRes } from "@/types";
+import { getAxiosInstance } from "@/utils/axiosInstance";
+
+const instance = getAxiosInstance();
+
+// 게시글 목록 조회
+export async function getPosts(type: string) {
+  const res = await instance.get<PostListRes>(`/posts?type=${type}`);
+  return res.data;
+}
+
+// 게시글 상세 조회
+export async function getPost(_id: number) {
+  const res = await instance.get<PostInfoRes>(`/posts/${_id}`);
+  return res.data;
+}
+
+// 댓글 목록 조회
+export async function getReplies(_id: number) {
+  const res = await instance.get<ReplyListRes>(`/posts/${_id}/replies`);
+  return res.data;
+}
+
+// 게시글 생성
+export async function createPost(post: FormData) {
+  const res = await instance.post<PostInfoRes>(`/posts`, post);
+  return res.data;
+}
+
+// 게시글 수정
+export async function updatePost(_id: number, post: FormData) {
+  const res = await instance.patch<PostInfoRes>(`/posts/${_id}`, post);
+  return res.data;
+}
+
+// 댓글 생성
+export async function createReply(post_id: number, reply: FormData) {
+  const res = await instance.post<ReplyInfoRes>(`/posts/${post_id}/replies`, reply);
+  return res.data;
+}
+
+// 댓글 삭제
+export async function deleteReply(post_id: number, reply_id: number) {
+  const res = await instance.delete<DeleteRes>(`/posts/${post_id}/replies/${reply_id}`);
+  return res.data;
+}
+
+// 게시글 삭제
+export async function deletePost(_id: number) {
+  const res = await instance.delete<DeleteRes>(`/posts/${_id}`);
+  return res.data;
+}
+```
+
+### 2.5.2 파일 업로드 API
+#### src/api/file.ts 작성
+```ts
+import type { FileUploadRes } from "@/types";
+import { getAxiosInstance } from "@/utils/axiosInstance";
+
+const instance = getAxiosInstance();
+
+// 파일 업로드
+export async function uploadFile(attach: File) {
+  const fileFormData = new FormData();
+  fileFormData.append('attach', attach);
+  
+  const fileRes = await instance.post<FileUploadRes>(`/files`, fileFormData, {
+    headers: {
+      'Content-Type': undefined,
+    },
+  });
+  console.log(`fileRes`, fileRes);
+  return fileRes.data;
+}
+```
+  
+### 2.5.3 회원 API
+#### src/api/user.ts 작성
+```ts
+import { uploadFile } from "@/api/file";
+import type { UserCreateRes } from "@/types";
+import { getAxiosInstance } from "@/utils/axiosInstance";
+
+const instance = getAxiosInstance();
+
+// 회원가입
+export async function createUser(user: FormData) {
+  const attach = user.get('attach') as File;
+  user.delete('attach');
+  
+  // 파일 업로드 API 호출
+  if(attach && attach.size > 0){
+    const fileRes = await uploadFile(attach);
+    user.append('image', fileRes.item[0].path);
+  }
+  
+  // 회원가입 API 호출
+  const res = await instance.post<UserCreateRes>(`/users`, user);
+  return res.data;
+}
+
+// 로그인
+export async function login(user: FormData) {
+  const res = await instance.post<UserCreateRes>(`/users/login`, user);
+  return res.data;
+}
+```
+  
+## 2.6 게시물 목록 조회 컴포넌트 작성
+### 2.6.1 게시물 목록 기능 추가
+#### src/pages/board/List.tsx 수정
+- react query의 useSuspenseQuery로 게시물 목록 조회
+
+  ```tsx
+  import { getPosts } from "@/api/post";
+  import ListItem from "@/pages/board/ListItem";
+  import type { ErrorRes, PostListItem, PostListRes, PostType } from "@/types";
+  import { useSuspenseQuery } from "@tanstack/react-query";
+  import type { AxiosError } from "axios";
+  import { Link, useParams } from "react-router";
+
+  function List() {
+    const { type = 'info' } = useParams<{ type: PostType }>();
+
+    const { data } = useSuspenseQuery<PostListRes, AxiosError<ErrorRes>, PostListItem[]>({
+      queryKey: ['posts', type],
+      queryFn: () => getPosts(type),
+      select: (data) => data.item,
+      staleTime: 1000*60,
+    });
+
+    const list = data.map((post) => <ListItem key={post._id} post={post} />);
+
+    return (
+      ...
+      <tbody>{ list }</tbody>
+      ...
+    );
+  }
+
+  export default List;
+  ```
+
+#### src/pages/board/ListItem.tsx 수정
+- props로 전달 받은 게시물 정보 출력
+
+  ```tsx
+  import type { PostListItem } from "@/types";
+  import { Link } from "react-router";
+
+  function ListItem({ post }: { post: PostListItem }) {
+    return (
+      <tr className="border-b border-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-300 ease-in-out">
+        <td className="p-2 text-center">{post._id}</td>
+        <td className="p-2 truncate indent-4"><Link to={`/${post.type}/${post._id}`} className="hover:text-orange-500 hover:underline">{post.title}</Link></td>
+        <td className="p-2 text-center truncate">{post.user.name}</td>
+        <td className="p-2 text-center hidden sm:table-cell">{post.views}</td>
+        <td className="p-2 text-center hidden sm:table-cell">{post.repliesCount}</td>
+        <td className="p-2 truncate text-center hidden sm:table-cell">{post.updatedAt}</td>
+      </tr>
+    );
+  }
+
+  export default ListItem;
+  ```
+
+* 게시물 목록 조회 테스트
+  - 정보공유 게시판: http://localhost:5173/info
+  - 자유 게시판: http://localhost:5173/free
+  - 질문 계시판: http://localhost:5173/qna
+
+## 2.7 게시물 상세 조회 컴포넌트 작성
+### 2.7.1 게시물 상세 조회 기능 추가
+#### src/pages/board/Detail.tsx 수정
+- react query의 useSuspenseQuery로 게시물 상세 조회
+
+  ```tsx
+  import { getPost } from "@/api/post";
+  import CommentList from "@/pages/board/CommentList";
+  import type { ErrorRes, Post, PostInfoRes } from "@/types";
+  import { useSuspenseQuery } from "@tanstack/react-query";
+  import type { AxiosError } from "axios";
+  import { Link, useParams } from "react-router";
+
+  function Detail() {
+
+    const { _id } = useParams();
+
+    const { data: post, isError, error } = useSuspenseQuery<PostInfoRes, AxiosError<ErrorRes>, Post>({
+      queryKey: ['posts', _id],
+      queryFn: () => getPost(Number(_id)),
+      select: (data) => data.item,
+      staleTime: 1000*60,
+    });
+
+    if(isError) throw error;
+
+    return (
+      <main className="flex-1 container mx-auto mt-4 px-4">
+
+        <section className="mb-8 p-4">
+          <form action="/info">
+            <div className="font-semibold text-xl">제목 : {post.title}</div>
+            <div className="text-right text-gray-400">
+              <div>작성자 : {post.user.name}</div>
+              <div>{post.updatedAt}</div>
+            </div>
+            <div className="mb-4">
+              <div>
+                <p className="w-full p-2 whitespace-pre-wrap">{post.content}</p>
+              </div>
+              <hr/>
+            </div>
+            <div className="flex justify-end my-4">
+              <Link to={`/${post.type}`} className="bg-orange-500 py-1 px-4 text-base text-white font-semibold ml-2 hover:bg-amber-400 rounded">목록</Link>
+              <Link to={`/${post.type}/${_id}/edit`} className="bg-gray-900 py-1 px-4 text-base text-white font-semibold ml-2 hover:bg-amber-400 rounded">수정</Link>
+              <button type="submit" className="bg-red-500 py-1 px-4 text-base text-white font-semibold ml-2 hover:bg-amber-400 rounded">삭제</button>
+            </div>
+          </form>
+        </section>
+        
+        <CommentList />
+
+      </main>
+    );
+  }
+
+  export default Detail;
+  ```
+
+* 게시물 상세 조회 테스트
+  - http://localhost:5173/info/6
+
+## 2.8 댓글 목록 조회 컴포넌트 작성
+### 2.8.1 댓글 목록 조회 기능 추가
+#### src/pages/board/CommentList.tsx 수정
+- react query의 useSuspenseQuery로 댓글 목록 조회
+
+  ```tsx
+  import { getReplies } from "@/api/post";
+  import CommentListItem from "@/pages/board/CommentListItem";
+  import CommentNew from "@/pages/board/CommentNew";
+  import type { ErrorRes, Reply, ReplyListRes } from "@/types";
+  import { useSuspenseQuery } from "@tanstack/react-query";
+  import type { AxiosError } from "axios";
+  import { useParams } from "react-router";
+
+  function CommentList() {
+    const { _id } = useParams();
+    const { data } = useSuspenseQuery<ReplyListRes, AxiosError<ErrorRes>, Reply[]>({
+      queryKey: ['posts', _id, 'replies'],
+      queryFn: () => getReplies(Number(_id)),
+      select: (data) => data.item,
+      staleTime: 1000*10,
+    });
+
+    const list = data.map((reply) => <CommentListItem key={reply._id} reply={reply} />);
+
+    return (
+      <section className="mb-8">
+        <h4 className="mt-8 mb-4 ml-2">댓글 { data.length }개</h4>
+        { list }
+        <CommentNew />
+      </section>
+    );
+  }
+
+  export default CommentList;
+  ```
+
+#### src/pages/board/CommentListItem.tsx 수정
+- props로 전달 받은 댓글 정보 출력
+
+  ```tsx
+  import type { Reply } from "@/types";
+  import { Link } from "react-router";
+
+  function CommentListItem({ reply }: { reply: Reply }) {
+    return (
+      <div className="shadow-md rounded-lg p-4 mb-4">
+        <div className="flex justify-between items-center mb-2">
+          <div className="flex items-center">
+            <img
+              className="w-8 mr-2 rounded-full"
+              src={reply.user.image}
+              alt={`${reply.user.name} 프로필 이미지`}
+            />
+            <Link to="" className="text-orange-400">{reply.user.name}</Link>
+          </div>
+          <time className="text-gray-500" dateTime={reply.updatedAt}>{reply.updatedAt}</time>
+        </div>
+        <div className="flex justify-between items-start mb-2">
+          <p className="whitespace-pre-wrap text-sm flex-1">{reply.content}</p>
+          <form action="#" className="inline ml-2">
+            <button type="submit" className="bg-red-500 py-1 px-2 text-sm text-white font-semibold ml-2 hover:bg-amber-400 rounded">삭제</button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  export default CommentListItem;
+  ```
+
+* 댓글 목록 조회 테스트
+  - http://localhost:5173/info/6
+
+## 2.9 회원 가입 컴포넌트 작성
+* 게시물 등록, 수정, 삭제, 댓글 등록, 댓글 삭제는 로그인 한 회원만 사용 가능한 기능
+
+### 2.9.1 입력값 검증 실패 메시지 출력용 컴포넌트 작성
+#### src/components/ui/InputError.tsx 작성
+```tsx
+import type { FieldError } from "react-hook-form";
+
+export default function InputError({ target }: { target: FieldError | undefined }){
+  if(!target) return;
+  return (
+    <p className="ml-2 mt-1 text-sm text-red-500 dark:text-red-400">
+      { target.message }
+    </p>
+  );
+}
+```
+
+### 2.9.2 폼 데이터 관리
+#### src/pages/user/Signup.tsx 수정
+- react-hook-form 사용
+
+  ```tsx
+  import { useForm } from 'react-hook-form';
+  import type { UserCreateForm } from "@/types";
+  ...
+  function Signup() {
+    const { register, formState: { errors } } = useForm<UserCreateForm>();
+    ...
+  }
+
+  export default Signup;
+  ```
+
+- react-hook-form의 register 함수로 입력 요소 등록 및 검증 실패 메시지 출력
+
+  ```tsx
+  import InputError from "@/components/ui/InputError";
+  ...
+  <div className="mb-4">
+    <label className="block text-gray-700 dark:text-gray-200 mb-2" htmlFor="name">이름</label>
+    <input
+      type="text"
+      id="name"
+      autoComplete="name"
+      placeholder="이름을 입력하세요"
+      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-orange-400 dark:bg-gray-700"
+      { ...register('name', { required: '이름은 필수입니다.' }) }
+    />
+    <InputError target={ errors.name } />
+  </div>
+  <div className="mb-4">
+    <label className="block text-gray-700 dark:text-gray-200 mb-2" htmlFor="email">이메일</label>
+    <input
+      type="email"
+      id="email"
+      autoComplete="username"
+      placeholder="이메일을 입력하세요"
+      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-orange-400 dark:bg-gray-700"
+      { ...register('email', { required: '이메일은 필수입니다.' }) }
+    />
+    <InputError target={ errors.email } />
+  </div>
+  <div className="mb-4">
+    <label className="block text-gray-700 dark:text-gray-200 mb-2" htmlFor="password">비밀번호</label>
+    <input
+      type="password"
+      id="password"
+      autoComplete="new-password"
+      placeholder="비밀번호를 입력하세요"
+      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-orange-400 dark:bg-gray-700"
+      { ...register('password', { required: '비밀번호는 필수입니다.' }) }
+    />
+    <InputError target={ errors.password } />
+  </div>
+
+  <div className="mb-4">
+    <label className="block text-gray-700 dark:text-gray-200 mb-2" htmlFor="attach">프로필 이미지</label>
+    <input
+      type="file"
+      id="attach"
+      accept="image/*"
+      placeholder="이미지를 선택하세요"
+      className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700"
+      { ...register('attach' )}
+    />
+  </div>
+  ...
+  ```
+
+### 2.9.3 회원 가입 기능 추가
+#### src/pages/user/Signup.tsx 수정
+- react query의 useMutation으로 회원 가입 이벤트 추가
+
+  ```tsx
+  import { Link, useNavigate } from "react-router";
+  import { useForm } from "react-hook-form";
+  import type { ErrorRes, UserCreateRes, UserCreateForm } from "@/types";
+  import { createUser } from "@/api/user";
+  import InputError from "@/components/ui/InputError";
+  import { useMutation } from "@tanstack/react-query";
+  import type { AxiosError } from "axios";
+
+  function Signup() {
+    const { register, formState: { errors }, handleSubmit, setError } = useForm<UserCreateForm>();
+    
+    const navigate = useNavigate();
+    const { mutate } = useMutation<UserCreateRes, AxiosError<ErrorRes>, FormData>({
+      mutationFn: createUser,
+      onSuccess: (data) => {
+        alert(data.item.name + '님, 회원가입 되었습니다.');
+        navigate(`/`);
+      },
+      onError: (err) => {
+        console.log(err);
+        const errors = err.response?.data.errors;
+        const message = err.response?.data.message;
+        if(errors){
+          // 서버 검증 에러를 각 필드에 설정        
+          Object.keys(errors).forEach((fieldName) => {
+            setError(fieldName as keyof UserCreateForm, { 
+              type: 'server',
+              message: errors[fieldName].msg 
+            });
+          });
+        }else if(message){
+          alert(message || '회원가입에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        }
+      },
+    });
+
+    const onSubmit = (data: UserCreateForm) => {
+      const formData = new FormData();
+      formData.append('type', 'user');
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('password', data.password);
+      if(data.attach && data.attach.length > 0) {
+        formData.append('attach', data.attach[0]);
+      }
+      mutate(formData);
+    };
+
+    return (
+      ...
+      <form onSubmit={ handleSubmit(onSubmit) }>
+      ...
+    );
+  }
+  export default Signup;
+  ```
+
+* 회원가입 기능 테스트
+  - http://localhost:5173/user/signup
+
+## 2.10 로그인 컴포넌트 작성
+### 2.10.1 폼 데이터 관리
+#### src/pages/user/Login.tsx 수정
+- react-hook-form 사용
+
+  ```tsx
+  import { useForm } from 'react-hook-form';
+  import type { LoginForm } from "@/types";
+  ...
+  function Login() {
+    const { register, formState: { errors } } = useForm<LoginForm>();
+    ...
+  }
+
+  export default Login;
+  ```
+
+- react-hook-form의 register 함수로 입력 요소 등록 및 검증 실패 메시지 출력
+  ```tsx
+  import InputError from "@/components/ui/InputError";
+  ...
+  <div className="mb-4">
+    <label className="block text-gray-700 dark:text-gray-200 mb-2" htmlFor="email">이메일</label>
+    <input
+      id="email"
+      type="email"
+      autoComplete="email"
+      placeholder="이메일을 입력하세요"
+      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-orange-400 dark:bg-gray-700"
+      { ...register('email', { required: '이메일은 필수입니다.' }) }
+    />
+    <InputError target={ errors.email } />
+  </div>
+  <div className="mb-4">
+    <label className="block text-gray-700 dark:text-gray-200 mb-2" htmlFor="password">비밀번호</label>
+    <input
+      id="password"
+      type="password"
+      autoComplete="current-password"
+      placeholder="비밀번호를 입력하세요"
+      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-orange-400 dark:bg-gray-700"
+      { ...register('password', { required: '비밀번호는 필수입니다.' }) }
+    />
+    <InputError target={ errors.password } />
+    <Link to="#" className="block mt-6 ml-auto text-gray-500 text-sm dark:text-gray-300 hover:underline">비밀번호를 잊으셨나요?</Link>
+  </div>
+  ...
+  ```
+
+### 2.10.2 로그인 기능 추가
+#### src/pages/user/Login.tsx 수정
+- react query의 useMutation으로 로그인 이벤트 추가
+
+  ```tsx
+  import { login } from "@/api/user";
+  import InputError from "@/components/ui/InputError";
+  import type { ErrorRes, LoginForm, UserCreateRes } from "@/types";
+  import { useMutation } from "@tanstack/react-query";
+  import type { AxiosError } from "axios";
+  import { useForm } from "react-hook-form";
+  import { Link, useNavigate } from "react-router";
+
+  function Login() {
+    const { register, formState: { errors }, handleSubmit, setError } = useForm<LoginForm>();
+    
+    const navigate = useNavigate();
+    const { mutate } = useMutation<UserCreateRes, AxiosError<ErrorRes>, FormData>({
+      mutationFn: login,
+      onSuccess: (data) => {
+        console.log(data);
+        alert(data.item.name + '님, 로그인 되었습니다.');
+        // navigate(`/`); // 개발자 도구 Console의 AccessToken 복사 후 주석 해제
+      },
+      onError: (err) => {
+        const errors = err.response?.data.errors;
+        const message = err.response?.data.message;
+        if(errors){
+          // 서버 검증 에러를 각 필드에 설정        
+          Object.keys(errors).forEach((fieldName) => {
+            setError(fieldName as keyof LoginForm, { 
+              type: 'server',
+              message: errors[fieldName].msg 
+            });
+          });
+        }else if(message){
+          alert(message || '로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        }
+      },
+    });
+
+    const onSubmit = (data: LoginForm) => {
+      const formData = new FormData();
+      formData.append('email', data.email);
+      formData.append('password', data.password);
+      mutate(formData);
+    };
+
+    return (
+      ...
+      <form onSubmit={ handleSubmit(onSubmit) }>
+      ...
+    );
+  }
+
+  export default Login;
+  ```
+
+* 로그인 기능 테스트
+  - http://localhost:5173/user/login
+  - 가입한 회원 정보로 로그인 테스트
+
+### 2.10.3 요청 헤더에 Authorization 추가
+* 로그인이 필요한 API 요청 시 Authorization 요청 헤더를 통해 API 서버가 로그인 한 사용자의 정보를 확인하므로 로그인 직후에 응답 데이터에 포함된 accessToken을 매 요청에 보내야 함
+  - 현재는 하드코딩 하고 추후 글로벌 상태관리 라이브러리에서 관리할 예정
+
+#### src/utils/axiosInstance.ts 수정
+* 요청 인터셉터에 Authorization 헤더를 임시로 access token 값으로 하드코딩
+* xxx은 로그인 완료 후 받은 응답 데이터의 accessToken 값으로 대체
+  - 개발자 도구의 Console에서 확인 가능
+  - `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjQsInR5cGUiOiJ1c2VyIiwiaWF0IjoxNzY3NDk4Mjg4LCJleHAiOjE3Njc1ODQ2ODgsImlzcyI6IkAFQkMifQ.bDF5yaAaBLFLYki3io84re7_BlV5VPY9PoxRIYsLDQ4` 와 유사한 문자열
+
+    ```js
+    instance.interceptors.request.use((config) => {
+      // 로그인 후에 응답받은 Access Token을 Authorization 헤더로 전달
+      config.headers.Authorization = `Bearer eyJhbGc...IYsLDQ4`;
+      ...
+    }, (error) => {
+      return Promise.reject(error);
+    });
+    ```
+
+* src/pages/user/Login.tsx의 `navigate(`/`);` 주석 해제
+
+## 2.11 게시물 등록 컴포넌트 작성
+### 2.11.1 폼 데이터 관리
+#### src/pages/board/New.tsx 수정
+- react-hook-form 사용
+
+  ```tsx
+  import { useForm } from 'react-hook-form';
+  import type { PostCreateForm } from "@/types";
+  ...
+  function New() {
+    const { register, formState: { errors } } = useForm<PostCreateForm>();
+    ...
+  }
+
+  export default New;
+  ```
+
+- react-hook-form의 register 함수로 입력 요소 등록 및 검증 실패 메시지 출력
+
+  ```tsx
+  import InputError from "@/components/ui/InputError";
+  ...
+  <div className="my-4">
+    <label className="block text-lg content-center" htmlFor="title">제목</label>
+    <input
+      id="title"
+      type="text"
+      placeholder="제목을 입력하세요." 
+      className="w-full py-2 px-4 border rounded-md dark:bg-gray-700 border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+      { ...register('title', { required: '제목을 입력하세요.' }) }
+    />
+    <InputError target={ errors.title } />
+  </div>
+  <div className="my-4">
+    <label className="block text-lg content-center" htmlFor="content">내용</label>
+    <textarea 
+      id="content"
+      rows={15}
+      placeholder="내용을 입력하세요."
+      className="w-full p-4 text-sm border rounded-lg border-gray-300 bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+      { ...register('content', { required: '내용을 입력하세요' }) }
+    ></textarea>
+    <InputError target={ errors.content } />
+  </div>
+  ...
+  ```
+
+### 2.11.2 게시물 등록 기능 추가
+#### src/pages/board/New.tsx 수정
+- react query의 useMutation으로 게시물 등록 이벤트 추가
+
+  ```tsx
+  import { Link, useNavigate, useParams } from "react-router";
+  import { useForm } from "react-hook-form";
+  import InputError from "@/components/ui/InputError";
+  import type { ErrorRes, PostCreateForm, PostInfoRes, PostType } from "@/types";
+  import { useMutation, useQueryClient } from "@tanstack/react-query";
+  import { createPost } from "@/api/post";
+  import type { AxiosError } from "axios";
+
+  function New() {
+    const { register, formState: { errors }, handleSubmit, setError } = useForm<PostCreateForm>();
+
+    const { type = 'info' } = useParams<{ type: PostType }>();
+    const navigate = useNavigate();
+
+    const queryClient = useQueryClient();
+
+    const { mutate } = useMutation<PostInfoRes, AxiosError<ErrorRes>, FormData>({
+      mutationFn: createPost,
+      onSuccess: (newPost) => {
+        alert(`${newPost.item._id}번 글이 등록 되었습니다.`);
+        queryClient.invalidateQueries({ queryKey: ['posts', type] });
+        navigate(`/${type}`);
+      },
+      onError: (err) => {
+        const errors = err.response?.data.errors;
+        const message = err.response?.data.message;
+        if(errors){
+          // 서버 검증 에러를 각 필드에 설정        
+          Object.keys(errors).forEach((fieldName) => {
+            setError(fieldName as keyof PostCreateForm, { 
+              type: 'server',
+              message: errors[fieldName].msg 
+            });
+          });
+        }else if(message){
+          alert(message || '게시글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        }
+      },
+    });
+
+    const onSubmit = (data: PostCreateForm) => {
+      const formData = new FormData();
+      formData.append('title', data.title);
+      formData.append('content', data.content);
+      formData.append('type', type);
+      mutate(formData);
+    };
+
+    return (
+      ...
+      <form onSubmit={ handleSubmit(onSubmit) }>
+      ...
+    );
+  }
+
+  export default New;
+  ```
+
+* 게시물 등록 기능 테스트
+  - http://localhost:5173/info/new
+
+## 2.12 게시물 수정 컴포넌트 작성
+### 2.12.1 폼 데이터 관리
+#### src/pages/board/Edit.tsx 수정
+- 게시물 상세 조회 후 react-hook-form 사용
+
+  ```tsx
+  import { getPost } from "@/api/post";
+  import type { ErrorRes, Post, PostInfoRes, PostUpdateForm } from "@/types";
+  import { useSuspenseQuery } from "@tanstack/react-query";
+  import type { AxiosError } from "axios";
+  import { useForm } from "react-hook-form";
+  import { Link, useParams } from "react-router";
+
+  function Edit() {
+    const { _id } = useParams();
+
+    const { data: post, isError, error } = useSuspenseQuery<PostInfoRes, AxiosError<ErrorRes>, Post>({
+      queryKey: ['posts', _id],
+      queryFn: () => getPost(Number(_id)),
+      select: (data) => data.item,
+      staleTime: 1000*60,
+    });
+
+    if(isError) throw error;
+
+    const { register, formState: { errors } } = useForm<PostUpdateForm>({
+      defaultValues: {
+        title: post.title,
+        content: post.content,
+      }
+    });
+
+    return (
+      ...
+    );
+  }
+
+  export default Edit;
+  ```
+
+- react-hook-form의 register 함수로 입력 요소 등록 및 검증 실패 메시지 출력
+
+  ```tsx
+  import InputError from "@/components/ui/InputError";
+  ...
+  <div className="my-4">
+    <label className="block text-lg content-center" htmlFor="title">제목</label>
+    <input
+      id="title"
+      type="text"
+      placeholder="제목을 입력하세요." 
+      className="w-full py-2 px-4 border rounded-md dark:bg-gray-700 border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+      { ...register('title', { required: '제목은 필수입니다.' }) }
+    />
+    <InputError target={ errors.title } />
+  </div>
+  <div className="my-4">
+    <label className="block text-lg content-center" htmlFor="content">내용</label>
+    <textarea 
+      id="content"
+      rows={15}
+      placeholder="내용을 입력하세요."
+      className="w-full p-4 text-sm border rounded-lg border-gray-300 bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+      { ...register('content', { required: '내용은 필수입니다.' }) }
+    />
+    <InputError target={ errors.content } />
+  </div>
+  ...
+  ```
+
+### 2.12.2 게시물 수정 기능 추가
+#### src/pages/board/Edit.tsx 수정
+- react query의 useMutation으로 게시물 수정 이벤트 추가
+
+  ```tsx
+  import { getPost, updatePost } from "@/api/post";
+  import InputError from "@/components/ui/InputError";
+  import type { ErrorRes, Post, PostInfoRes, PostUpdateForm } from "@/types";
+  import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+  import type { AxiosError } from "axios";
+  import { useForm } from "react-hook-form";
+  import { Link, useNavigate, useParams } from "react-router";
+
+  function Edit() {
+    const { type, _id } = useParams();
+
+    const { data: post, isError, error } = useSuspenseQuery<PostInfoRes, AxiosError<ErrorRes>, Post>({
+      queryKey: ['posts', _id],
+      queryFn: () => getPost(Number(_id)),
+      select: (data) => data.item,
+      staleTime: 1000*60,
+    });
+
+    if(isError) throw error;
+
+    const { register, formState: { errors }, handleSubmit, setError } = useForm<PostUpdateForm>({
+      defaultValues: {
+        title: post.title,
+        content: post.content,
+      }
+    });
+
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+
+    const { mutate } = useMutation<PostInfoRes, AxiosError<ErrorRes>, FormData>({
+      mutationFn: (post) => updatePost(Number(_id), post),
+      onSuccess: (updatedPost) => {
+        alert(`${updatedPost.item._id}번 게시글이 수정되었습니다.`);
+        queryClient.invalidateQueries({ queryKey: ['posts', _id] });
+        queryClient.invalidateQueries({ queryKey: ['posts', type] });
+        navigate(`/${type}/${_id}`);
+      },
+      onError: (err) => {
+        const errors = err.response?.data.errors;
+        const message = err.response?.data.message;
+        if(errors){
+          // 서버 검증 에러를 각 필드에 설정        
+          Object.keys(errors).forEach((fieldName) => {
+            setError(fieldName as keyof PostUpdateForm, { 
+              type: 'server',
+              message: errors[fieldName].msg 
+            });
+          });
+        }else if(message){
+          alert(message || '게시글 수정에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        }
+      },
+    });
+
+    const onSubmit = (data: PostUpdateForm) => {
+      const formData = new FormData();
+      formData.append('title', data.title);
+      formData.append('content', data.content);
+      mutate(formData);
+    };
+
+    return (
+      ...
+      <form onSubmit={ handleSubmit(onSubmit) }>
+      ...
+    );
+  }
+
+  export default Edit;
+  ```
+
+* 게시물 수정 기능 테스트
+  - 로그인 한 사용자가 작성한 게시물에 대해서 수정 기능 테스트
+
+## 2.13 댓글 등록 컴포넌트 작성
+### 2.13.1 폼 데이터 관리
+#### src/pages/board/CommentNew.tsx 수정
+- react-hook-form 사용
+
+  ```tsx
+  import { useForm } from 'react-hook-form';
+  import type { ReplyCreateForm } from "@/types";
+  ...
+  function CommentNew() {
+    const { register, formState: { errors } } = useForm<ReplyCreateForm>();
+    ...
+  }
+
+  export default CommentNew;
+  ```
+
+- react-hook-form의 register 함수로 입력 요소 등록 및 검증 실패 메시지 출력
+
+  ```tsx
+  import InputError from "@/components/ui/InputError";
+  ...
+  <div className="mb-4">
+    <textarea
+      rows={3}
+      cols={40}
+      className="block p-2 w-full text-sm border rounded-lg border-gray-300 bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+      placeholder="내용을 입력하세요."
+      { ...register('content', { required: '내용을 입력하세요.' }) }
+    />
+    <InputError target={ errors.content } />          
+  </div>
+  ...
+  ```
+
+### 2.13.2 댓글 등록 기능 추가
+#### src/pages/board/CommentNew.tsx 수정
+- react query의 useMutation으로 댓글 등록 이벤트 추가
+
+  ```tsx
+  import { createReply } from "@/api/post";
+  import InputError from "@/components/ui/InputError";
+  import type { ErrorRes, ReplyCreateForm, ReplyInfoRes } from "@/types";
+  import { useMutation, useQueryClient } from "@tanstack/react-query";
+  import type { AxiosError } from "axios";
+  import { useForm } from "react-hook-form";
+  import { useParams } from "react-router";
+
+  function CommentNew() {
+    const { register, formState: { errors }, handleSubmit, reset } = useForm<ReplyCreateForm>();
+    
+    const { _id } = useParams();
+    const queryClient = useQueryClient();
+
+    const { mutate } = useMutation<ReplyInfoRes, AxiosError<ErrorRes>, FormData>({
+      mutationFn: (reply) => createReply(Number(_id), reply),
+      onSuccess: (newReply) => {
+        alert(`${newReply.item._id}번 댓글이 등록 되었습니다.`);
+        queryClient.invalidateQueries({ queryKey: ['posts', _id, 'replies'] });
+        reset();
+      },
+    });
+
+    const onSubmit = (data: ReplyCreateForm) => {
+      const formData = new FormData();
+      formData.append('content', data.content);
+      mutate(formData);
+    };
+
+    return (
+      ...
+      <form onSubmit={ handleSubmit(onSubmit) }>
+      ...
+    );
+  }
+
+  export default CommentNew;
+  ```
+
+* 댓글 등록 기능 테스트
+  - http://localhost:5173/info/6
+
+## 2.14 댓글 삭제 기능 구현
+### 2.14.1 댓글 삭제 기능 추가
+#### src/pages/board/CommentListItem.tsx 수정
+- react query의 useMutation으로 댓글 삭제 이벤트 추가
+
+  ```tsx
+  import { deleteReply } from "@/api/post";
+  import type { DeleteRes, ErrorRes, Reply } from "@/types";
+  import { useMutation, useQueryClient } from "@tanstack/react-query";
+  import type { AxiosError } from "axios";
+  import { Link, useParams } from "react-router";
+
+  function CommentListItem({ reply }: { reply: Reply }) {
+    const { _id } = useParams();
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation<DeleteRes, AxiosError<ErrorRes>, void>({
+      mutationFn: () => deleteReply(Number(_id), reply._id),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['posts', _id, 'replies'] });
+      }
+    });
+
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (confirm('삭제하시겠습니까?')) {
+        mutate();
+      }
+    };
+
+    return (
+      ...
+      <form onSubmit={ onSubmit } className="inline ml-2">
+      ...
+    );
+  }
+
+  export default CommentListItem;
+  ```
+
+* 댓글 삭제 기능 테스트
+  - 로그인 한 사용자가 작성한 댓글에 대해서 삭제 기능 테스트
+
+## 2.15 게시물 삭제 기능 구현
+### 2.15.1 게시물 삭제 기능 추가
+#### src/pages/board/Detail.tsx 수정
+- react query의 useMutation으로 게시물 삭제 이벤트 추가
+
+  ```tsx
+  import { deletePost, getPost } from "@/api/post";
+  import CommentList from "@/pages/board/CommentList";
+  import type { DeleteRes, ErrorRes, Post, PostInfoRes } from "@/types";
+  import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+  import type { AxiosError } from "axios";
+  import { Link, useNavigate, useParams } from "react-router";
+
+  function Detail() {
+
+    const { type, _id } = useParams();
+
+    const { data: post, isError, error } = useSuspenseQuery<PostInfoRes, AxiosError<ErrorRes>, Post>({
+      queryKey: ['posts', _id],
+      queryFn: () => getPost(Number(_id)),
+      select: (data) => data.item,
+      staleTime: 1000*60,
+    });
+
+    if(isError) throw error;
+
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation<DeleteRes, AxiosError<ErrorRes>, void>({
+      mutationFn: () => deletePost(Number(_id)),
+      onSuccess: () => {
+        alert('게시글이 삭제 되었습니다.');
+        queryClient.invalidateQueries({ queryKey: ['posts', type] });
+        navigate(`/${post.type}`);
+      }
+    });
+
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (confirm('삭제하시겠습니까?')) {
+        mutate();
+      }
+    };
+
+    return (
+      ...
+      <form onSubmit={ onSubmit }>
+      ...
+    );
+  }
+
+  export default Detail;
+  ```
+
+* 게시물 삭제 기능 테스트
+  - 로그인 한 사용자가 작성한 게시글에 대해서 삭제 기능 테스트
+
+## 2.16 Step 02 완료
+* 완성된 코드 참고: https://github.com/FEBC-15/react/tree/main/workspace-ins/ch11-skeleton/lion-board-react-02
+
