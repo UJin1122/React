@@ -1,18 +1,24 @@
 import { Metadata } from "next";
 
-function generateMetadata(){
-  const data ={
-    title: `1번 게시물`,
-    description: '게시판 이용 수칙입니다.',
+export async function generateMetadata({ params }:{ params: Promise<{ id: string }> }): Promise<Metadata> {
+  // TODO: API 서버 호출 필요
+    const { id } = await params;
+
+  const data = {
+    title: `${ id }번 게시물`,
+    content: '게시판 이용 수칙입니다.',
   };
-  return{
+
+  return {
     title: data.title,
     description: data.content,
   }
 }
 
-export default function PostInfo(){
+// 동적 세그먼트의 값을 꺼낼때 params prop을 사용
+export default async function PostInfo({ params }:{ params: Promise<{ id: string }> }){
+  const { id } = await params;
   return (
-    <h1>1번 게시물 상세 조회</h1>
+    <h1>{ id }번 게시물 상세 조회</h1>
   );
 }
