@@ -5,6 +5,7 @@ export default function PostLayout({
 }: Readonly<{ 
   children: React.ReactNode 
 }>) {
+  
   return (
     <div className="flex flex-1 overflow-hidden">
       <aside className="w-48 bg-gray-800 text-white p-4 lg:w-64">
