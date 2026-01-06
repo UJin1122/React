@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 
 export async function generateMetadata({ params }:{ params: Promise<{ id: string }> }): Promise<Metadata> {
   // TODO: API 서버 호출 필요
@@ -27,13 +28,20 @@ export function generateStaticParams(){
 
 // 동적 세그먼트의 값을 꺼낼때 params prop을 사용
 export default async function PostInfo({ params }:{ params: Promise<{ id: string }> }){
-  await new Promise(resolve => setTimeout(resolve, 1000));
   const { id } = await params;
-  
-  if(id === '444') throw new Error('4444444444444444444444444444444');
+
+  const res = await fetch(`http://localhost:3000/api/posts/${id}`);
+  const data = await res.json();
+  const post = data.item;
 
   console.log(id, '게시물 조회');
   return (
-    <h1>{ id }번 게시물 상세 조회</h1>
+    <div>
+      <p>작성자: { post.user?.name }</p>
+      <p>수정일: { post.updatedAt }</p>
+      <Image src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4Ux4wdRflvmxEDp4igUzKyI-DCgGehN7pvQ&s'} alt={post.title} width={500} height={300} />
+      <h1>{ post.title }</h1>
+      <p>{ post.content }</p>
+    </div>
   );
 }

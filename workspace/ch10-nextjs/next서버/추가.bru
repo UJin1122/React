@@ -1,0 +1,22 @@
+meta {
+  name: 추가
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://kqwlp0fc-3000.asse.devtunnels.ms/api
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "message": "잘보입니다"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

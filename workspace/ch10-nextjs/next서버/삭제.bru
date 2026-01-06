@@ -1,0 +1,22 @@
+meta {
+  name: 삭제
+  type: http
+  seq: 3
+}
+
+delete {
+  url: https://ndbfxdxm-3000.asse.devtunnels.ms/api
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "key": "message"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
