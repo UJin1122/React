@@ -31,6 +31,9 @@ export default async function PostInfo({ params }: { params: Promise<{ id: strin
   // 3초 후에 resolve 됨
   await new Promise(resolve => setTimeout(resolve, 1000*3));
   const { id } = await params;
+
+  if(id === '444') throw new Error('444 에러!!!');
+
   console.log(id, '게시물 조회함');
   return (
     <h1>{ id }번 게시물 상세 조회</h1>
