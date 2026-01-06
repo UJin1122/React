@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 // 동적 세그먼트의 값을 꺼낼때 params prop을 사용
 export default async function PostInfo({ params }: { params: Promise<{ id: string }> }){
   const { id } = await params;
+  console.log(id, '게시물 조회함');
   return (
     <h1>{ id }번 게시물 상세 조회</h1>
   );
