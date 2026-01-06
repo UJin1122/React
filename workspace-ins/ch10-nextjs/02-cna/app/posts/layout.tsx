@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default function PostLayout({ 
   children 
@@ -14,7 +15,9 @@ export default function PostLayout({
         </ul>
       </aside>
       <main className="flex-1 p-6 bg-gray-100 overflow-y-auto">
-        { children }
+        {/* <Suspense fallback={<p>Suspense로 직접 구현한 로딩중...</p>}> */}
+          { children }
+        {/* </Suspense> */}
       </main>
     </div>
   );

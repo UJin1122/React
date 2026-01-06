@@ -28,6 +28,8 @@ export function generateStaticParams(){
 
 // 동적 세그먼트의 값을 꺼낼때 params prop을 사용
 export default async function PostInfo({ params }: { params: Promise<{ id: string }> }){
+  // 3초 후에 resolve 됨
+  await new Promise(resolve => setTimeout(resolve, 1000*3));
   const { id } = await params;
   console.log(id, '게시물 조회함');
   return (
