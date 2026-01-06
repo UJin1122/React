@@ -12,7 +12,8 @@ export default function RootLayout({
 
   // 현재 URL 경로를 추출('/posts', '/user/login')
   const pathname = usePathname();
-  const isActive = (path: string) => path === pathname ? 'cs-active' : '';
+  // pathname: /posts/new, path: '/posts'
+  const isActive = (path: string) => path === pathname || (path !== '/' && pathname.startsWith(path)) ? 'cs-active' : '';
 
   return (
     <html lang="ko">
