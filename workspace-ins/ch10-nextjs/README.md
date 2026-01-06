@@ -1162,7 +1162,9 @@ export default function NotFound() {
 
 ## 5.4 route handler
 * 서버에서 실행되고 데이터를 클라이언트에 반환하는 API 엔드포인트 생성
+  - 클라이언트 컴포넌트에서 사용
   - 서버 컴포넌트에서는 직접 백엔드로부터 데이터를 가져오면 되므로 route handler를 호출할 필요 없음
+* route.js, route.ts 이름으로 작성
 * 외부 API를 호출할 때 route handler를 통해 호출하면 API 토큰 같은 민감한 정보를 클라이언트에 노출하지 않음
 * GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS 메서드 지원
   - 지원되지 않은 메서드 호출 시 405 Method Not Allowed 에러 응답
@@ -1170,9 +1172,7 @@ export default function NotFound() {
 * app/api/posts/[id]/route.ts 파일 작성
 
   ```ts
-  import { NextRequest, NextResponse } from 'next/server';
-
-  export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const res = await fetch(`https://fesp-api.koyeb.app/market/posts/${id}`, {
       headers: {
@@ -1181,7 +1181,7 @@ export default function NotFound() {
       },
     });
     const data = await res.json();
-    return NextResponse.json(data);
+    return Response.json(data);
   }
   ```
 
@@ -1191,7 +1191,7 @@ export default function NotFound() {
 #### NextRequest 주요 기능
 ```ts
 export function GET(request: NextRequest) {
-  // URL과 검색 매개변수
+  // URL과 쿼리 스트링 추출
   const { nextUrl } = request;
   const searchParams = nextUrl.searchParams;
   const query = searchParams.get('query'); // /api/search?query=hello → "hello"
@@ -1199,11 +1199,7 @@ export function GET(request: NextRequest) {
   // 쿠키 접근
   const token = request.cookies.get('token')?.value;
   
-  // 헤더 접근
-  const userAgent = request.headers.get('user-agent');
-  const authorization = request.headers.get('authorization');
-  
-  return NextResponse.json({ query, token, userAgent });
+  return NextResponse.json({ query, token });
 }
 ```
 
@@ -1380,14 +1376,14 @@ export function POST(request: NextRequest) {
 #### 6.2.3.2 클라이언트 컴포넌트
 * 서버와 클라이언트에서 실행되는 컴포넌트
 * 파일의 첫 줄에 'use client' 지시어 추가
-* 서버에서 먼저 실행된 후 결과와(HTML) 컴포넌트 자체를(JS) 클라이언트로 전송
+* 서버에서 먼저 실행된 후 결과와(HTML) 번들링된 컴포넌트 파일을(JS) 클라이언트로 전송
 * 이후 클라이언트에서도 실행되는 컴포넌트로, 브라우저에서만 할 수 있는 작업이 필요한 경우 클라이언트 컴포넌트로 만들어야 함
   - 이벤트 처리, DOM 직접 핸들링
   - useState, useEffect 등 상태와 라이프사이클 관련 기능
   - 브라우저 API(window, document, localStorage, geolocation 등) 사용
 * 클라이언트 컴포넌트가 import해서 사용하는 모든 자식 컴포넌트는 암묵적으로 클라이언트 컴포넌트가 되고 자바스크립트 번들에 포함되어 클라이언트로 전송됨
 * 클라이언트 컴포넌트가 서버 컴포넌트를 직접 import 할 수는 없지만 children으로 포함하는 것은 가능
-  - 서버 컴포넌트는 서버에서 실행되어야 하기 때문에 브라우저에서 실행되는 클라이언트 컴포넌트에서 직접 import 해서 호출하는 것은 불가능
+  - 서버 컴포넌트는 서버에만 존재하기 때문에 브라우저에서 실행되는 클라이언트 컴포넌트에서 직접 import 해서 호출하는 것은 불가능
   - 서버 컴포넌트를 자식 컴포넌트로 포함하면 서버에서 먼저 실행된 후 결과가 자식 컴포넌트에 추가되므로 가능
 
 ##### 클라이언트 컴포넌트의 렌더링
@@ -1444,7 +1440,7 @@ export function POST(request: NextRequest) {
 # 7 Data Fetching
 ## 7.1 데이터를 가져오는 방법
 ### 7.1.1 클라이언트 컴포넌트
-* API 서버 직접 호출
+* API 서버 호출
 * route handler 호출
   - router handler에서 API 서버 호출
 * `서버 함수` 호출
