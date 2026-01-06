@@ -689,7 +689,7 @@ import Link from "next/link";
   ```tsx
   'use client'
   import { usePathname } from 'next/navigation';
-  
+  ...
   const pathname = usePathname(); // 현재 경로 반환 (예: '/posts')
   ```
 
