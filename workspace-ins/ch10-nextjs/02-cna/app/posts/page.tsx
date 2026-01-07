@@ -17,7 +17,7 @@ export default async function PostList(){
   const res = await fetch('http://localhost:3000/api/posts');
   const data: PostListItem[] = await res.json();
 
-  console.log(data);
+  console.log(globalThis.navigator.userAgent);
 
   const list = data.map(post => <li key={post._id}><Link href={`/posts/${post._id}`}>{post._id} - {post.title}</Link></li>);
   
