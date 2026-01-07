@@ -1,11 +1,8 @@
+import { getPosts } from "@/lib/post";
+
 // 목록 조회
 export async function GET(){
-  const res = await fetch(`https://fesp-api.koyeb.app/market/posts`,{
-    headers:{
-      'client-id': 'openmarket'
-    }
-  });
-  const data = await res.json();
+  const data = await getPosts();
   return Response.json(data);
 }
 

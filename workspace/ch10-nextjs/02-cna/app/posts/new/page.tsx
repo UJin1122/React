@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import RegistForm from "@/app/posts/new/RegistForm";
 
 export const metadata: Metadata = {
   title: '게시글 등록',
@@ -6,10 +7,10 @@ export const metadata: Metadata = {
 }
 
 export default async function PostNew(){
-  // new에는 loading 이 없기 때문에 상위 폴더의 로딩이 사용됨
-  // 게시물 로딩중...이 출력됨
-  // await new Promise(resolve => setTimeout(resolve, 1000*3));
   return (
-    <h1>게시글 등록</h1>
+    <div>
+      <h1 style={{ marginBottom: '16px' }}>게시글 등록</h1>
+      <RegistForm/>
+    </div>
   );
 }
