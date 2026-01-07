@@ -1,3 +1,4 @@
+import { getPost } from "@/lib/post";
 import { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
@@ -29,13 +30,18 @@ export function generateStaticParams(){
 // 동적 세그먼트의 값을 꺼낼때 params prop을 사용
 export default async function PostInfo({ params }: { params: Promise<{ id: string }> }){
   // 3초 후에 resolve 됨
-  await new Promise(resolve => setTimeout(resolve, 1000*3));
+  // await new Promise(resolve => setTimeout(resolve, 1000*3));
+  // if(id === '444') throw new Error('444 에러!!!');
+
   const { id } = await params;
 
-  if(id === '444') throw new Error('444 에러!!!');
-
+  const data = await getPost(id);
   console.log(id, '게시물 조회함');
   return (
-    <h1>{ id }번 게시물 상세 조회</h1>
+    <>
+      <h1>{ id }번 게시물 상세 조회</h1>
+      <h2>제목: { data.title }</h2>
+      <textarea className="w-full h-full focus:outline-none" defaultValue={ data.content }></textarea>
+    </>
   );
 }
