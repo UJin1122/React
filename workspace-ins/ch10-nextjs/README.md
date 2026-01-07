@@ -1533,59 +1533,20 @@ export default function NotFound() {
 * 게시물 등록
 
 ```tsx
-// data/actions/boardAction.ts
+// actions/board.ts
 'use server';
 
-import { PostRes } from "@/types/board";
-
-export async function createPost(prevState: PostRes, formData: FormData) {
+// 게시물 등록
+export async function createPost(formData: FormData) {
   const title = formData.get('title');
   const content = formData.get('content');
-  const res = await fetch('https://fesp-api.koyeb.app/market/posts', {
+  const res = await fetch(`https://fesp-api.koyeb.app/market/posts`, {
     method: 'POST',
     body: JSON.stringify({ title, content }),
     headers: {
       'Client-Id': 'openmarket',
-    },
-  });
-  const data = await res.json();
-  return data;
-}
-```
-
-```tsx
-// app/posts/new/RegistForm.tsx
-'use client';
-
-import { createPost } from "@/data/actions/boardAction";
-import { useActionState } from "react";
-
-export default function RegistForm() {
-
-  const [state, formAction, isPending] = useActionState(createPost, null);
-
-  return (
-    <form action={ formAction }>
-      <input type="text" name="title" placeholder="제목" />
-      <input type="text" name="content" placeholder="내용" />
-      <button type="submit" disabled={isPending}>등록</button>
-    </form>
-  )
-}
-```
-
-#### `서버 함수`
-* 게시물 목록 조회
-
-```tsx
-// data/functions/boardFetch.ts
-import { Post } from "@/types/board";
-
-export async function fetchPosts(): Promise<Post[]> {
-  const res = await fetch('https://fesp-api.koyeb.app/market/posts', {
-    headers: {
-      'Client-Id': 'openmarket',
-    },
+      'Content-Type': 'application/json',
+    }
   });
   const data = await res.json();
   return data.item;
@@ -1593,21 +1554,20 @@ export async function fetchPosts(): Promise<Post[]> {
 ```
 
 ```tsx
-// app/posts/page.tsx
-import Link from "next/link";
-import { fetchPosts } from "@/data/functions/boardFetch";
+// app/posts/new/RegistForm.tsx
+'use client';
 
-export default async function ListPage() {
-  const list = await fetchPosts();
-  const posts = list.map(post => <li key={ post._id }><Link href={`/posts/${post._id}`}>{ post.title }</Link></li>);
+import { createPost } from "@/actions/post";
 
+export default function RegistForm(){
   return (
-    <>
-      <h1>목록 조회</h1>
-      <ul>
-        { posts }
-      </ul>
-    </>
+    <form action={createPost}>
+      <label htmlFor="title">제목</label>
+      <input type="text" id="title" name="title" />
+      <label htmlFor="content">내용</label>
+      <input type="text" id="content" name="content" />
+      <button type="submit">등록</button>
+    </form>
   );
 }
 ```
@@ -1718,21 +1678,23 @@ export default function ClientComponent({ createPost }) {
 
   ```tsx
   'use client';
-  import { createPost } from "@/data/actions/boardAction";
-  export default function RegistForm() {
+
+  import { createPost } from "@/actions/post";
+
+  export default function RegistForm(){
     return (
-      <>
-        <form action={ createPost }>
-          <input type="text" name="title" placeholder="제목을 입력하세요" />
-          <textarea name="content" placeholder="내용을 입력하세요" />
-          <button type="submit">등록</button>
-        </form>
-      </>
-    )
+      <form action={createPost}>
+        <label htmlFor="title">제목</label>
+        <input type="text" id="title" name="title" />
+        <label htmlFor="content">내용</label>
+        <input type="text" id="content" name="content" />
+        <button type="submit">등록</button>
+      </form>
+    );
   }
   ```
 
-  - `서버 액션`이 호출되면 Form 내부의 입력 요소들 값이 저장된 FormData 객체가 자동으로 전달됨
+  - `서버 액션`이 호출되면 Form 내부의 입력 요소들 값이 FormData 객체로 만들어져서 서버 액션의 인자값으로 전달됨
   - 자바스크립트가 로드되기 이전이거나 비활성화 되었어도 폼 제출 가능
     + 자바스크립트가 로드되기 이전에 제출되면 큐에 담은 후 클라이언트 하이드레이션의 우선 순위로 지정됨
   - submit 이후에 새로고침 없음
@@ -1765,8 +1727,8 @@ export default function ClientComponent({ createPost }) {
 * 이전 fetch 작업 후 다음 fetch 작업을 하기 때문에 폭포수 현상 발생
 * 다음 데이터를 가져올 때 이전 데이터가 필요한 경우 사용(성능 저하)
 * loading 페이지나 `<Suspense>`를 사용해서 데이터 스트리밍 중에 로딩중 상태를 보여주면 전체가 블로킹 되는 문제를 막을 수 있음
-
   - 사용자는 이미 로딩된 컨텐츠에 대해서는 인터렉션이 가능
+
   ```tsx
   // ...
 
