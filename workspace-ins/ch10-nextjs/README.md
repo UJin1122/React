@@ -18,35 +18,99 @@
   - [4.2 app 라우터](#42-app-라우터)
   - [4.3 라우트 정의](#43-라우트-정의)
   - [4.4 페이지와 레이아웃](#44-페이지와-레이아웃)
+    - [4.4.1 페이지](#441-페이지)
+    - [4.4.2 레이아웃](#442-레이아웃)
+    - [4.4.3 메타데이터](#443-메타데이터)
   - [4.5 페이지 이동](#45-페이지-이동)
+    - [4.5.1 Link 컴포넌트](#451-link-컴포넌트)
+    - [4.5.2 history API](#452-history-api)
+    - [4.5.3 useRouter 훅](#453-userouter-훅)
+    - [4.5.4 redirect](#454-redirect)
+    - [4.5.5 permanentRedirect](#455-permanentredirect)
+    - [4.5.6 next.config.ts의 redirects](#456-nextconfigts의-redirects)
   - [4.6 동적 라우트](#46-동적-라우트)
+    - [4.6.1 요청한 URL이 /posts/3일 경우 3을 꺼내는 방법](#461-요청한-url이-posts3일-경우-3을-꺼내는-방법)
+    - [4.6.2 Catch-all 세그먼트](#462-catch-all-세그먼트)
+    - [4.6.3 Optional Catch-all 세그먼트](#463-optional-catch-all-세그먼트)
+    - [4.6.4 generateStaticParams() 함수](#464-generatestaticparams-함수)
   - [4.7 라우트 그룹 및 프라이빗 폴더](#47-라우트-그룹-및-프라이빗-폴더)
+    - [4.7.1 라우트 그룹](#471-라우트-그룹)
+    - [4.7.2 프라이빗 폴더](#472-프라이빗-폴더)
   - [4.8 라우팅 작동 방식](#48-라우팅-작동-방식)
+    - [4.8.1 코드 분할](#481-코드-분할)
+    - [4.8.2 Prefetching](#482-prefetching)
+    - [4.8.3 부분 렌더링](#483-부분-렌더링)
   - [4.9 프로젝트 구성 및 라우트 관리](#49-프로젝트-구성-및-라우트-관리)
+    - [4.9.1 프로젝트 폴더 구조 전략](#491-프로젝트-폴더-구조-전략)
 - [5. 라우팅용 특수 파일](#5-라우팅용-특수-파일)
   - [5.1 로딩중 페이지와 스트리밍](#51-로딩중-페이지와-스트리밍)
+    - [5.1.1 loading](#511-loading)
+    - [5.1.2 서스펜스를 이용한 스트리밍](#512-서스펜스를-이용한-스트리밍)
   - [5.2 error](#52-error)
   - [5.3 not-found](#53-not-found)
   - [5.4 route handler](#54-route-handler)
+    - [5.4.1 route handler의 NextRequest, NextResponse](#541-route-handler의-nextrequest-nextresponse)
 - [6. 서버 컴포넌트와 클라이언트 컴포넌트](#6-서버-컴포넌트와-클라이언트-컴포넌트)
   - [6.1 클라이언트와 서버](#61-클라이언트와-서버)
+    - [6.1.1 렌더링](#611-렌더링)
+    - [6.1.2 렌더링 환경](#612-렌더링-환경)
+    - [6.1.3 요청-응답 수명주기](#613-요청-응답-수명주기)
+    - [6.1.4 네트워크 경계](#614-네트워크-경계)
   - [6.2 렌더링 방식](#62-렌더링-방식)
+    - [6.2.1 CSR vs. SSR](#621-csr-vs-ssr)
+      - [6.2.1.1 CSR(Client Side Rendering)](#6211-csrclient-side-rendering)
+      - [6.2.1.2 SSR(Server Side Rendering)](#6212-ssrserver-side-rendering)
+      - [6.2.1.3 SSR의 장점](#6213-ssr의-장점)
+    - [6.2.2 SSR vs. RSC(React Server Component)](#622-ssr-vs-rscreact-server-component)
+      - [6.2.2.1 Next.js RSC의 장점](#6221-nextjs-rsc의-장점)
+    - [6.2.3 서버 컴포넌트 vs. 클라이언트 컴포넌트](#623-서버-컴포넌트-vs-클라이언트-컴포넌트)
+      - [6.2.3.1 서버 컴포넌트](#6231-서버-컴포넌트)
+      - [6.2.3.2 클라이언트 컴포넌트](#6232-클라이언트-컴포넌트)
+    - [6.2.4 Next.js의 RSC(React Server Component) 렌더링 방식](#624-nextjs의-rscreact-server-component-렌더링-방식)
+      - [6.2.4.1 정적 렌더링(Static Rendering)](#6241-정적-렌더링static-rendering)
+      - [6.2.4.2 동적 렌더링(Dynamic Rendering)](#6242-동적-렌더링dynamic-rendering)
+      - [6.2.4.3 스트리밍(Streaming)](#6243-스트리밍streaming)
+      - [6.2.4.4 ISR(Imcremental Static Regeneration)](#6244-isrimcremental-static-regeneration)
   - [6.3 Edge와 Node.js 런타임](#63-edge와-nodejs-런타임)
 - [7. Data Fetching](#7-data-fetching)
   - [7.1 데이터를 가져오는 방법](#71-데이터를-가져오는-방법)
+    - [7.1.1 클라이언트 컴포넌트](#711-클라이언트-컴포넌트)
+    - [7.1.2 서버 컴포넌트](#712-서버-컴포넌트)
   - [7.2 Next.js의 fetch 함수](#72-nextjs의-fetch-함수)
   - [7.3 `서버 액션`과 `서버 함수`](#73-서버-액션과-서버-함수)
+    - [7.3.1 `서버 함수`(Server Functions)](#731-서버-함수server-functions)
+    - [7.3.2 `서버 액션`(Server Actions)](#732-서버-액션server-actions)
+    - [7.3.3 용어 정리](#733-용어-정리)
+    - [7.3.4 사용 예시](#734-사용-예시)
+    - [7.3.5 `서버 함수` 주요 특징](#735-서버-함수-주요-특징)
+    - [7.3.6 `서버 함수` 정의](#736-서버-함수-정의)
+    - [7.3.7 `서버 함수` 호출](#737-서버-함수-호출)
+      - [7.3.7.1 form 요소의 action 속성으로 호출](#7371-form-요소의-action-속성으로-호출)
   - [7.4 fetch 패턴과 모범 사례](#74-fetch-패턴과-모범-사례)
+    - [7.4.1 서버 컴포넌트 사용](#741-서버-컴포넌트-사용)
+    - [7.4.2 컴포넌트 트리간 동일한 데이터 전달하지 않기](#742-컴포넌트-트리간-동일한-데이터-전달하지-않기)
+    - [7.4.3 스트리밍과 서스펜스 활용](#743-스트리밍과-서스펜스-활용)
+    - [7.4.4 병렬 및 순차 fetch](#744-병렬-및-순차-fetch)
+      - [7.4.4.1 순차적 fetch](#7441-순차적-fetch)
+      - [7.4.4.2 병렬 fetch](#7442-병렬-fetch)
 - [8. 캐싱](#8-캐싱)
   - [8.1 Data Cache](#81-data-cache)
+    - [8.1.1 Next.js의 fetch API](#811-nextjs의-fetch-api)
+    - [8.1.2 데이터 캐시와 fetch 메모이제이션의 차이점](#812-데이터-캐시와-fetch-메모이제이션의-차이점)
+    - [8.1.3 캐시 재검증](#813-캐시-재검증)
   - [8.2 Full Route Cache](#82-full-route-cache)
   - [8.3 Router Cache](#83-router-cache)
   - [8.4 Request Memoization](#84-request-memoization)
-  - [8.5 Next.js 15의 캐싱 주요 변경사항](#85-nextjs-15의-캐싱-주요-변경사항)
 - [9. 최적화](#9-최적화)
   - [9.1 이미지](#91-이미지)
   - [9.2 스크립트](#92-스크립트)
+    - [9.2.1 외부 스크립트 로딩](#921-외부-스크립트-로딩)
+    - [9.2.2 인라인 스크립트](#922-인라인-스크립트)
   - [9.3 정적 컨텐츠](#93-정적-컨텐츠)
+    - [9.3.1 public 폴더](#931-public-폴더)
+    - [9.3.2 폰트 최적화](#932-폰트-최적화)
+    - [9.3.3 아이콘 최적화](#933-아이콘-최적화)
+    - [9.3.4 압축 및 캐싱 최적화](#934-압축-및-캐싱-최적화)
 
 # 1 Next.js 개요
 * 공식 홈페이지: https://nextjs.org
@@ -1187,51 +1251,8 @@ export default function NotFound() {
 
 ### route handler의 NextRequest, NextResponse
 * Fetch API의 Request, Response를 확장하여 추가적인 편의 메서드 제공
-
-#### NextRequest 주요 기능
-```ts
-export function GET(request: NextRequest) {
-  // URL과 쿼리 스트링 추출
-  const { nextUrl } = request;
-  const searchParams = nextUrl.searchParams;
-  const query = searchParams.get('query'); // /api/search?query=hello → "hello"
-  
-  // 쿠키 접근
-  const token = request.cookies.get('token')?.value;
-  
-  return NextResponse.json({ query, token });
-}
-```
-
-#### NextResponse 주요 기능
-```ts
-import { NextResponse } from 'next/server';
-
-export function POST(request: NextRequest) {
-  // 1. JSON 응답
-  return NextResponse.json({ message: 'Success' }, { status: 201 });
-  
-  // 2. 리다이렉트
-  return NextResponse.redirect(new URL('/login', request.url));
-  
-  // 3. 헤더 설정
-  const response = NextResponse.json({ data: 'example' });
-  response.headers.set('X-Custom-Header', 'MyValue');
-  response.headers.set('Cache-Control', 'max-age=3600');
-  
-  // 4. 쿠키 설정
-  response.cookies.set('session', 'abc123', {
-    httpOnly: true,
-    secure: true,
-    maxAge: 60 * 60 * 24 * 7, // 1주일
-  });
-  
-  // 5. 쿠키 삭제
-  response.cookies.delete('old-session');
-  
-  return response;
-}
-```
+* NextRequest: URL, 쿼리 파라미터, 쿠키 접근을 위한 `nextUrl`, `cookies` 객체 제공
+* NextResponse: 쿠키 설정/삭제를 위한 `cookies` 객체 제공
 
 ---
 
@@ -1365,17 +1386,22 @@ export function POST(request: NextRequest) {
 3. RSC Payload를 기반으로 HTML 생성
   - 초기 접속이나 새로고침 등으로 페이지가 로드될 때 HTML 생성 및 전송
   - 이후 페이지 이동 시에는 RSC Payload만 생성해서 전송
+  - 서버 컴포넌트 트리 하위에 클라이언트 컴포넌트가 있는 경우: 서버 컴포넌트는 서버에서만 실행되어 HTML 생성, 클라이언트 컴포넌트는 서버에서도 실행되어 HTML 생성(이벤트 핸들러는 포함되지 않음)
 4. HTML과 RSC Payload를 클라이언트에 전송
   - HTML은 브라우저 자체의 렌더링으로 빠르게 화면 표시
-  - HTML만 가지고 화면을 보여줬기 때문에 사용자와의 인터렉션이 되지 않는 상태
-5. 인터렉션을 위한 하이드레이션 시작
-  - 클라이언트 컴포넌트 다운로드
-  - 리액트 앱으로 동작시키기 위해 RSC Payload 정보를 이용해서 Virtual DOM을 생성, 브라우저 DOM과 동기화 시키고 이벤트 핸들러를 등록해서 사용자와 인터렉션이 가능한 상태로 만듦
+  - 서버 컴포넌트는 서버에서만 실행되며 클라이언트로 JavaScript 번들이 전송되지 않음
+  - 서버 컴포넌트로 렌더링된 HTML은 정적이며 이벤트 핸들러가 없음
+  - 하위 클라이언트 컴포넌트: JavaScript 번들이 클라이언트로 전송됨
+5. 브라우저에서 하이드레이션 (클라이언트 컴포넌트가 있는 경우)
+  - RSC Payload 정보를 이용해서 필요한 클라이언트 컴포넌트를 다운로드
+  - 컴포넌트를 실행하여 상태를 초기화(useState, useActionState 등)
+  - Virtual DOM을 생성하고 브라우저 DOM과 동기화
+  - 이벤트 핸들러를 등록해서 사용자와 인터렉션이 가능한 상태로 만듦
 
 #### 6.2.3.2 클라이언트 컴포넌트
 * 서버와 클라이언트에서 실행되는 컴포넌트
 * 파일의 첫 줄에 'use client' 지시어 추가
-* 서버에서 먼저 실행된 후 결과와(HTML) 번들링된 컴포넌트 파일을(JS) 클라이언트로 전송
+* 서버에서 먼저 실행된 후 결과와(HTML) 번들링된 클라이언트 컴포넌트를(JS) 클라이언트로 전송
 * 이후 클라이언트에서도 실행되는 컴포넌트로, 브라우저에서만 할 수 있는 작업이 필요한 경우 클라이언트 컴포넌트로 만들어야 함
   - 이벤트 처리, DOM 직접 핸들링
   - useState, useEffect 등 상태와 라이프사이클 관련 기능
@@ -1477,14 +1503,13 @@ export function POST(request: NextRequest) {
 서버에서 실행되는 모든 함수
 ├── 일반 함수 ('use server' 없음)
 │   └── 서버 컴포넌트 내부에서만 사용
-└── `서버 함수` ('use server' 있음)
+└── `서버 함수` ('use server' 있음): 클라이언트 컴포넌트에서 호출하는 함수
     ├── `서버 액션` (form과 연관)
     │   ├── form의 action prop으로 직접 사용: <form action={ serverFn }>
     │   ├── useActionState와 함께 사용: formAction을 action prop으로 사용
     │   └── useTransition과 함께 사용: startTransition 내에서 호출
-    └── 기타 `서버 함수` (form과 무관, 직접 호출)
-        ├── 클라이언트 컴포넌트에서 직접 호출
-        └── 서버 컴포넌트에서 직접 호출
+    └── 나머지 (form과 무관, 직접 호출)
+        └── 클라이언트 컴포넌트에서 직접 호출
 ```
 
 ### 7.3.4 사용 예시
@@ -1953,47 +1978,6 @@ revalidatePath('/posts'); // /posts URL의 캐시 삭제
   }
   ```
 
-## 8.5 Next.js 15의 캐싱 주요 변경사항
-* 기본값 변경
-  - Data Cache: 기본적으로 `no-store` (캐시 안됨)
-  - Route Handler Cache: 기본적으로 캐시 안됨
-  - Router Cache: Page 컴포넌트 기본 `staleTime`이 0초
-
-* Next.js 14 vs 15 비교
-```tsx
-// Next.js 14: 자동으로 캐시됨 (기본값 cache: 'force-cache')
-const res = await fetch('https://api.example.com/posts');
-
-// Next.js 15: 캐시 안됨 (기본값 cache: 'no-cache')
-const res = await fetch('https://api.example.com/posts');
-
-// Next.js 15에서 캐시하려면 명시적 설정 필요
-const res = await fetch('https://api.example.com/posts', { 
-  cache: 'force-cache', // 무기한 캐시
-  next: { revalidate: 60 }, // 시간 기반 재검증 (60초가 지나면 업데이트)
-});
-```
-
-### 8.5.1 캐시를 명시적으로 설정해도 여전히 캐시가 안되는 경우
-* 미들웨어에서는 캐시 안됨
-* Fetch가 아니라 Request 객체를 사용하는 경우
-* GET 이외의 HTTP 메서드 사용 (POST, PUT, DELETE 등)
-* cookies() 또는 headers() 함수 사용
-  - header나 cookie를 꺼내는 작업은 동적으로 실행되어야 하므로 해당 컴포넌트는 동적 렌더링이 됨
-* 라우트 세그먼트에서 `dynamic = 'force-dynamic'` 설정
-
-  ```tsx
-  // 이런 경우들은 cache: 'force-cache'를 설정해도 캐시 안됨
-  export default async function Page() {
-    const cookieStore = await cookies(); // 동적 함수 사용
-    const res = await fetch('https://api.example.com/posts', { 
-      cache: 'force-cache' // 설정해도 캐시 안됨!
-    });
-  }
-
-  export const dynamic = 'force-dynamic'; // 이 설정이 있으면 모든 fetch가 캐시 안됨
-  ```
-
 ---
 
 # 9 최적화
@@ -2055,18 +2039,93 @@ export default function DashboardLayout({
 ```
 
 ### 9.2.2 인라인 스크립트
-* 스크립트를 추적하고 최적화 하기 위해서 id 속성 부여
+* 외부 스크립트 파일이 아닌 JavaScript 코드를 직접 컴포넌트에 작성하는 방식
+* `Script` 컴포넌트의 자식으로 JavaScript 코드를 문자열로 전달
+* id 속성 필수: 스크립트를 추적하고 최적화하기 위해 반드시 고유한 id를 부여해야 함
+  - 같은 id를 가진 스크립트는 중복 실행 방지
+  - Next.js가 스크립트를 추적하여 최적화 수행
+* 사용 시나리오:
+  - 간단한 DOM 조작 코드
+  - 외부 라이브러리 초기화 코드
+  - 분석 도구 설정 코드
+* 주의사항:
+  - 인라인 스크립트는 서버 컴포넌트에서 사용 불가 (클라이언트 컴포넌트에서만 사용)
+  - `dangerouslySetInnerHTML`과 달리 Next.js가 최적화 및 추적 가능
+
 ```tsx
-<Script id="show-banner">
-  {`document.getElementById('banner').classList.remove('hidden')`}
-</Script>
+'use client';
+
+import Script from 'next/script';
+
+export default function Banner() {
+  return (
+    <>
+      <div id="banner" className="hidden">배너 내용</div>
+      <Script id="show-banner">
+        {`document.getElementById('banner').classList.remove('hidden')`}
+      </Script>
+    </>
+  );
+}
 ```
 
+인라인 스크립트 vs 외부 스크립트:
+- 인라인 스크립트: 작은 코드, 즉시 실행 필요, 외부 요청 없음
+- 외부 스크립트: 큰 라이브러리, 캐싱 가능, 별도 파일로 관리
+
 ## 9.3 정적 컨텐츠
-* public 폴더 아래에 위치하면 자동으로 최적화
-* public 폴더는 코드에서 '/'로 접근
-* 이미지 포맷 최적화
-* 폰트 최적화
-* 아이콘 최적화
-* 압축 및 캐싱 최적화
+* 정적 파일(이미지, 폰트, 아이콘 등)을 효율적으로 제공하기 위한 최적화 기능
+
+### 9.3.1 public 폴더
+* `public` 폴더에 위치한 파일은 자동으로 최적화되어 제공됨
+* 접근 방법: 코드에서 `/`로 시작하는 경로로 접근
+  - `public/logo.png` → `/logo.png`
+  - `public/images/banner.jpg` → `/images/banner.jpg`
+* 특징:
+  - 빌드 시 그대로 복사되어 배포됨
+  - 서버 컴포넌트와 클라이언트 컴포넌트 모두에서 사용 가능
+  - CDN을 통한 정적 파일 제공 가능
+
+```tsx
+// 이미지 사용 예시
+<img src="/logo.png" alt="로고" />
+
+// 링크 예시
+<Link href="/downloads/manual.pdf">매뉴얼 다운로드</Link>
+```
+
+### 9.3.2 폰트 최적화
+* `next/font`를 사용하여 폰트 자동 최적화
+* 최적화 기능:
+  - 폰트 파일 자동 다운로드 및 최적화
+  - 자동 self-hosting (외부 요청 제거)
+  - 폰트 로딩 최적화로 레이아웃 시프트 방지
+  - Zero layout shift 보장
+
+```tsx
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export default function Layout({ children }) {
+  return <div className={inter.className}>{children}</div>;
+}
+```
+
+### 9.3.3 아이콘 최적화
+* `app` 디렉토리의 `icon.png`, `icon.svg` 등이 자동으로 최적화됨
+* 지원 형식: PNG, SVG, ICO 등
+* 자동 생성: 다양한 크기의 favicon 자동 생성
+* 최적화: 압축 및 최적 포맷 변환
+
+### 9.3.4 압축 및 캐싱 최적화
+* 압축: Gzip, Brotli 압축 자동 적용
+* 캐싱: 정적 파일에 대한 적절한 캐시 헤더 설정
+  - `Cache-Control` 헤더 자동 설정
+  - 브라우저 캐싱 최적화
+  - CDN 캐싱 지원
+* 성능 향상:
+  - 파일 크기 감소로 전송 시간 단축
+  - 캐싱으로 재방문 시 빠른 로딩
+  - 네트워크 요청 최소화
 

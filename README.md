@@ -743,10 +743,16 @@
 <summary><h3>23일차(2025.12.31 수)</h3></summary>
 
 #### 오전(3시간)
-
+* 9장 HTTP 통신과 Ajax
+  * 🔊 [7. React Query(TanStack Query)](./workspace-ins/ch09-ajax#7-react-querytanstack-query)
+    - 💻 [03 React Query 라이브러리](./workspace-ins/ch09-ajax/03-board-reactquery)
+      + workspace/ch09-ajax/01-board-axios 폴더 복사해서 workspace/ch09-ajax/03-board-reactquery 폴더 생성
 
 #### 오후(3시간)
-
+  * 🔊 [8. 데이터 패칭 패턴](./workspace-ins/ch09-ajax#8-데이터-패칭-패턴)
+    - 💻 [04 Fetch-on-render와 Fetch-then-render](./workspace-ins/ch09-ajax/04-board-pattern)
+    - 💻 [05 Render-as-you-fetch(Suspense)](./workspace-ins/05-board-suspense)
+    - 💻 [06 React Query와 Suspense 함께 사용](./workspace-ins/06-board-suspense-reactquery)
 
 </details>
 </details>
@@ -758,10 +764,16 @@
 <summary><h3>24일차(2026.01.05 월)</h3></summary>
 
 #### 오전(3시간)
-
+* 🔊 [10장 Next.js](./workspace-ins/ch10-nextjs#10장-nextjs)
+  * 🔊 [1 Next.js 개요](./workspace-ins/ch10-nextjs#1-nextjs-개요)
+  * 🔊 [2 개발환경 구성](./workspace-ins/ch10-nextjs#2-개발환경-구성)
+    - 💻 [01 개발환경 수동 구성](./workspace-ins/ch10-nextjs/01-manual)
+    - 💻 [02 개발환경 자동 구성 - catete-next-app](./workspace-ins/ch10-nextjs/02-cna)
+  * [3 프로젝트 구조](./workspace-ins/ch10-nextjs#3-프로젝트-구조)
 
 #### 오후(3시간)
-
+* 🔊 [10장 Next.js](./workspace-ins/ch10-nextjs#10장-nextjs)
+  * [4 라우팅](./workspace-ins/ch10-nextjs#4-라우팅)
 
 </details>
 
@@ -769,10 +781,12 @@
 <summary><h3>25일차(2026.01.06 화)</h3></summary>
 
 #### 오전(3시간)
-
+* 🔊 [10장 Next.js](./workspace-ins/ch10-nextjs#10장-nextjs)
+  * [4 라우팅](./workspace-ins/ch10-nextjs#4-라우팅)
 
 #### 오후(3시간)
-
+* 🔊 [10장 Next.js](./workspace-ins/ch10-nextjs#10장-nextjs)
+  * [5 라우팅용 특수 파일](./workspace-ins/ch10-nextjs#5-라우팅용-특수-파일)
 
 </details>
 
