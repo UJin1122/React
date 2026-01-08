@@ -5,10 +5,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   
   // TODO: API 서버 호출 필요
-  const data = {
-    title: `${ id }번 게시물`,
-    content: '게시판 이용 수칙입니다.',
-  };
+  const data = await getPost(id);
+
+  // const data = {
+  //   title: `${ id }번 게시물`,
+  //   content: '게시판 이용 수칙입니다.',
+  // };
 
   return {
     title: data.title,
@@ -30,7 +32,7 @@ export function generateStaticParams(){
 // 동적 세그먼트의 값을 꺼낼때 params prop을 사용
 export default async function PostInfo({ params }: { params: Promise<{ id: string }> }){
   // 3초 후에 resolve 됨
-  // await new Promise(resolve => setTimeout(resolve, 1000*3));
+  // await new Promise(resolve => setTimeout(resolve, 1000*30));
   // if(id === '444') throw new Error('444 에러!!!');
 
   const { id } = await params;

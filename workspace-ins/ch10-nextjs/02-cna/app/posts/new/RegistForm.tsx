@@ -3,7 +3,7 @@
 import { createPost } from "@/actions/post";
 
 export default function RegistForm(){
-
+  console.log('RegistForm', globalThis.navigator.userAgent);
   return (
     <form action={createPost}>
       <label htmlFor="title">제목</label>

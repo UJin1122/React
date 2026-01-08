@@ -7,7 +7,6 @@ import ErrorPage from "@/pages/ErrorPage";
 import MainPage from "@/pages/index";
 import Login from "@/pages/user/Login";
 import Signup from "@/pages/user/Signup";
-import { Suspense } from "react";
 
 import { createBrowserRouter } from "react-router";
 
@@ -23,30 +22,28 @@ const router = createBrowserRouter([
       },
       { 
         path: ":type", 
-        element: 
-          <Suspense fallback={<div>게시물 목록 로딩중...</div>}>
-            <List />
-          </Suspense>
-        },
+        element: <List />
+      },
       { 
         path: ":type/new", 
-        element: <New /> },
+        element: <New /> 
+      },
       { 
         path: ":type/:_id", 
-        element: <Detail /> },
+        element: <Detail /> 
+      },
       { 
         path: ":type/:_id/edit", 
-        element: <Edit /> },
+        element: <Edit /> 
+      },
       { 
         path: "user/login", 
-        element: <Login /> },
+        element: <Login /> 
+      },
       { 
         path: "user/signup",
-        element: 
-          
-            <Signup />
-          
-        },
+        element: <Signup />
+      },
     ]
   },
 ]);

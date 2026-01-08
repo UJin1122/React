@@ -13,7 +13,6 @@ function Login() {
   const { mutate } = useMutation<UserCreateRes, AxiosError<ErrorRes>, FormData>({
     mutationFn: login,
     onSuccess: (data) => {
-      console.log(data);
       alert(data.item.name + '님, 로그인 되었습니다.');
       navigate(`/`); // 개발자 도구 Console의 AccessToken 복사 후 주석 해제
     },

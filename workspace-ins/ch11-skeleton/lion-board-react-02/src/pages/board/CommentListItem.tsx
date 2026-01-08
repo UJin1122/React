@@ -27,7 +27,7 @@ function CommentListItem({ reply }: { reply: Reply }) {
         <div className="flex items-center">
           <img
             className="w-8 mr-2 rounded-full"
-            src={reply.user.image}
+            src={reply.user.image || '/images/favicon.svg'}
             alt={`${reply.user.name} 프로필 이미지`}
           />
           <Link to="" className="text-orange-400">{reply.user.name}</Link>
