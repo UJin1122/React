@@ -401,7 +401,11 @@ import './globals.css';
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="ko">
       ...
@@ -436,10 +440,10 @@ export default function ListItem() {
     <tr className="border-b border-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-300 ease-in-out">
       <td className="p-2 text-center">1</td>
       <td className="p-2 truncate indent-4"><Link href="/info/1" className="hover:text-orange-500 hover:underline">React란?</Link></td>
-      <td className="p-2 text-center truncate">액션핑</td>
+      <td className="p-2 text-center truncate">네오</td>
       <td className="p-2 text-center hidden sm:table-cell">22</td>
       <td className="p-2 text-center hidden sm:table-cell">5</td>
-      <td className="p-2 truncate text-center hidden sm:table-cell">2025.06.30 17:59:13</td>
+      <td className="p-2 truncate text-center hidden sm:table-cell">2026.01.03 17:59:13</td>
     </tr>
   );
 }
@@ -466,7 +470,7 @@ export default async function ListPage() {
 * app/info/1/CommentItem.tsx 생성
 * app/info/1/page.tsx에서 첫번째 댓글 영역 `<div className="shadow-md rounded-lg p-4 mb-4">...</div>` 태그 복사해서 추가하고 기존 `<div>...</div>` 영역 두개는 `<CommentItem />` 두개로 교체
 
-#### CommentList.tsx
+#### CommentItem.tsx
 ```tsx
 import Image from "next/image";
 import Link from "next/link";
@@ -477,15 +481,15 @@ export default function CommentItem() {
       <div className="flex justify-between items-center mb-2">
         <div className="flex items-center">
           <Image
+            width={32}
+            height={32}
             className="w-8 mr-2 rounded-full"
-            src="https://fesp-api.koyeb.app/market/files/openmarket/user-apeach.png"
+            src="https://res.cloudinary.com/ddedslqvv/image/upload/v1767106161/user-apeach_ol8y1n.png"
             alt="어피치 프로필 이미지"
-            width="32"
-            height="32"
           />
           <Link href="" className="text-orange-400">어피치</Link>
         </div>
-        <time className="text-gray-500" dateTime="2025.06.30 14:11:22">2025.06.30 14:11:22</time>
+        <time className="text-gray-500" dateTime="2026.01.05 14:11:22">2026.01.05 14:11:22</time>
       </div>
       <div className="flex justify-between items-start mb-2">
         <p className="whitespace-pre-wrap text-sm flex-1">아는 내용이구만...</p>
@@ -512,7 +516,7 @@ export default function CommentNew() {
         <div className="mb-4">
           <textarea
             rows={3}
-            cols={40}
+            cols={40} 
             className="block p-2 w-full text-sm border rounded-lg border-gray-300 bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             placeholder="내용을 입력하세요."
             name="comment"></textarea>
@@ -546,6 +550,7 @@ export default async function InfoPage() {
 
       <CommentNew />
     </section>
+    ...
   );
 }
 ```
