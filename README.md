@@ -34,7 +34,7 @@
 - [ch10-nextjs](./workspace-ins/ch10-nextjs)
 
 ## 11장 프로젝트 준비
-- [ch11-skeleton](./workspace-ins/ch11-skeleton)
+- [ch11-skeleton](./workspace-ins/ch11-skeleton/README-next.md)
 
 ## 12장 React App
 - [ch12-app](./workspace-ins/ch12-app)
