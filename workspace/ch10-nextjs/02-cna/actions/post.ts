@@ -1,10 +1,14 @@
+'use server';
+
 // API 서버와 통신 작업
-// 클라이언트 컴포넌트 전용
+
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createPost(formData: FormData): Promise<void>{
   const title = formData.get('title');
   const content = formData.get('content');
-  const res = await fetch(`https://fesp-api.koyeb.app/market/posts`,{
+  await fetch(`https://fesp-api.koyeb.app/market/posts`,{
     method: 'POST',
     body: JSON.stringify({ title, content }),
     headers:{
@@ -12,6 +16,7 @@ export async function createPost(formData: FormData): Promise<void>{
       'Content-Type': 'application/json'
     }
   });
-  const data = await res.json();
-  return data.item;
+
+  revalidatePath('/posts');
+  redirect('/posts');
 }
