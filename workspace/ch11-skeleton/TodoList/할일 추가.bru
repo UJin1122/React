@@ -1,0 +1,23 @@
+meta {
+  name: 할일 추가
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/todolist
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "공부는",
+    "content": "예습과 복습"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

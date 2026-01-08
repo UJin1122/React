@@ -1,0 +1,23 @@
+meta {
+  name: 할일 수정
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{url}}/todolist/5
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "key": "5",
+    "title": "예습 복습"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
