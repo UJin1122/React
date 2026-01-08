@@ -1,4 +1,4 @@
-# 11장 게시판 앱 개발
+# 11장 게시판 앱 개발(React)
 * TypeScript
 * React
 * Vite
