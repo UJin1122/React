@@ -30,16 +30,19 @@ export function generateStaticParams(){
 export default async function PostInfo({ params }:{ params: Promise<{ id: string }> }){
   const { id } = await params;
 
-  const res = await fetch(`http://localhost:3000/api/posts/${id}`);
+  const res = await fetch(`https://fesp-api.koyeb.app/market/posts/${id}`, {
+    headers: {
+      'client-id': 'openmarket'
+    }
+  });
   const data = await res.json();
   const post = data.item;
 
-  console.log(id, '게시물 조회');
+  console.log(data.item, '게시물 조회');
   return (
     <div>
       <h1>{ id }번 게시물 조회</h1>
       <h2>{data.title}</h2>
-      <textarea className="w-full h-full focus:outline-none" defaultValue={ data.content }></textarea>
       <p>작성자: { post.user?.name }</p>
       <p>수정일: { post.updatedAt }</p>
       <Image src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4Ux4wdRflvmxEDp4igUzKyI-DCgGehN7pvQ&s'} alt={post.title} width={500} height={300} />
