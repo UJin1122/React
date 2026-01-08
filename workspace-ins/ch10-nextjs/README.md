@@ -1811,62 +1811,66 @@ export default async function Page({
 * 방법: fetch 호출 시 cache 옵션 설정, next.tags로 태그 지정, revalidateTag()로 재검증
 
   ```tsx
-  // 기본으로 캐시됨 (Next.js 14)
-  const res = await fetch('https://fesp-api.koyeb.app/market/posts');
-
-  // Next.js 15에서는 명시적 설정 필요
   const res = await fetch('https://fesp-api.koyeb.app/market/posts', { cache: 'force-cache' });
   ```
+
+<img src="../../images/nextjs/data-cache.png" width="800">
+
+* 이미지 설명: Data Cache의 동작 흐름을 보여줌. 첫 번째 요청 시 서버에서 데이터를 가져와 캐시에 저장하고, 이후 동일한 요청은 캐시에서 직접 응답하여 빠른 응답 시간을 제공함.
 
 ### 8.1.1 Next.js의 fetch API
 * fetch의 반환값을 서버의 데이터 캐시에 자동으로 캐시하도록 구성할 수 있음
   - 빌드시, 요청시 데이터를 캐시하고 재사용
+  - 서버 컴포넌트에서의 기본 동작: 기본적으로 캐시되지 않으므로, 캐시가 필요한 경우 명시적으로 캐시 옵션을 지정해야 함
 
     ```ts
-    // Next.js 14 기본값: 'force-cache'
-    // Next.js 15 기본값: 'no-store'
+    // 서버 컴포넌트: 기본적으로 캐시되지 않음
+    fetch('https://fesp-api.koyeb.app/market/posts');
+    
+    // 캐시 강제 (명시적으로 캐시 사용)
     fetch('https://fesp-api.koyeb.app/market/posts', { cache: 'force-cache' });
+    
+    // 캐시 비활성화 (명시적으로 캐시 안함)
+    fetch('https://fesp-api.koyeb.app/market/posts', { cache: 'no-store' });
     ```
 
   - layout, page의 라우트 세그먼트 설정 옵션을 사용하면 layout이나 page 내의 모든 요청에 적용됨
     ```tsx
-    export const dynamic = 'force-dynamic'; // 외부 라이브러리에서도 캐시 안하도록 설정됨
+    export const dynamic = 'force-dynamic'; // axios 같은 외부 라이브러리에서도 캐시 안하도록 설정됨
     ```
 
-<img src="../../images/nextjs/data-cache.png" width="800">
+#### fetch의 cache 옵션
+* `cache: 'force-cache'`: 캐시를 강제로 사용 (명시적으로 지정 필요)
+* `cache: 'no-store'`: 캐시를 사용하지 않음, 매번 새로운 요청
+* `cache: 'default'`: 브라우저의 기본 캐시 동작을 따름 (`Cache-Control`, `Expires`, `ETag` 등의 HTTP 헤더값에 따름)
+* cache 옵션 미지정: 기본적으로 캐시되지 않음
 
-### 8.1.2 데이터 캐시와 fetch 메모이제이션의 차이점
-- 데이터 캐시는 여러 요청에서 재사용 됨
-- 메모이제이션은 컴포넌트 트리가 렌더링 되는 동안에만 재사용 됨
-  + 렌더링 될때 호출되는 여러 컴포넌트가 동일한 URL과 옵션으로 fetch 요청을 보내면 최초 요청의 응답을 저장하고 이후의 요청에는 저장된 응답이 사용된 후 렌더링이 끝나면 삭제됨
-- 데이터 캐시는 비활성화 하거나 재검증 시 서버에 다시 요청
-- 메모이제이션은 임시 캐시이므로 다음 렌더링 작업이 발생하면 항상 서버에 다시 요청
-- 메모이제이션 -> 데이터 캐시 -> 데이터 소스 순으로 확인
+#### 라우트 세그먼트 설정 옵션 (Data Cache 제어)
+* `export const dynamic = 'force-dynamic'`: 모든 fetch 요청이 Data Cache에 저장되지 않음
+* `export const dynamic = 'force-static'`: fetch 요청이 Data Cache에 저장됨
 
-<img src="../../images/nextjs/request-memoization.png" width="800">
-
-### 8.1.3 캐시 재검증
+### 8.1.2 캐시 재검증
 * 데이터 캐시를 제거하고 최신 데이터를 다시 가져오는 프로세스
 * 재검증 시도시 오류가 발생하면 마지막 성공한 데이터 캐시를 사용하고 다음 요청에서 재검증을 다시 시도
 
 #### 시간 기반 재검증
 * next.revalidate 옵션으로 초단위 시간 설정
 ```tsx
-fetch('https://fesp-api.koyeb.app/market/posts', { next: { revalidate: 3600 } });
+fetch('https://fesp-api.koyeb.app/market/posts', { next: { revalidate: 60 * 60 } });
 ```
 
 * 라우트 세그먼트 설정 옵션의 revalidate 값을 지정
 ```tsx
-export const revalidate = 3600;
+export const revalidate = 60 * 60;
 ```
 
 <img src="../../images/nextjs/time-based-revalidation.png" width="800">
 
-#### 요청시 재검증
-* revalidateTag()
-  - 지정한 태그의 서버 데이터 캐시 무효화
-* revalidatePath()
-  - 지정한 경로의 서버 데이터 캐시 무효화
+* 이미지 설명: 시간 기반 재검증(Time-based Revalidation)의 동작 흐름. 설정한 시간(예: 3600초) 동안 캐시된 데이터를 사용하다가, 시간이 지나면 백그라운드에서 재검증을 수행하여 캐시를 업데이트함. 재검증 중에는 기존 캐시를 계속 사용하여 사용자 경험을 유지함.
+
+#### 캐시 무효화 함수
+* `revalidateTag(tag: string)`: 지정한 태그의 캐시 무효화
+* `revalidatePath(path: string)`: 지정한 경로의 캐시 무효화
 
 ```tsx
 // /posts/page.tsx
@@ -1880,12 +1884,19 @@ revalidatePath('/posts'); // /posts URL의 캐시 삭제
 
 <img src="../../images/nextjs/on-demand-revalidation.png" width="800">
 
+* 이미지 설명: 요청 시 재검증(On-demand Revalidation)의 동작 흐름. `revalidateTag()`나 `revalidatePath()`를 호출하면 지정한 태그나 경로의 캐시가 즉시 무효화되고, 다음 요청 시 최신 데이터를 가져와 캐시를 업데이트함. 데이터가 변경되었을 때 수동으로 캐시를 갱신할 수 있음.
+
 ## 8.2 Full Route Cache
 * 위치: 서버측
-* 대상: 렌더링된 페이지(SSG), Route Handler 결과(API 응답 전체)
+* 대상: 렌더링된 페이지(SSG), Route Handler의 Response 응답 전체
 * 목적: 정적으로 생성된 페이지의 빠른 제공(SSG), 빠른 API 응답 제공
 * 지속 시간: 재배포 또는 재검증까지 유지
 * 방법: generateStaticParams() 함수 작성, export const dynamic 설정, revalidatePath()로 재검증
+
+* Route Handler 응답 캐싱
+  - Route Handler(`app/api/.../route.ts`)가 반환하는 `Response` 객체 전체가 캐시됨
+  - `Response.json()`, `Response.text()`, `new Response()` 등 모든 응답 형식 포함
+  - 상태 코드, 헤더, 본문(body) 등 HTTP 응답의 모든 요소가 캐시됨
 
   ```tsx
   // 정적 페이지 생성 (SSG)
@@ -1902,12 +1913,11 @@ revalidatePath('/posts'); // /posts URL의 캐시 삭제
 
   ```tsx
   // app/api/config/route.ts
-  import { NextResponse } from 'next/server';
-
-  // 정적 캐싱 강제 (최초 요청시 응답 데이터를 캐시, 다시 빌드 전까지 사용)
+  // 정적 캐싱 강제 (빌드 타임에 실행되어 응답을 캐시, 이후 요청은 캐시된 응답 반환)
   export const dynamic = 'force-static';
 
   export async function GET() {
+    // request 객체를 사용하면 에러 발생 (빌드 타임에는 실제 요청 객체가 없음)
     const res = await fetch(`https://fesp-api.koyeb.app/market/config`, {
       headers: {
         'Content-Type': 'application/json',
@@ -1915,7 +1925,7 @@ revalidatePath('/posts'); // /posts URL의 캐시 삭제
       },
     });
     const data = await res.json();
-    return NextResponse.json(data);
+    return Response.json(data);
   }
   ```
 
@@ -1927,16 +1937,15 @@ revalidatePath('/posts'); // /posts URL의 캐시 삭제
 * 방법: next.config.ts에서 staleTimes 설정, Link 컴포넌트의 prefetch 속성 조정, router.prefetch('/posts'), router.refresh() 호출
 
   ```tsx
-  // next.config.ts - 라우터 캐시 설정
+  // next.config.ts
   module.exports = {
     experimental: {
       staleTimes: {
-        dynamic: 30,  // 동적 페이지 30초 캐시
-        static: 300,  // 정적 페이지 5분 캐시
+        dynamic: 60,  // 동적 페이지 60초 캐시
+        static: 60*10,  // 정적 페이지 10분 캐시
       },
     },
   };
-  ```
 
 ## 8.4 Request Memoization
 * 위치: 서버측 (렌더링 중)
@@ -1944,6 +1953,10 @@ revalidatePath('/posts'); // /posts URL의 캐시 삭제
 * 목적: 컴포넌트 트리에서 중복 요청 방지
 * 지속 시간: 렌더링 사이클 시작에서 완료시까지
 * 방법: 특별한 설정 불필요, 동일한 URL과 옵션으로 fetch 호출하면 자동으로 메모이제이션
+
+<img src="../../images/nextjs/request-memoization.png" width="800">
+
+* 이미지 설명: Request Memoization의 동작 흐름. 같은 렌더링 사이클 내에서 동일한 fetch 요청이 여러 번 발생하면, 첫 번째 요청만 실제로 서버에 전송되고 이후 요청은 메모이제이션된 결과를 재사용함. 렌더링이 완료되면 메모이제이션 캐시는 삭제됨.
 
   ```tsx
   // 같은 렌더링 사이클에서 동일 요청은 메모이제이션됨
@@ -2022,11 +2035,11 @@ export default function DashboardLayout({
 * id 속성 필수: 스크립트를 추적하고 최적화하기 위해 반드시 고유한 id를 부여해야 함
   - 같은 id를 가진 스크립트는 중복 실행 방지
   - Next.js가 스크립트를 추적하여 최적화 수행
-* 사용 시나리오:
+* 사용 시나리오
   - 간단한 DOM 조작 코드
   - 외부 라이브러리 초기화 코드
   - 분석 도구 설정 코드
-* 주의사항:
+* 주의사항
   - 인라인 스크립트는 서버 컴포넌트에서 사용 불가 (클라이언트 컴포넌트에서만 사용)
   - `dangerouslySetInnerHTML`과 달리 Next.js가 최적화 및 추적 가능
 
@@ -2062,7 +2075,6 @@ export default function Banner() {
 * 특징:
   - 빌드 시 그대로 복사되어 배포됨
   - 서버 컴포넌트와 클라이언트 컴포넌트 모두에서 사용 가능
-  - CDN을 통한 정적 파일 제공 가능
 
 ```tsx
 // 이미지 사용 예시
@@ -2074,7 +2086,7 @@ export default function Banner() {
 
 ### 9.3.2 폰트 최적화
 * `next/font`를 사용하여 폰트 자동 최적화
-* 최적화 기능:
+* 최적화 기능
   - 폰트 파일 자동 다운로드 및 최적화
   - 자동 self-hosting (외부 요청 제거)
   - 폰트 로딩 최적화로 레이아웃 시프트 방지
@@ -2102,7 +2114,7 @@ export default function Layout({ children }) {
   - `Cache-Control` 헤더 자동 설정
   - 브라우저 캐싱 최적화
   - CDN 캐싱 지원
-* 성능 향상:
+* 성능 향상
   - 파일 크기 감소로 전송 시간 단축
   - 캐싱으로 재방문 시 빠른 로딩
   - 네트워크 요청 최소화
