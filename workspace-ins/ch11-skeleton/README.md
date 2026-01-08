@@ -1,7 +1,8 @@
-# 11장 게시판 앱 개발
+# 11장 게시판 앱 개발(React)
 * TypeScript
 * React
 * Vite
+* [Next.js 버전 보기](./README-next.md)
 
 ## 목차
 - [0 개발 준비](#0-개발-준비)

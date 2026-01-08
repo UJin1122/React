@@ -1915,6 +1915,7 @@ revalidatePath('/posts'); // /posts URL의 캐시 삭제
   // app/api/config/route.ts
   // 정적 캐싱 강제 (빌드 타임에 실행되어 응답을 캐시, 이후 요청은 캐시된 응답 반환)
   export const dynamic = 'force-static';
+  export const revalidate = 60; // 60초 후 캐시 무효화
 
   export async function GET() {
     // request 객체를 사용하면 에러 발생 (빌드 타임에는 실제 요청 객체가 없음)
