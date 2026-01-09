@@ -1016,7 +1016,7 @@ export default async function InfoPage() {
 
 * `app/[boardType]/page.tsx` 파일 열기
 * 파일 상단에 import 추가
-* `generateMetadata` 함수 추가 (export default 함수 위에)
+* `generateMetadata` 함수 추가
 
   **추가할 코드:**
   ```tsx
@@ -1144,29 +1144,27 @@ export default async function InfoPage() {
 
 ### 2.3.6 회원가입 페이지
 
-**작업 내용**: 회원가입 페이지에 메타데이터 추가 (params가 없으므로 일반 함수 사용)
+**작업 내용**: 회원가입 페이지에 메타데이터 추가
 
 * `app/(user)/signup/page.tsx` 파일 열기
 * 파일 상단에 import 추가
-* `generateMetadata` 함수 추가
+* `metadata` export 추가
 
   **추가할 코드:**
   ```tsx
   import { Metadata } from "next";
 
-  export async function generateMetadata(): Promise<Metadata> {
-    return {
+  export const metadata: Metadata = {
+    title: `회원가입 - 라이언 보드`,
+    description: `무료 회원 가입후 라이언 보드의 모든 서비스를 이용하세요.`,
+    openGraph: {
       title: `회원가입 - 라이언 보드`,
       description: `무료 회원 가입후 라이언 보드의 모든 서비스를 이용하세요.`,
-      openGraph: {
-        title: `회원가입 - 라이언 보드`,
-        description: `무료 회원 가입후 라이언 보드의 모든 서비스를 이용하세요.`,
-        url: `/signup`,
-        images: {
-          url: '/images/front-end.png'
-        }
+      url: `/signup`,
+      images: {
+        url: '/images/front-end.png'
       }
-    };
+    }
   }
 
   export default function SignupPage() {
